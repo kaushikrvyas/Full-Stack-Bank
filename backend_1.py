@@ -7,6 +7,9 @@ business_normal_waiting = []
 personal_skipped = []
 business_skipped = []
 current_queue_no = 0
+current_serving_personal = {'personal 2':6, 'personal 3':2}
+current_serving_business = {'business 1':2, 'business 3':3}
+is_number_change = False
 
 def get_next_personal_customer():
     """
@@ -84,27 +87,48 @@ def counter_name_parser(counter_id):
 
 @app.route('/counter/<counter_id>', methods=['GET','POST'])
 def show(counter_id):
-    branch,type_of_business,counterId= counter_name_parser(counter_id)
+    global is_number_change
+    global current_serving_personal
+    global current_serving_business
+
+    is_number_change = True
+    branch, type_of_business, counterId= counter_name_parser(counter_id)
     name = f"{branch} {type_of_business} {counterId}"
+    display_name = f"{type_of_business} {counterId}"
     button = request.form.get("button1") if request.form.get("button1") else request.form.get("button2")
 
-    if request.method == 'POST' and button == "next" and type_of_business == 'p':
+    if request.method == 'POST' and button == "next" and type_of_business == 'personal':
         current_queue_no = get_next_personal_customer()
+        current_serving_personal[display_name] = current_queue_no
         return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
 
-    elif request.method == 'POST' and button == "next" and type_of_business == 'b':
+    elif request.method == 'POST' and button == "next" and type_of_business == 'business':
         current_queue_no = get_next_business_customer()
+        current_serving_business[display_name] = current_queue_no
         return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
 
-    elif request.method == "POST" and button == "skip" and type_of_business == 'p':
+    elif request.method == "POST" and button == "skip" and type_of_business == 'personal':
         current_queue_no = skip_personal_customer()
+        current_serving_personal[display_name] = current_queue_no
         return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
 
-    elif request.method == "POST" and button == "skip" and type_of_business == 'b':
+    elif request.method == "POST" and button == "skip" and type_of_business == 'business':
         current_queue_no = skip_business_customer()
+        current_serving_business[display_name] = current_queue_no
         return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
 
-    return render_template('counter_page_1.html', counterName=name,  q=None)
+    return render_template('counter_page_1.html', counterName=name, q=None)
+
+
+@app.route('/main_display/<branch>', methods=['GET','POST'])
+def _show(branch):
+    print(type(branch))
+    global is_number_change
+    global current_serving_personal
+    global current_serving_business
+    url = f"/main_display/" + branch
+    return render_template('main_display.html', current_serving_personal=current_serving_personal,
+                           current_serving_business=current_serving_business, url=url)
 
 
 if __name__ == '__main__':
