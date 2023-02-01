@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <font color = "Black">
+            <h3 align = "center">Your Q Number: <span id="q-number"></span></h3>
+            <h3 align = "center"># of People in queue: <span id="queue-length"></span></h3>
+            <h3 align = "center">Your Business Type: <span class="op"></span></h3>
+            <h3 align = "center">Your Branch: <span class="op2"></span></h3>
+        </font>
+        <!-- <form action="display.html" method="GET">
+            <input type="text" name="serialNumber" />
+            <input type="submit" value="Submit" />
+        </form>
+        <!-->
+    <script type="text/javascript">
+        let qNumber = 0;
+        let queueLength = 0;
+        function getQNumber() {
+            qNumber++;
+            queueLength++;
+            document.getElementById('q-number').innerHTML = qNumber;
+            document.getElementById('queue-length').innerHTML = queueLength;
+            btype = document.querySelector('#businessType');
+            op = btype.value;
+            document.querySelector('.op').textContent = op;
+            locsg = document.querySelector('#branchLoc');
+            op2 = locsg.value;
+            document.querySelector('.op2').textContent = op2;
+        }
+    </script>
+</body>
+</html>
