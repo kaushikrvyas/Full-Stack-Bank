@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<style>
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+</style>
+
+<head>
+  <meta http-equiv="refresh" content="2;url={{url}}">
+  <title>Queue Number On Monitor Screen</title>
+</head>
+
+<body>
+  <font color="red">
+    <h1 align="left"> It is now calling for the quenue number:</h1>
+  </font>
+
+  <table>
+
+    <tr>
+      <th> Personal banking </th>
+    </tr>
+    <tr>
+      <th> Now Serving </th>
+      <th> Counter </th>
+    </tr>
+    {% for k,v in current_serving_personal.items() %}
+    <tr>
+      <td>{{v}}</td>
+      <td>{{k}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <table>
+    <tr>
+      <th> Business banking </th>
+    </tr>
+    <tr>
+      <th> Now Serving </th>
+      <th> Counter </th>
+    </tr>
+    {% for k,v in current_serving_business.items() %}
+    <tr>
+      <td>{{v}}</td>
+      <td>{{k}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+
+
+</html>
