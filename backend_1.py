@@ -66,20 +66,6 @@ def skip_business_customer():
         return 'Cannot skip, no customer in the queue'
 
 
-@app.route('/counter/counter_id', methods=['GET','POST'])
-def next():
-
-    button = request.form.get("button1") if request.form.get("button1") else request.form.get("button2")
-    if request.method == 'POST' and button == "next":
-        current_queue_no = get_next_personal_customer()
-        return render_template('counter_page_1.html', q=current_queue_no)
-    elif request.method == "POST" and button == "skip":
-        current_queue_no = skip_personal_customer()
-        return render_template('counter_page_1.html', q=current_queue_no)
-
-    return render_template('counter_page_1.html', q=None)
-
-
 def counter_name_parser(counter_id):
     branch_dict = {'jp':'Jurong Point',
                    'je': 'Jurong East',
@@ -94,8 +80,8 @@ def counter_name_parser(counter_id):
     type_of_business = business_dict[type_id]
     counterId = counter_id[5:]
     name = f"{branch} {type_of_business} {counterId}"
-
     return name
+
 
 @app.route('/counter/<counter_id>', methods=['GET','POST'])
 def show(counter_id):
