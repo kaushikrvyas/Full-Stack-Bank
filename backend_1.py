@@ -119,6 +119,14 @@ def counter_name_parser(counter_id):
     counterId = counter_id[5:]
     return branch, type_of_business, counterId, branch_id
 
+def add_personal_normal_waiting(branch):
+    pass
+
+def add_business_normal_waiting(branch):
+    pass
+
+def add_personal_priority_waiting(branch):
+    pass
 
 @app.route('/counter/<counter_id>', methods=['GET', 'POST'])
 def __show(counter_id):
