@@ -119,14 +119,68 @@ def counter_name_parser(counter_id):
     counterId = counter_id[5:]
     return branch, type_of_business, counterId, branch_id
 
-def add_personal_normal_waiting(branch):
-    pass
 
-def add_business_normal_waiting(branch):
-    pass
+def add_personal_normal_waiting(branch,type_of_business,priority):    
+    global dict_all
+    personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
+    personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
+    if type_of_business=='personal' and priority=='False':
+        if len(personal_priority_waiting)+len(personal_normal_waiting) == 0:
+            next_p_n_number =1
+        else:
+            if len(personal_priority_waiting)==0:
+                next_p_n_number =personal_normal_waiting[-1]+1
+            else:    
+                if len(personal_normal_waiting)==0:
+                    next_p_n_number = personal_priority_waiting[-1] + 1
+                else:    
+                    if personal_normal_waiting[-1]>personal_priority_waiting[-1]:
+                        next_p_n_number = personal_normal_waiting[-1] + 1
+                    else:
+                        next_p_n_number = personal_priority_waiting[-1] + 1
+        personal_normal_waiting.append(next_p_n_number)
+        return next_p_n_number
+    else:
+        return 'Not personal normal customer'
 
-def add_personal_priority_waiting(branch):
-    pass
+
+def add_personal_priority_waiting(branch,type_of_business,priority):
+    global dict_all
+    personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
+    personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
+    if type_of_business=='personal' and priority=='True':
+        if len(personal_priority_waiting)+len(personal_normal_waiting) == 0:
+            next_p_p_number =1
+        else:
+            if len(personal_normal_waiting)==0:
+                next_p_p_number =personal_priority_waiting[-1]+1
+            else:    
+                if len(personal_priority_waiting)==0:
+                    next_p_p_number = personal_normal_waiting[-1] + 1
+                else:
+                    if personal_normal_waiting[-1]>personal_priority_waiting[-1]:
+                        next_p_p_number = personal_normal_waiting[-1] + 1
+                    else:
+                        next_p_p_number = personal_priority_waiting[-1] + 1
+        personal_priority_waiting.append(next_p_p_number)
+        return next_p_p_number
+    else:
+        return 'Not personal priority customer'
+    
+def add_business_normal_waiting(branch,type_of_business,priority):
+    global dict_all
+    business_normal_waiting = dict_all[branch]['business_normal_waiting']
+    if type_of_business=='business'and priority=='NA':
+        if len(business_normal_waiting) > 0:
+            next_b_number = business_normal_waiting[-1] + 1
+        else:
+            next_b_number=1
+        business_normal_waiting.append(next_b_number)
+        return next_b_number
+    else:
+        return 'Not business customer'
+
+
 
 @app.route('/counter/<counter_id>', methods=['GET', 'POST'])
 def __show(counter_id):
