@@ -13,42 +13,25 @@
         <ol>
         <li>Enter your personal information:
             <ul>
-                <li>Type of business: 
-                    <select id="businessType">
-                        <option value="Personal">Personal</option>
-                        <option value="Business">Business</option>
-                        <option value="Private Banking">Private Banking</option>
+                <li>Type of business:
+                    <select id="type_of_business">
+                        {% for k,v in business_dict.items() %}
+                        <option value={{v}}>{{v}}</option>
+                        {% endfor %}
                     </select>
                 </li>
-                <li>Type of business: 
-                    <select id="branchLoc">
-                        <option value="Jurong">Jurong</option>
-                        <option value="Orchard">Orchard</option>
-                        <option value="Changi">Changi</option>
+                <li>Branch you are going to:
+                    <select id="branch">
+                        {% for k,v in branch_dict.items() %}
+                        <option value={{v}}>{{v}}</option>
+                        {% endfor %}
                     </select>
                 </li>
-                <li>Phone number: <input type="text" id="phone"></li>
-                <li>Email address: <input type="text" id="email"></li>
             </ul>
         </li>
         <li>Click the "Get Q Number" button to receive your q number.</li>
         </ol>
-            <button id = "getQbutton" onclick="location.href='/client/info'">Get Q Number</button>
-        <script type="text/javascript">
-            let qNumber = 0;
-            let queueLength = 0;
-            function getQNumber() {
-                qNumber++;
-                queueLength++;
-                document.getElementById('q-number').innerHTML = qNumber;
-                document.getElementById('queue-length').innerHTML = queueLength;
-                btype = document.querySelector('#businessType');
-                op = btype.value;
-                document.querySelector('.op').textContent = op;
-                locsg = document.querySelector('#branchLoc');
-                op2 = locsg.value;
-                document.querySelector('.op2').textContent = op2;
-            }
-    </script>
+            <button id = "getQbutton" name = "getQbutton" >Get Q Number</button>
+
     </body>
 </html>
