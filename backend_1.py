@@ -120,40 +120,7 @@ def counter_name_parser(counter_id):
     return branch, type_of_business, counterId, branch_id
 
 
-@app.route('/counter/<counter_id>', methods=['GET','POST'])
-def show(counter_id):
-    global current_serving_personal
-    global current_serving_business
-
-    branch, type_of_business, counterId, branch_id= counter_name_parser(counter_id)
-    name = f"{branch} {type_of_business} {counterId}"
-    display_name = f"{type_of_business} {counterId}"
-    button = request.form.get("button1") if request.form.get("button1") else request.form.get("button2")
-
-    if request.method == 'POST' and button == "next" and type_of_business == 'personal':
-        current_queue_no = get_next_personal_customer()
-        current_serving_personal[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
-
-    elif request.method == 'POST' and button == "next" and type_of_business == 'business':
-        current_queue_no = get_next_business_customer()
-        current_serving_business[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
-
-    elif request.method == "POST" and button == "skip" and type_of_business == 'personal':
-        current_queue_no = skip_personal_customer()
-        current_serving_personal[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
-
-    elif request.method == "POST" and button == "skip" and type_of_business == 'business':
-        current_queue_no = skip_business_customer()
-        current_serving_business[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
-
-    return render_template('counter_page_1.html', counterName=name, q=None)
-
-
-@app.route('/counter_try/<counter_id>', methods=['GET', 'POST'])
+@app.route('/counter/<counter_id>', methods=['GET', 'POST'])
 def __show(counter_id):
     global dict_all
     branch_name, type_of_business, counterId, branch = counter_name_parser(counter_id)
