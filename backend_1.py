@@ -223,14 +223,16 @@ def _show(branch):
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
     url = f"/main_display/" + branch
-    return render_template('main_display.html', current_serving_personal=current_serving_personal,
-                           current_serving_business=current_serving_business, url=url)
+    return render_template('main_tv_display.html', current_serving_personal=current_serving_personal, current_serving_business=current_serving_business, url=url)
 
 
-@app.route('/customer_get_queue/mobile', methods=['GET','POST'])
+@app.route('/getq/mobile', methods=['GET','POST'])
 def get_q_mobile():
-    return render_template('queue.html', branch_dict=branch_dict, business_dict=business_dict)
+    return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict)
 
+@app.route('/getq/inperson/<branch>', methods=['GET','POST'])
+def get_q_inperson(branch):
+    return render_template('inperson_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict)
 
 if __name__ == '__main__':
     app.run(debug = True,port=8080)

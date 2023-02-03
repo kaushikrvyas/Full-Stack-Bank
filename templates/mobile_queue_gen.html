@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ABC Bank Queuing System</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #F2F2F2;
+                text-align: center;
+                padding: 50px;
+            }
+            h1 {
+                color: #005AA7;
+                font-size: 36px;
+                margin-bottom: 50px;
+            }
+            h2 {
+                color: #5F5F5F;
+                font-size: 18px;
+                margin-bottom: 50px;
+            }
+            ol {
+                font-size: 16px;
+                text-align: left;
+                margin-bottom: 50px;
+            }
+            li {
+                margin: 10px 0;
+            }
+            select {
+                padding: 10px;
+                font-size: 16px;
+                margin: 10px;
+                border: 1px solid #005AA7;
+                border-radius: 5px;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Queuing Numbering System</h1>
+        <h2>Welcome to ABC Bank. Please follow the steps below to enter your details and get your queue number:</h2>
+        <ol>
+        <li>Enter your personal information:
+            <ul>
+                <li>Type of business:
+                    <select id="type_of_business">
+                        {% for k,v in business_dict.items() %}
+                        <input type="radio" id="{{v}}" name="business_type" value="{{v}}">
+                        <label for="{{v}}">{{v}}</label><br>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>Branch you are going to:
+                    <select id="branch">
+                        {% for k,v in branch_dict.items() %}
+                        <option value={{v}}>{{v}}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+            </ul>
+        </li>
+        <li>Click the "Get Q Number" button to receive your q number.</li>
+        </ol>
+            <button id="getQbutton" name="getQbutton">Get Q Number</button>
+    </body>
+</html>
