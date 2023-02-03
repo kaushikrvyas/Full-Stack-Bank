@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
 dict_all = {'jp': {'personal_normal_waiting': [2,4],
@@ -189,16 +189,23 @@ def _show(branch):
                            current_serving_business=current_serving_business, url=url)
 
 
-@app.route('/getq/mobile', methods=['GET','POST'])
-def get_q_mobile():
+@app.route('/getq/mobile/<user>', methods=['GET','POST'])
+def get_q_mobile(user):
     global dict_all
 
     if request.method == 'POST':
         type_of_business = request.form.get('type_of_business')
+        print(type_of_business)
         priority = request.form.get('priority')
+        print(priority)
         branch = request.form.get('branch')
-
-        assign_queue_no_to_queue(branch, type_of_business, priority)
+        print(branch)
+        if type_of_business is not None and priority is not None and branch is not None:
+            current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
+            print(current_assigned_queue_no)
+            return render_template('queue_generated.html',user=user)
+        else:  #if user doesn't select all value, prompt user to input all required information
+            return render_template('queue_gen_fail.html',user=user)
     return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 
