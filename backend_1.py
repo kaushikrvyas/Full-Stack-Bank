@@ -142,7 +142,7 @@ def add_personal_normal_waiting(branch,type_of_business,priority):
         return next_p_n_number
     else:
         return 'Not personal normal customer'
-
+    
 
 def add_personal_priority_waiting(branch,type_of_business,priority):
     global dict_all
