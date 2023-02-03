@@ -49,21 +49,5 @@
             <br>
             <h3 align = "center">People ahead of you: <span id="queue-length"></span></h3>
             <h3 align = "center">Estimated waiting time: <span id="queue-length"></span></h3>
-    <script type="text/javascript">
-        let qNumber = 0;
-        let queueLength = 0;
-        function getQNumber() {
-            qNumber++;
-            queueLength++;
-            document.getElementById('q-number').innerHTML = qNumber;
-            document.getElementById('queue-length').innerHTML = queueLength;
-            btype = document.querySelector('#businessType');
-            op = btype.value;
-            document.querySelector('.op').textContent = op;
-            locsg = document.querySelector('#branchLoc');
-            op2 = locsg.value;
-            document.querySelector('.op2').textContent = op2;
-        }
-    </script>
 </body>
 </html>
