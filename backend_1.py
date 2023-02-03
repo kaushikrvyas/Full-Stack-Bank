@@ -47,8 +47,10 @@ branch_dict = {'jp': 'Jurong Point',
                'je': 'Jurong East',
                'kl': 'Kuala Lumpur',
                'hg': 'Hou Gang'}
-business_dict = {'p': 'personal',
-                 'b': 'business'}
+business_dict = {'p': 'Private Banking',
+                  'b': 'Corporate Banking'}
+priority_dict = {'y': 'Yes',
+                  'n': 'No'}
 
 def get_next_personal_customer(branch):
     """
@@ -216,19 +218,20 @@ def _show(branch):
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
     url = f"/main_display/" + branch
-    return render_template('main_display.html', current_serving_personal=current_serving_personal,
+    return render_template('main_tv_display.html', current_serving_personal=current_serving_personal,
                            current_serving_business=current_serving_business, url=url)
 
 
-@app.route('/customer_get_queue/mobile', methods=['GET','POST'])
+@app.route('/getq/mobile', methods=['GET','POST'])
 def get_q_mobile():
     global dict_all
-    current_assigned_queue_no = dict_all[branch]['current_assigned_queue_no']
+    current_assigned_queue_no = dict_all['branch']['current_assigned_queue_no']
     current_assigned_queue_no += 1
+    return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict)
 
-
-    return render_template('queue.html', branch_dict=branch_dict, business_dict=business_dict)
-
+@app.route('/getq/inperson', methods=['GET','POST'])
+def get_q_inperson():
+     return render_template('inperson_queue_gen.html', business_dict=business_dict, priority_dict=priority_dict)
 
 if __name__ == '__main__':
     app.run(debug = True,port=8080)
