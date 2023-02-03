@@ -228,7 +228,7 @@ def get_q_inperson(branch):
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch = branch_dict[branch]
-            return render_template('queue_generated.html',user=user, q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
 
