@@ -156,24 +156,24 @@ def __show(counter_id):
     if request.method == 'POST' and button == "next" and type_of_business == 'personal':
         current_queue_no = get_next_personal_customer(branch)
         current_serving_personal[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
     elif request.method == 'POST' and button == "next" and type_of_business == 'business':
         current_queue_no = get_next_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
     elif request.method == "POST" and button == "skip" and type_of_business == 'personal':
         current_queue_no = skip_personal_customer(branch)
         current_serving_personal[display_name]= current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
     elif request.method == "POST" and button == "skip" and type_of_business == 'business':
         current_queue_no = skip_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
-    return render_template('counter_page_1.html', counterName=name, q=None)
+    return render_template('counter_main.html', counterName=name, q=None)
 
 
 @app.route('/counter/<branch>/<type_of_business>/<counter>', methods=['GET', 'POST'])
@@ -192,24 +192,24 @@ def show1(branch, type_of_business, counter):
     if request.method == 'POST' and button == "next" and type_of_business == 'personal':
         current_queue_no = get_next_personal_customer(branch)
         current_serving_personal[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
     elif request.method == 'POST' and button == "next" and type_of_business == 'business':
         current_queue_no = get_next_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
     elif request.method == "POST" and button == "skip" and type_of_business == 'personal':
         current_queue_no = skip_personal_customer(branch)
         current_serving_personal[display_name]= current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
     elif request.method == "POST" and button == "skip" and type_of_business == 'business':
         current_queue_no = skip_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', counterName=name, q=current_queue_no)
 
-    return render_template('counter_page_1.html', counterName=name, q=None)
+    return render_template('counter_main.html', counterName=name, q=None)
 
 
 @app.route('/main_display/<branch>', methods=['GET','POST'])
@@ -224,14 +224,14 @@ def _show(branch):
 
 @app.route('/getq/mobile', methods=['GET','POST'])
 def get_q_mobile():
-    global dict_all
-    current_assigned_queue_no = dict_all['branch']['current_assigned_queue_no']
-    current_assigned_queue_no += 1
-    return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict)
+    return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
-@app.route('/getq/inperson', methods=['GET','POST'])
-def get_q_inperson():
-     return render_template('inperson_queue_gen.html', business_dict=business_dict, priority_dict=priority_dict)
+@app.route('/getq/inperson/<branch>', methods=['GET','POST'])
+def get_q_inperson(branch):
+    global dict_all
+    current_assigned_queue_no = dict_all[branch]['current_assigned_queue_no']
+    current_assigned_queue_no += 1
+    return render_template('inperson_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 if __name__ == '__main__':
     app.run(debug = True,port=8080)

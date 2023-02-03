@@ -48,7 +48,7 @@
     <br>
   <table>
     <tr>
-        <th colspan="2"> Personal banking </th>
+        <th colspan="2"> Private Banking </th>
     </tr>
     <tr>
       <th> Now Serving </th>
@@ -63,17 +63,15 @@
     <tr>
         <th colspan="2"> Missed Queue Numbers </th>
     </tr>
-    {% for k,v in business_skipped.items() %}
     <tr>
-        <td colspan="2">{{v}}</td>
+        <td colspan="2">skipped values here</td>
     </tr>
-    {% endfor %}
   </table>
 <br><br>
 
   <table>
     <tr>
-        <th colspan="2"> Business banking </th>
+        <th colspan="2"> Corporate Banking </th>
     </tr>
     <tr>
       <th> Now Serving </th>
@@ -86,13 +84,11 @@
     </tr>
     {% endfor %}
     <tr>
-        <th colspan="2"> Missed Queue Numbers </th>
-    </tr>
-    {% for k,v in business_skipped.items() %}
-    <tr>
-        <td colspan="2">{{v}}</td>
-    </tr>
-    {% endfor %}
+      <th colspan="2"> Missed Queue Numbers </th>
+  </tr>
+  <tr>
+      <td colspan="2">skipped values here</td>
+  </tr>
   </table>
 <br><br>
 </body>

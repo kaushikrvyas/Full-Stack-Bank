@@ -1,19 +1,68 @@
-
+<!DOCTYPE html>
+<html>
   <head>
+    <meta charset="UTF-8">
+  <title>ABC Bank Queuing System</title>
+  <meta charset="UTF-8">
+  <title>ABC Bank Queuing System</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #F2F2F2;
+          text-align: center;
+          padding: 50px;
+      }
+      h1 {
+          color: #005AA7;
+          font-size: 30px;
+          margin-bottom: 10px;
+      }
+      h2 {
+          margin-top: 20px;
+          color: #5F5F5F;
+          font-size: 24px;
+          margin-bottom: 20px;
+      }
+      ol {
+          font-size: 16px;
+          text-align: left;
+          margin-bottom: 50px;
+      }
+      li {
+          margin: 10px 0;
+      }
+      select {
+          padding: 10px;
+          font-size: 16px;
+          margin: 10px;
+          border: 1px solid #005AA7;
+          border-radius: 5px;
+      }
+      button {
+          padding: 10px 20px;
+          font-size: 20px;
+          background-color: #005AA7;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top: 30px;
+      }
+  </style>
     <title>Bank Counter</title>
   </head>
   <body>
-    <font color="#008000",face="arial",size="3">
-    <h3 align = "center">{{counterName}}</h3>
-    </font>
+    <h1 align = "center">{{counterName[:-2]}}</h1>
+    <h1 align = "center">Counter {{counterName[-2:]}}</h1>
+    </font>s
     <font size="3">
-    <p align = "center">Current serving number:
+    <h2 align = "center">Current serving number:
       {% if q %}
         <span id="current_queue_no">{{q}}</span>
       {% else %}
         <span>not exist</span>
       {% endif %}
-    </p>`
+    </h2>
     </font>
     <div style="text-align:center">
         <form action="" method="post" name="next">
