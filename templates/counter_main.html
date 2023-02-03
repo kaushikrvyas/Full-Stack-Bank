@@ -52,8 +52,8 @@
     <title>Bank Counter</title>
   </head>
   <body>
-    <h1 align = "center">{{counterName[:-2]}}</h1>
-    <h1 align = "center">Counter {{counterName[-2:]}}</h1>
+    <h1 align = "center">{{branch_name}} {{type_of_business}}</h1>
+    <h1 align = "center">Counter {{counter}}</h1>
     </font>
     <font size="3">
     <h2 align = "center">Current serving number:
@@ -68,6 +68,7 @@
         <form action="" method="post" name="next">
             <button id="button1" name="button1" value="next">Next</button>
             <button id="button2" name="button2" value="skip">Skip</button>
+            <button id="button3" name="button3" value="stop">Stop</button>
         </form>
     </div>
     <script>
