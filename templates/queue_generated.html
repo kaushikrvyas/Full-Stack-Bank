@@ -5,60 +5,48 @@
         <title>ABC Bank Queuing System</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
-                background-color: #F2F2F2;
-                text-align: center;
-                padding: 50px;
+              font-family: Arial, sans-serif;
+              background-color: #F2F2F2;
+              text-align: center;
+              padding: 50px;
             }
             h1 {
-                color: #005AA7;
-                font-size: 36px;
-                margin-bottom: 50px;
+              color: #005AA7;
+              font-size: 36px;
+              margin-bottom: 50px;
             }
-            h2 {
-                color: #5F5F5F;
-                font-size: 18px;
-                margin-bottom: 50px;
+            h3 {
+              color: #5F5F5F;
+              font-size: 18px;
+              margin-bottom: 30px;
             }
-            ol {
-                font-size: 16px;
-                text-align: left;
-                margin-bottom: 50px;
+            table {
+              border-collapse: collapse;
+              width: 50%;
+              margin: 10px auto;
             }
-            li {
-                margin: 10px 0;
+            th,
+            td {
+              border: 1px solid black;
+              padding: 10px;
+              text-align: center;
             }
-            select {
-                padding: 10px;
-                font-size: 16px;
-                margin: 10px;
-                border: 1px solid #005AA7;
-                border-radius: 5px;
+            th {
+              background-color: #005AA7;
+              color: white;
             }
-            button {
-                padding: 10px 20px;
-                font-size: 16px;
-                background-color: #005AA7;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                margin-top: 50px;
+            font[color="red"] {
+              color: red;
+              font-size: 24px;
             }
         </style>
     </head>
     <body>
-        <font color = "Black">
+            <h1 align = "center">Queue Report</h1>
             <h3 align = "center">Your Q Number: <span id="q-number"></span></h3>
             <h3 align = "center"># of People in queue: <span id="queue-length"></span></h3>
             <h3 align = "center">Your Business Type: <span class="op"></span></h3>
             <h3 align = "center">Your Branch: <span class="op2"></span></h3>
-        </font>
-        <!-- <form action="display.html" method="GET">
-            <input type="text" name="serialNumber" />
-            <input type="submit" value="Submit" />
-        </form>
-        <!-->
     <script type="text/javascript">
         let qNumber = 0;
         let queueLength = 0;
