@@ -7,6 +7,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'personal_skipped': [],
                    'business_skipped': [],
                    'current_queue_no': 0,
+                   'current_assigned_queue_no': 0,
                    'current_serving_personal': {'personal 2':6, 'personal 3':2},
                    'current_serving_business': {'business 1': 2, 'business 3': 3}
                     },
@@ -16,6 +17,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'personal_skipped': [],
                    'business_skipped': [],
                    'current_queue_no': 0,
+                   'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {}
                     },
@@ -25,7 +27,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'personal_skipped': [],
                    'business_skipped': [],
                    'current_queue_no': 0,
-                   'current_serving_personal': {},
+                  'current_assigned_queue_no': 0,
+                  'current_serving_personal': {},
                    'current_serving_business': {}
                     },
             'hg':{'personal_normal_waiting': [],
@@ -34,7 +37,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'personal_skipped': [],
                    'business_skipped': [],
                    'current_queue_no': 0,
-                   'current_serving_personal': {},
+                  'current_assigned_queue_no': 0,
+                  'current_serving_personal': {},
                    'current_serving_business': {}
                     }
             }
@@ -43,10 +47,8 @@ branch_dict = {'jp': 'Jurong Point',
                'je': 'Jurong East',
                'kl': 'Kuala Lumpur',
                'hg': 'Hou Gang'}
-business_dict = {'p': 'Private Banking',
-                 'b': 'Corporate Banking'}
-priority_dict = {'y': 'Yes',
-                 'n': 'No'}
+business_dict = {'p': 'personal',
+                 'b': 'business'}
 
 def get_next_personal_customer(branch):
     """
@@ -122,74 +124,63 @@ def counter_name_parser(counter_id):
     return branch, type_of_business, counterId, branch_id
 
 
-def add_personal_normal_waiting(branch,type_of_business,priority):    
+def assign_queue_no_to_queue(branch, type_of_business, priority):
     global dict_all
-    personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
+    current_assigned_queue_no = dict_all[branch]['current_assigned_queue_no']
     personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
-    if type_of_business=='personal' and priority=='False':
-        if len(personal_priority_waiting)+len(personal_normal_waiting) == 0:
-            next_p_n_number =1
-        else:
-            if len(personal_priority_waiting)==0:
-                next_p_n_number =personal_normal_waiting[-1]+1
-            else:    
-                if len(personal_normal_waiting)==0:
-                    next_p_n_number = personal_priority_waiting[-1] + 1
-                else:    
-                    if personal_normal_waiting[-1]>personal_priority_waiting[-1]:
-                        next_p_n_number = personal_normal_waiting[-1] + 1
-                    else:
-                        next_p_n_number = personal_priority_waiting[-1] + 1
-        personal_normal_waiting.append(next_p_n_number)
-        return next_p_n_number
-    else:
-        return 'Not personal normal customer'
-    
-
-def add_personal_priority_waiting(branch,type_of_business,priority):
-    global dict_all
     personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
-    personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
-    if type_of_business=='personal' and priority=='True':
-        if len(personal_priority_waiting)+len(personal_normal_waiting) == 0:
-            next_p_p_number =1
-        else:
-            if len(personal_normal_waiting)==0:
-                next_p_p_number =personal_priority_waiting[-1]+1
-            else:    
-                if len(personal_priority_waiting)==0:
-                    next_p_p_number = personal_normal_waiting[-1] + 1
-                else:
-                    if personal_normal_waiting[-1]>personal_priority_waiting[-1]:
-                        next_p_p_number = personal_normal_waiting[-1] + 1
-                    else:
-                        next_p_p_number = personal_priority_waiting[-1] + 1
-        personal_priority_waiting.append(next_p_p_number)
-        return next_p_p_number
-    else:
-        return 'Not personal priority customer'
-    
-def add_business_normal_waiting(branch,type_of_business,priority):
-    global dict_all
     business_normal_waiting = dict_all[branch]['business_normal_waiting']
-    if type_of_business=='business'and priority=='NA':
-        if len(business_normal_waiting) > 0:
-            next_b_number = business_normal_waiting[-1] + 1
-        else:
-            next_b_number=1
-        business_normal_waiting.append(next_b_number)
-        return next_b_number
-    else:
-        return 'Not business customer'
+
+    if type_of_business =='p' and priority is True:
+        personal_priority_waiting.append(current_assigned_queue_no)
+    elif type_of_business =='p' and priority is False:
+        personal_normal_waiting.append(current_assigned_queue_no)
+    elif type_of_business =='b':
+        business_normal_waiting.append(current_assigned_queue_no)
 
 
-
-@app.route('/counter/<counter_id>', methods=['GET', 'POST'])
+@app.route('/counter/<counter_id>', methods=['GET', 'POST']) #counter_id examples: jp_p_2 (jurong point personal 2)
 def __show(counter_id):
     global dict_all
     branch_name, type_of_business, counterId, branch = counter_name_parser(counter_id)
     name = f"{branch_name} {type_of_business} {counterId}"
     display_name = f"{type_of_business} {counterId}"
+    button = request.form.get("button1") if request.form.get("button1") else request.form.get("button2")
+
+    current_queue_no = dict_all[branch]['current_queue_no']
+    current_serving_personal = dict_all[branch]['current_serving_personal']
+    current_serving_business = dict_all[branch]['current_serving_business']
+
+    if request.method == 'POST' and button == "next" and type_of_business == 'personal':
+        current_queue_no = get_next_personal_customer(branch)
+        current_serving_personal[display_name] = current_queue_no
+        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+
+    elif request.method == 'POST' and button == "next" and type_of_business == 'business':
+        current_queue_no = get_next_business_customer(branch)
+        current_serving_business[display_name] = current_queue_no
+        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+
+    elif request.method == "POST" and button == "skip" and type_of_business == 'personal':
+        current_queue_no = skip_personal_customer(branch)
+        current_serving_personal[display_name]= current_queue_no
+        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+
+    elif request.method == "POST" and button == "skip" and type_of_business == 'business':
+        current_queue_no = skip_business_customer(branch)
+        current_serving_business[display_name] = current_queue_no
+        return render_template('counter_page_1.html', counterName=name, q=current_queue_no)
+
+    return render_template('counter_page_1.html', counterName=name, q=None)
+
+
+@app.route('/counter/<branch>/<type_of_business>/<counter>', methods=['GET', 'POST'])
+def show1(branch, type_of_business, counter):
+    global dict_all
+    branch_name = branch_dict[branch]
+    type_of_business = business_dict[type_of_business]
+    name = f"{branch_name} {type_of_business} {counter}"
+    display_name = f"{type_of_business} {counter}"
     button = request.form.get("button1") if request.form.get("button1") else request.form.get("button2")
 
     current_queue_no = dict_all[branch]['current_queue_no']
@@ -225,16 +216,19 @@ def _show(branch):
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
     url = f"/main_display/" + branch
-    return render_template('main_tv_display.html', current_serving_personal=current_serving_personal, current_serving_business=current_serving_business, url=url)
+    return render_template('main_display.html', current_serving_personal=current_serving_personal,
+                           current_serving_business=current_serving_business, url=url)
 
 
-@app.route('/getq/mobile', methods=['GET','POST'])
+@app.route('/customer_get_queue/mobile', methods=['GET','POST'])
 def get_q_mobile():
-    return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+    global dict_all
+    current_assigned_queue_no = dict_all[branch]['current_assigned_queue_no']
+    current_assigned_queue_no += 1
 
-@app.route('/getq/inperson', methods=['GET','POST'])
-def get_q_inperson():
-    return render_template('inperson_queue_gen.html', business_dict=business_dict, priority_dict=priority_dict)
+
+    return render_template('queue.html', branch_dict=branch_dict, business_dict=business_dict)
+
 
 if __name__ == '__main__':
     app.run(debug = True,port=8080)
