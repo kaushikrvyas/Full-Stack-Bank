@@ -128,53 +128,20 @@ def counter_name_parser(counter_id):
 
 def assign_queue_no_to_queue(branch, type_of_business, priority):
     global dict_all
-    current_assigned_queue_no = dict_all[branch]['current_assigned_queue_no']
     personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
     personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
     business_normal_waiting = dict_all[branch]['business_normal_waiting']
+    current_assigned_queue_no = dict_all[branch]['current_assigned_queue_no']
+    current_assigned_queue_no += 1
+    dict_all[branch]['current_assigned_queue_no'] = current_assigned_queue_no
 
-    if type_of_business =='p' and priority is True:
+    if type_of_business =='p' and priority == 'y':
         personal_priority_waiting.append(current_assigned_queue_no)
-    elif type_of_business =='p' and priority is False:
+    elif type_of_business =='p' and priority == 'n':
         personal_normal_waiting.append(current_assigned_queue_no)
     elif type_of_business =='b':
         business_normal_waiting.append(current_assigned_queue_no)
-
-
-@app.route('/counter/<counter_id>', methods=['GET', 'POST']) #counter_id examples: jp_p_2 (jurong point personal 2)
-def __show(counter_id):
-    global dict_all
-    branch_name, type_of_business, counterId, branch = counter_name_parser(counter_id)
-    name = f"{branch_name} {type_of_business} {counterId}"
-    display_name = f"{type_of_business} {counterId}"
-    button = request.form.get("button1") if request.form.get("button1") else request.form.get("button2")
-
-    current_queue_no = dict_all[branch]['current_queue_no']
-    current_serving_personal = dict_all[branch]['current_serving_personal']
-    current_serving_business = dict_all[branch]['current_serving_business']
-
-    if request.method == 'POST' and button == "next" and type_of_business == 'personal':
-        current_queue_no = get_next_personal_customer(branch)
-        current_serving_personal[display_name] = current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
-
-    elif request.method == 'POST' and button == "next" and type_of_business == 'business':
-        current_queue_no = get_next_business_customer(branch)
-        current_serving_business[display_name] = current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
-
-    elif request.method == "POST" and button == "skip" and type_of_business == 'personal':
-        current_queue_no = skip_personal_customer(branch)
-        current_serving_personal[display_name]= current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
-
-    elif request.method == "POST" and button == "skip" and type_of_business == 'business':
-        current_queue_no = skip_business_customer(branch)
-        current_serving_business[display_name] = current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
-
-    return render_template('counter_main.html', counterName=name, q=None)
-
+    return current_assigned_queue_no
 
 @app.route('/counter/<branch>/<type_of_business>/<counter>', methods=['GET', 'POST'])
 def show1(branch, type_of_business, counter):
@@ -224,7 +191,16 @@ def _show(branch):
 
 @app.route('/getq/mobile', methods=['GET','POST'])
 def get_q_mobile():
+    global dict_all
+
+    if request.method == 'POST':
+        type_of_business = request.form.get('type_of_business')
+        priority = request.form.get('priority')
+        branch = request.form.get('branch')
+
+        assign_queue_no_to_queue(branch, type_of_business, priority)
     return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+
 
 @app.route('/getq/inperson/<branch>', methods=['GET','POST'])
 def get_q_inperson(branch):
@@ -233,6 +209,7 @@ def get_q_inperson(branch):
     current_assigned_queue_no += 1
     return render_template('inperson_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
+
 if __name__ == '__main__':
-    app.run(debug = True,port=8080)
+    app.run(debug = True,port=8000)
 
