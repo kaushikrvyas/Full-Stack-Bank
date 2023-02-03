@@ -195,14 +195,11 @@ def get_q_mobile(user):
 
     if request.method == 'POST':
         type_of_business = request.form.get('type_of_business')
-        print(type_of_business)
         priority = request.form.get('priority')
-        print(priority)
         branch = request.form.get('branch')
-        print(branch)
+
         if type_of_business is not None and priority is not None and branch is not None:
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
-            print(current_assigned_queue_no)
             return render_template('queue_generated.html',user=user)
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html',user=user)
