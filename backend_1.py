@@ -8,8 +8,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'business_skipped': [],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
-                   'current_serving_personal': {'personal 2':"QP2", 'personal 3':"QP3"},
-                   'current_serving_business': {'business 1': "QB4", 'business 3': "QB5"}
+                   'current_serving_personal': {'personal 2':"2", 'personal 3':"3"},
+                   'current_serving_business': {'business 1': "4", 'business 3': "5"}
                     },
             'je': {'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -150,33 +150,43 @@ def show1(branch, type_of_business, counter):
     type_of_business = business_dict[type_of_business]
     name = f"{branch_name} {type_of_business} {counter}"
     display_name = f"{type_of_business} {counter}"
-    button = request.form.get("button1") if request.form.get("button1") else request.form.get("button2")
+
+    if request.form.get("button1"):
+        button = request.form.get("button1")
+    elif request.form.get("button2"):
+        button = request.form.get("button2")
+    elif request.form.get("button3"):
+        button = request.form.get("button3")
 
     current_queue_no = dict_all[branch]['current_queue_no']
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
 
-    if request.method == 'POST' and button == "next" and type_of_business == 'personal':
+    if request.method == 'POST' and button == "next" and type_of_business == 'Private Banking':
         current_queue_no = get_next_personal_customer(branch)
         current_serving_personal[display_name] = current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
 
-    elif request.method == 'POST' and button == "next" and type_of_business == 'business':
+    elif request.method == 'POST' and button == "next" and type_of_business == 'Corporate Banking':
         current_queue_no = get_next_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
 
-    elif request.method == "POST" and button == "skip" and type_of_business == 'personal':
+    elif request.method == "POST" and button == "skip" and type_of_business == 'Private Banking':
         current_queue_no = skip_personal_customer(branch)
         current_serving_personal[display_name]= current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
 
-    elif request.method == "POST" and button == "skip" and type_of_business == 'business':
+    elif request.method == "POST" and button == "skip" and type_of_business == 'Corporate Banking':
         current_queue_no = skip_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_main.html', counterName=name, q=current_queue_no)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
 
-    return render_template('counter_main.html', counterName=name, q=None)
+    elif request.method == 'POST' and button == 'stop':
+        current_serving_business[display_name] = 'Stop Serving'
+        return render_template('stop_serving.html', branch_name=branch_name, counter=counter, type_of_business=type_of_business)
+
+    return render_template('counter_main.html', branch_name=branch_name, q=None, counter=counter, type_of_business=type_of_business)
 
 
 @app.route('/main_display/<branch>', methods=['GET','POST'])
