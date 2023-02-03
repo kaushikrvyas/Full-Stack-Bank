@@ -194,9 +194,14 @@ def _show(branch):
     global dict_all
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
+    personal_skipped = dict_all[branch]['personal_skipped']
+    business_skipped = dict_all[branch]['business_skipped']
     url = f"/main_display/" + branch
     return render_template('main_tv_display.html', current_serving_personal=current_serving_personal,
-                           current_serving_business=current_serving_business, url=url)
+                           current_serving_business=current_serving_business,
+                           personal_skipped = personal_skipped,
+                           business_skipped = business_skipped,
+                           url=url)
 
 
 @app.route('/getq/mobile/<user>', methods=['GET','POST'])
