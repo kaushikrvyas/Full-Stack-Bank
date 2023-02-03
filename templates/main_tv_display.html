@@ -64,9 +64,9 @@
         <th colspan="2"> Missed Queue Numbers </th>
     </tr>
     <tr>
-        <td colspan="2">skipped values here</td>
+      <td colspan="2">{% for x in personal_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
     </tr>
-  </table>
+      </table>
 <br><br>
 
   <table>
@@ -87,7 +87,7 @@
       <th colspan="2"> Missed Queue Numbers </th>
   </tr>
   <tr>
-      <td colspan="2">skipped values here</td>
+      <td colspan="2">{% for x in business_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
   </tr>
   </table>
 <br><br>
