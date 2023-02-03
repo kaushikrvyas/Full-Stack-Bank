@@ -68,14 +68,16 @@
             <ul>
                 <li>Type of Banking:<br>
                         {% for k,v in business_dict.items() %}
-                        <input type="radio" name="business_type" value="{{v}}">
-                        <label for="{{v}}">{{v}}</label><br>
+                        <form action="" method="post">
+                            <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
+                            <label for="{{k}}">{{v}}</label><br>
                         {% endfor %}
                 </li>
                 <li>Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
-                    <input type="radio" name="priority_type" value="{{v}}">
-                    <label for="{{v}}">{{v}}</label><br>
+                     <form action="" method="post">
+                        <input type="radio" name="priority" name="priority" value="{{k}}">
+                        <label for="{{k}}">{{v}}</label><br>
                     {% endfor %}
                 </li>
             </ul>
