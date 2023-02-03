@@ -68,27 +68,30 @@
             <ul>
                 <li>Type of Banking:<br>
                         {% for k,v in business_dict.items() %}
-                        <input type="radio" name="business_type" value="{{v}}">
-                        <label for="{{v}}">{{v}}</label><br>
+                    <form action="" method="post">
+                        <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
+                        <label for="{{k}}">{{v}}</label><br>
                         {% endfor %}
                 </li>
                 <li>Please choose your preferred branch:<br>
-                    <select id="branch">
+                    <select id="branch" name="branch">
                         {% for k,v in branch_dict.items() %}
-                        <option value={{v}}>{{v}}</option>
-                        {% endfor %}
+                        <form action="" method="post">
+                            <option value={{k}}>{{v}}</option>
+                            {% endfor %}
                     </select>
                 </li>
                 <li>Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
-                    <input type="radio" name="priority_type" value="{{v}}">
-                    <label for="{{v}}">{{v}}</label><br>
+                    <form action="" method="post">
+                        <input type="radio" name="priority" name="priority" value="{{k}}">
+                        <label for="{{k}}">{{v}}</label><br>
                     {% endfor %}
                 </li>
             </ul>
         </li>
         <li>Click the "Get Queue Number" button below to receive your queue number.</li>
         </ol>
-            <button id="getQbutton" name="getQbutton" value="getQbutton">Get Queue Number</button>
+            <button id="getQbutton" name="getQbutton">Get Queue Number</button>
     </body>
 </html>
