@@ -221,8 +221,17 @@ def get_q_mobile(user):
 @app.route('/getq/inperson/<branch>', methods=['GET','POST'])
 def get_q_inperson(branch):
     global dict_all
-    current_assigned_queue_no = dict_all[branch]['current_assigned_queue_no']
-    current_assigned_queue_no += 1
+    if request.method == 'POST':
+        type_of_business = request.form.get('type_of_business')
+        priority = request.form.get('priority')
+        if type_of_business is not None and priority is not None:
+            current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
+            type_of_business = business_dict[type_of_business]
+            branch = branch_dict[branch]
+            return render_template('queue_generated.html',user=user, q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
+        else:  #if user doesn't select all value, prompt user to input all required information
+            return render_template('queue_gen_fail.html')
+
     return render_template('inperson_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 
