@@ -8,8 +8,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'business_skipped': [],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
-                   'current_serving_personal': {'personal 2':6, 'personal 3':2},
-                   'current_serving_business': {'business 1': 2, 'business 3': 3}
+                   'current_serving_personal': {'personal 2':"QP2", 'personal 3':"QP3"},
+                   'current_serving_business': {'business 1': "QB4", 'business 3': "QB5"}
                     },
             'je': {'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
