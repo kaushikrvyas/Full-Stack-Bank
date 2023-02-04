@@ -32,7 +32,7 @@
             button {
                 display: block;
                 padding: 20px 40px;
-                font-size: 16px;
+                font-size: 18px;
                 background-color: #005AA7;
                 color: white;
                 border: none;
@@ -98,10 +98,34 @@
                 left: 0;
                 font-weight: bold;
             }
+            select {
+                width: 20%;
+                padding: 16px 16px;
+                border: none;
+                border-radius: 5px;
+                background-color: #005AA7;
+                color: white;
+                font-size: 18px;
+              }
+              input[type="radio"] {
+                
+              }
+
+              input[type="radio"] + label {
+                display: inline-block;
+                margin-right: 5px;
+                padding: 7px 10px;
+                background-color: #ccc;
+                border-radius: 50px;
+                cursor: pointer;
+              }
+              
+              input[type="radio"]:checked + label {
+                color: #005AA7;
+              }
           </style>
     </head>
     <body>
-        <link rel="stylesheet" href="styles.css">
         <h1>Generate your Queue Number</h1>
         <h2>Welcome to ABC Bank. Please follow the steps below to enter to obtain your queue number:</h2>
         <ol>
@@ -111,22 +135,22 @@
                         {% for k,v in business_dict.items() %}
                     <form action="" method="post">
                         <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
-                        <label for="{{k}}">{{v}}</label><br>
+                        <label for="{{k}}">{{v}}</label>
                         {% endfor %}
                 </li>
                 <li >Please choose your preferred branch:
-                    <select  id="branch" name="branch">
+                    <select id="branch" name="branch">
                         {% for k,v in branch_dict.items() %}
                         <form action="" method="post">
-                            <option  value={{k}}>{{v}}</option>
-                            {% endfor %}
+                            <option value={{k}}>{{v}}</option>
+                        {% endfor %}
                     </select>
                 </li>
                 <li >Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
                     <form action="" method="post">
                         <input type="radio" name="priority" name="priority" value="{{k}}">
-                        <label for="{{k}}">{{v}}</label><br>
+                        <label for="{{k}}">{{v}}</label>
                     {% endfor %}
                 </li>
             </ul>
