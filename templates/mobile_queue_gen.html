@@ -9,7 +9,9 @@
                 background-color: #F2F2F2;
                 padding: 50px;
             }
-            
+            .half-gap {
+                margin-top: 1em;
+              }
             h1 {
                 color: #005AA7;
                 font-size: 36px;
@@ -108,15 +110,20 @@
                 font-size: 18px;
               }
               input[type="radio"] {
-                
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 2px solid #000;
+                display: inline-block;
+                position: relative;
               }
 
               input[type="radio"] + label {
                 display: inline-block;
                 margin-right: 5px;
-                padding: 7px 10px;
+                padding: 5px 10px;
                 background-color: #ccc;
-                border-radius: 50px;
+                border-radius: 100px;
                 cursor: pointer;
               }
               
@@ -131,10 +138,10 @@
         <ol>
         <li ><b>Enter visit information:</b>
             <ul>
-                <li >Type of Banking:<br>
+                <li>Type of Banking:<br>
                         {% for k,v in business_dict.items() %}
                     <form action="" method="post">
-                        <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
+                        <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
                         <label for="{{k}}">{{v}}</label>
                         {% endfor %}
                 </li>
@@ -149,7 +156,7 @@
                 <li >Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
                     <form action="" method="post">
-                        <input type="radio" name="priority" name="priority" value="{{k}}">
+                        <input class="half-gap" type="radio" name="priority" name="priority" value="{{k}}">
                         <label for="{{k}}">{{v}}</label>
                     {% endfor %}
                 </li>

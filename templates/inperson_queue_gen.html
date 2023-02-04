@@ -9,7 +9,9 @@
                 background-color: #F2F2F2;
                 padding: 50px;
             }
-            
+            .half-gap {
+                margin-top: 1em;
+              }
             h1 {
                 color: #005AA7;
                 font-size: 36px;
@@ -108,15 +110,20 @@
                 font-size: 18px;
               }
               input[type="radio"] {
-                
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 2px solid #000;
+                display: inline-block;
+                position: relative;
               }
 
               input[type="radio"] + label {
                 display: inline-block;
                 margin-right: 5px;
-                padding: 7px 10px;
+                padding: 5px 10px;
                 background-color: #ccc;
-                border-radius: 50px;
+                border-radius: 100px;
                 cursor: pointer;
               }
               
@@ -129,26 +136,26 @@
         <h1>Generate your Queue Number</h1>
         <h2>Welcome to ABC Banks. Please follow the steps below to enter to obtain your queue number:</h2>
         <ol>
-        <li>Enter visit information:
+        <li><b>Enter visit information:</b>
             <ul>
                 <li>Type of Banking:<br>
                         {% for k,v in business_dict.items() %}
                         <form action="" method="post">
                             <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
-                            <label for="{{k}}">{{v}}</label><br>
+                            <label for="{{k}}">{{v}}</label>
                         {% endfor %}
                 </li>
                 <li>Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
                      <form action="" method="post">
                         <input type="radio" name="priority" name="priority" value="{{k}}">
-                        <label for="{{k}}">{{v}}</label><br>
+                        <label for="{{k}}">{{v}}</label>
                     {% endfor %}
                 </li>
             </ul>
         </li>
-        <li>Click the "Get Queue Number" button below to receive your queue number.</li>
+        <li><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
         </ol>
-            <button id="getQbutton" name="getQbutton">Get Queue Number</button>
+            <button style="display:block; margin: 0 auto;" id="getQbutton" name="getQbutton">Get Queue Number</button>
     </body>
 </html>
