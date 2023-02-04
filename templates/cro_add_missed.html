@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ABC Bank Queuing System</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #F2F2F2;
+                text-align: center;
+                padding: 50px;
+            }
+            h1 {
+                color: #005AA7;
+                font-size: 36px;
+                margin-bottom: 15px;
+            }
+            h2 {
+                color: #5F5F5F;
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+            ol {
+                font-size: 20px;
+                text-align: left;
+                margin-bottom: 20px;
+            }
+            li {
+                margin: 20px 0;
+            }
+            br {
+                line-height: 5px;
+            }
+            select {
+                padding: 5px;
+                font-size: 18px;
+                margin: 5px;
+                border: 1px solid #005AA7;
+                border-radius: 5px;
+            }
+            button {
+                display: inline;
+                padding: 20px 20px;
+                font-size: 16px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 20px;
+            }
+            input[type="radio"]{
+                font-size: 18px;
+                display: inline;
+                margin-right: 5px;
+            }
+            label{
+                font-size: 18px;
+                margin-right: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Add Missed Number Into Queue</h1>
+        <ol>
+        <li>Enter visit information:
+            <ul>
+                <li>Type of Banking:<br>
+                        {% for k,v in business_dict.items() %}
+                    <form action="" method="post">
+                        <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
+                        <label for="{{k}}">{{v}}</label><br>
+                        {% endfor %}
+                </li>
+                <li>Priority Banking?<br>
+                    {% for k,v in priority_dict.items() %}
+                    <form action="" method="post">
+                        <input type="radio" name="priority" name="priority" value="{{k}}">
+                        <label for="{{k}}">{{v}}</label><br>
+                    {% endfor %}
+                </li>
+                <li>Please enter the missed number:<br>
+                    <input type="number" name="missednum" name="missednum" value="{{y}}" >
+                </li>
+            </ul>
+        </li>
+        <li>Click the "Add" button below to add the number into waiting list.</li>
+        </ol>
+            <button id="getQbutton" name="getQbutton">Add</button>
+    </body>
+</html>
