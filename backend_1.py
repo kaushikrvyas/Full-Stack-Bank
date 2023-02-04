@@ -149,9 +149,8 @@ def assign_queue_no_to_queue(branch, type_of_business, priority):
         business_normal_waiting.append(current_assigned_queue_no)
     return current_assigned_queue_no
   
-  # CRO add missed numbers function -Serena
- def add_missed_num_to_queue(branch,type_of_business,priority,missednum):
-    
+# CRO add missed numbers function -Serena
+def add_missed_num_to_queue(branch,type_of_business,priority,missednum):
     global dict_all
     personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
     personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
@@ -299,7 +298,7 @@ def cro_show(branch):
                         system_status=system_status,
                         url=url)
 
-                        
+
 @app.route('/cro/manipulate/<branch>', methods=['GET','POST']) #CRO Add missed numbers -Serena
 
 def add_miss_num(branch):
