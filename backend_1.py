@@ -240,6 +240,28 @@ def get_q_inperson(branch):
     return render_template('inperson_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 
+@app.route('/cro/<branch>', methods=['GET','POST'])   #CRO Display, shows the queue status: serving, waiting, missed 
+def cro_show(branch):
+    global dict_all
+    current_serving_personal = dict_all[branch]['current_serving_personal']
+    current_serving_business = dict_all[branch]['current_serving_business']
+    personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
+    personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
+    business_normal_waiting = dict_all[branch]['business_normal_waiting']
+    personal_skipped = dict_all[branch]['personal_skipped']
+    business_skipped = dict_all[branch]['business_skipped']
+    url = f"/cro/" + branch
+    
+    return render_template('cro_display.html', current_serving_personal= current_serving_personal,
+                           current_serving_business=current_serving_business,
+                           personal_priority_waiting=personal_priority_waiting,
+                           personal_normal_waiting=personal_normal_waiting,
+                           business_normal_waiting=business_normal_waiting,
+                           personal_skipped=personal_skipped,
+                           business_skipped=business_skipped,
+                           url=url)
+  
+  
 if __name__ == '__main__':
     app.run(debug = True,port=8000)
 
