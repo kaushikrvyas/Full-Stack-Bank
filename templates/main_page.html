@@ -54,7 +54,7 @@
   </style>
   <head>
     <style>
-      .branch-card {
+      .domain-card {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -76,40 +76,45 @@
     <h1>Welcome to ABC Bank</h1>
     <h2>Welcome to the Queue System (demo). Please select your domain</h2>
     <div style="display: flex; justify-content: space-between;">
-      <div class="branch-card">
-        <img src="hg.jpg" alt="Branch 1">
-        <h3>CRO Page</h3>
-        <button onclick="window.location.href='queue-ticket-generation-branch1.html'">
-          Generate Queue Ticket
+      <div class="domain-card">
+        <form action="" method="post">
+        <img src="hg.jpg" alt="Domain 1">
+        <button id="button1" name="button1" value="CROPage">
+          CRO Page
         </button>
+      </form>
+      </div>
+      <div class="domain-card">
+        <form action="" method="post">
+        <img src="je.png" alt="Domain 2">
+        <button id="button2" name="button2" value="QPage4Mobile">
+          Queue Page for Mobile
+        </button>
+      </form>
+      </div>
+      <div class="domain-card">
+        <form action="" method="post">
+        <img src="jp.jpg" alt="Domain 3">
+        <button id="button3" name="button3" value="QPage4Inperson">
+          Queue Page for Inperson
+        </button>
+      </form>
+      </div>
+      <div class="domain-card">
+        <form action="" method="post">
+        <img src="kl.jpg" alt="Domain 4">
+        <button id="button4" name="button4" value="PublicDisplayPage">
+          Public Display Page
+        </button>
+      </form>
       </div>
       <div class="branch-card">
-        <img src="je.png" alt="Branch 2">
-        <h3>Queue Page for Mobile</h3>
-        <button onclick="window.location.href='queue-ticket-generation-branch2.html'">
-          Generate Queue Ticket
+        <form action="" method="post">
+        <img src="kl.jpg" alt="Domain 5">
+        <button id="button5" name="button5" value="CounterPage">
+          Counter Page
         </button>
-      </div>
-      <div class="branch-card">
-        <img src="jp.jpg" alt="Branch 3">
-        <h3>Queue Page for Inperson</h3>
-        <button onclick="window.location.href='queue-ticket-generation-branch3.html'">
-          Generate Queue Ticket
-        </button>
-      </div>
-      <div class="branch-card">
-        <img src="kl.jpg" alt="Branch 4">
-        <h3>Public Display</h3>
-        <button onclick="window.location.href='queue-ticket-generation-branch4.html'">
-          Generate Queue Ticket
-        </button>
-      </div>
-      <div class="branch-card">
-        <img src="kl.jpg" alt="Branch 4">
-        <h3>Counter Page</h3>
-        <button onclick="window.location.href='queue-ticket-generation-branch4.html'">
-          Generate Queue Ticket
-        </button>
+      </form>
       </div>
     </div>
   </body>
