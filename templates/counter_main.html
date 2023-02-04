@@ -3,7 +3,127 @@
   <head>
     <title>ABC Bank Queuing System</title>
     <meta charset="UTF-8">
-    <link href="styles.css" rel="stylesheet">
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #F2F2F2;
+          padding: 50px;
+      }
+      
+      h1 {
+          color: #005AA7;
+          font-size: 36px;
+          margin-bottom: 30px;
+          text-align: center;
+      }
+      
+      h2 {
+          color: #5F5F5F;
+          font-size: 20px;
+          margin-bottom: 30px;
+          text-align: center;
+      }
+      
+      h3 {
+          font-size: 20px;
+          margin-bottom: 30px;
+      }
+      
+      button {
+          display: block;
+          padding: 20px 40px;
+          font-size: 18px;
+          background-color: #005AA7;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top: 30px;
+          text-align: center;
+      }
+      
+      table {
+          border-collapse: collapse;
+          width: 50%;
+          margin: 10px auto;
+      }
+      
+      th, td {
+          border: 1px solid black;
+          padding: 10px;
+          text-align: center;
+          font-size: 16px;
+      }
+      
+      th {
+          background-color: #005AA7;
+          color: white;
+          font-size: 16px;
+      }
+      
+      font[color="red"] {
+          color: red;
+          font-size: 24px;
+      }
+      
+      ul, ol {
+          padding: 0;
+          margin: 0;
+          list-style: none;
+          font-size: 16px;
+      }
+      
+      li {
+          padding: 10px;
+          margin-bottom: 10px;
+          background-color: #EAEAEA;
+          border-radius: 5px;
+          text-align: left;
+          font-size: 18px;
+      }
+      
+      ol {
+          counter-reset: item;
+      }
+      
+      ol > li {
+          counter-increment: item;
+          position: relative;
+          padding-left: 30px;
+      }
+      
+      ol > li:before {
+          content: counters(item, ".") ". ";
+          position: absolute;
+          left: 0;
+          font-weight: bold;
+      }
+      select {
+          width: 20%;
+          padding: 16px 16px;
+          border: none;
+          border-radius: 5px;
+          background-color: #005AA7;
+          color: white;
+          font-size: 18px;
+        }
+        input[type="radio"] {
+          
+        }
+
+        input[type="radio"] + label {
+          display: inline-block;
+          margin-right: 5px;
+          padding: 7px 10px;
+          background-color: #ccc;
+          border-radius: 50px;
+          cursor: pointer;
+        }
+        
+        input[type="radio"]:checked + label {
+          color: #005AA7;
+        }
+    </style>
     <title>Bank Counter</title>
   </head>
   <body>

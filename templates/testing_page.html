@@ -1,64 +1,22 @@
-<!----> <!---->
 <!DOCTYPE html>
 <html lang="en">
-  <meta charset="UTF-8">
-  <title>ABC Bank Queuing System</title>
-<head>
-  <link href="styles.css" rel="stylesheet">
-  <meta http-equiv="refresh" content="2;url={{url}}">
-  <title>Queue Number On Monitor Screen</title>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <link href="styles.css" rel="stylesheet">
+    <title>Queue Number On Monitor Screen</title>
+  </head>
 <body>
     <h1 align="center"> It is now calling for the queue number:</h1>
     <br>
-  <table>
-    <tr>
-        <th colspan="2"> Personal banking </th>
-    </tr>
-    <tr>
-      <th> Now Serving </th>
-      <th> Counter </th>
-    </tr>
-    {% for k,v in current_serving_personal.items() %}
-    <tr>
-      <td>{{v}}</td>
-      <td>{{k[-1:]}}</td>
-    </tr>
-    {% endfor %}
-    <tr>
-        <th colspan="2"> Missed Queue Numbers </th>
-    </tr>
-    {% for k,v in business_skipped.items() %}
-    <tr>
-        <td colspan="2">{{v}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-<br><br>
-
-  <table>
-    <tr>
-        <th colspan="2"> Business banking </th>
-    </tr>
-    <tr>
-      <th> Now Serving </th>
-      <th> Counter </th>
-    </tr>
-    {% for k,v in current_serving_business.items() %}
-    <tr>
-      <td>{{v}}</td>
-      <td>{{k[-1:]}}</td>
-    </tr>
-    {% endfor %}
-    <tr>
-        <th colspan="2"> Missed Queue Numbers </th>
-    </tr>
-    {% for k,v in business_skipped.items() %}
-    <tr>
-        <td colspan="2">{{v}}</td>
-    </tr>
-    {% endfor %}
-  </table>
+    <table>
+        <tr>
+            <th colspan="2"> Personal banking </th>
+        </tr>
+        <tr>
+          <th> Now Serving </th>
+          <th> Counter </th>
+        </tr>
+    </table>
 <br><br>
 </body>
 </html>

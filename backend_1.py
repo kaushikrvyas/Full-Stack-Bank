@@ -227,7 +227,6 @@ def _show(branch):
                            system_status=system_status,
                            url=url)
 
-
 @app.route('/getq/mobile/<user>', methods=['GET','POST'])
 def get_q_mobile(user):
     global dict_all
@@ -380,6 +379,10 @@ def choose_branches(branch):
     if request.method == 'POST' and button == "PublicDisplayPage":
         return render_template('miss_added.html')
     return render_template('main_page.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+
+@app.route('/test', methods=['GET','POST'])
+def tester():
+    return render_template('testing_page.html')
 
 if __name__ == '__main__':
     app.run(debug = True,port=8000)
