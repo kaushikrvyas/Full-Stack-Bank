@@ -250,6 +250,10 @@ def get_q_mobile(user):
 @app.route('/getq/inperson/<branch>', methods=['GET','POST'])
 def get_q_inperson(branch):
     global dict_all
+
+    if dict_all[branch]['system_status'] == system_status_dict['t']:
+        return render_template('service_terminated.html')
+
     if request.method == 'POST':
         type_of_business = request.form.get('type_of_business')
         priority = request.form.get('priority')
@@ -276,6 +280,17 @@ def cro_show(branch):
     if request.method == 'POST' and button == "terminateService":
         dict_all[branch]['system_status'] = system_status_dict['t']
     if request.method == 'POST' and button == "reinitiateService":
+        dict_all[branch] = {'personal_normal_waiting': [],
+                   'personal_priority_waiting':[],
+                   'business_normal_waiting': [],
+                   'personal_skipped': [],
+                   'business_skipped': [],
+                   'current_queue_no': 0,
+                   'current_assigned_queue_no': 0,
+                   'current_serving_personal': {},
+                   'current_serving_business': {},
+                   'system_status': "avaliable"
+                    }
         dict_all[branch]['system_status'] = system_status_dict['a']
     
     current_serving_personal = dict_all[branch]['current_serving_personal']
@@ -314,10 +329,6 @@ def add_miss_num(branch):
             return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
             
     return render_template('cro_add_missed.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
-  
-  
-
-  
   
 if __name__ == '__main__':
     app.run(debug = True,port=8000)
