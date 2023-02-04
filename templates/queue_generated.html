@@ -130,6 +130,18 @@
               input[type="radio"]:checked + label {
                 color: #005AA7;
               }
+            form input[type="button"] {
+              display: block;
+              padding: 20px 40px;
+              font-size: 18px;
+              background-color: #005AA7;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              margin: 30px auto 0;
+              text-align: center;
+              }
           </style>
     </head>
     <body>
@@ -137,5 +149,8 @@
             <h3 align = "center">Your Queue Number: <span id="q_number" name="q_number">{{q_number}}</span></h3>
             <h3 align = "center">Your Business Type: <span class="op" id="type_of_business" name="type_of_business">{{type_of_business}}</span></h3>
             <h3 align = "center">Your Branch: <span class="op2" id="branch" name="branch">{{branch}}</span></h3>
+            <form>
+                <input type="button" style="display:block; margin: 0 auto;" value="Generate New Queue Number" onclick="history.back()">
+            </form>
 </body>
 </html>
