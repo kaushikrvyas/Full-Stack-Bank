@@ -1,141 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F2F2F2;
-            padding: 50px;
-        }
-        .half-gap {
-            margin-top: 1em;
-          }
-        h1 {
-            color: #005AA7;
-            font-size: 36px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        h2 {
-            color: #5F5F5F;
-            font-size: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        h3 {
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-        
-        button {
-            display: block;
-            padding: 20px 40px;
-            font-size: 18px;
-            background-color: #005AA7;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 30px;
-            text-align: center;
-        }
-        
-        table {
-            border-collapse: collapse;
-            width: 50%;
-            margin: 10px auto;
-        }
-        
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-        
-        th {
-            background-color: #005AA7;
-            color: white;
-            font-size: 16px;
-        }
-        
-        font[color="red"] {
-            color: red;
-            font-size: 24px;
-        }
-        
-        ul, ol {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            font-size: 16px;
-        }
-        
-        li {
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #EAEAEA;
-            border-radius: 5px;
-            text-align: left;
-            font-size: 18px;
-        }
-        
-        ol {
-            counter-reset: item;
-        }
-        
-        ol > li {
-            counter-increment: item;
-            position: relative;
-            padding-left: 30px;
-        }
-        
-        ol > li:before {
-            content: counters(item, ".") ". ";
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-        select {
-            width: 20%;
-            padding: 16px 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #005AA7;
-            color: white;
-            font-size: 18px;
-          }
-          input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid #000;
-            display: inline-block;
-            position: relative;
-          }
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #F2F2F2;
+                padding: 50px;
+            }
+            .half-gap {
+                margin-top: 1em;
+            }
+            h1 {
+                color: #005AA7;
+                font-size: 36px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            
+            h2 {
+                color: #5F5F5F;
+                font-size: 20px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            
+            h3 {
+                font-size: 20px;
+                margin-bottom: 30px;
+            }
+            
+            button {
+                display: block;
+                padding: 20px 40px;
+                font-size: 18px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 30px;
+                text-align: center;
+            }
+            
+            table {
+                border-collapse: collapse;
+                width: 50%;
+                margin: 10px auto;
+            }
+            
+            th, td {
+                border: 1px solid black;
+                padding: 10px;
+                text-align: center;
+                font-size: 16px;
+            }
+            
+            th {
+                background-color: #005AA7;
+                color: white;
+                font-size: 16px;
+            }
+            
+            font[color="red"] {
+                color: red;
+                font-size: 24px;
+            }
+            
+            ul, ol {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                font-size: 16px;
+            }
+            
+            li {
+                padding: 10px;
+                margin-bottom: 10px;
+                background-color: #EAEAEA;
+                border-radius: 5px;
+                text-align: left;
+                font-size: 18px;
+            }
+            
+            ol {
+                counter-reset: item;
+            }
+            
+            ol > li {
+                counter-increment: item;
+                position: relative;
+                padding-left: 30px;
+            }
+            
+            ol > li:before {
+                content: counters(item, ".") ". ";
+                position: absolute;
+                left: 0;
+                font-weight: bold;
+            }
+            select {
+                width: 20%;
+                padding: 16px 16px;
+                border: none;
+                border-radius: 5px;
+                background-color: #005AA7;
+                color: white;
+                font-size: 18px;
+            }
+            input[type="radio"] {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 2px solid #000;
+                display: inline-block;
+                position: relative;
+            }
 
-          input[type="radio"] + label {
-            display: inline-block;
-            margin-right: 5px;
-            padding: 5px 10px;
-            background-color: #ccc;
-            border-radius: 100px;
-            cursor: pointer;
-          }
-          
-          input[type="radio"]:checked + label {
-            color: #005AA7;
-          }
-      </style>
-    <h4>Please input all the required information</h4>
-</head>
-<body>
-    <form>
-        <input type="button" style="display:block; margin: 0 auto;" value="Back" onclick="history.back()">
-    </form>
-</body>
+            input[type="radio"] + label {
+                display: inline-block;
+                margin-right: 5px;
+                padding: 5px 10px;
+                background-color: #ccc;
+                border-radius: 100px;
+                cursor: pointer;
+            }
+            
+            input[type="radio"]:checked + label {
+                color: #005AA7;
+            }
+            form input[type="button"] {
+                display: block;
+                padding: 20px 40px;
+                font-size: 18px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 30px auto 0;
+                text-align: center;
+                }
+        </style>
+    </head>
+    <body>
+        <h2>Please input all the required information</h2>
+        <form>
+            <input type="button" style="display:block; margin: 0 auto;" value="Go Back" onclick="history.back()">
+        </form>
+    </body>
 </html>
