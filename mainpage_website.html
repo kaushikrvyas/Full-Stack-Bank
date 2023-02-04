@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .branch-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+        margin: 20px;
+      }
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      button {
+        padding: 10px 20px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Our Bank</h1>
+    <h2>Choose Your Branch</h2>
+    <div style="display: flex; justify-content: space-between;">
+      <div class="branch-card">
+        <img src="branch1.jpg" alt="Branch 1">
+        <button onclick="window.location.href='queue-ticket-generation-branch1.html'">
+          Generate Queue Ticket
+        </button>
+      </div>
+      <div class="branch-card">
+        <img src="branch2.jpg" alt="Branch 2">
+        <button onclick="window.location.href='queue-ticket-generation-branch2.html'">
+          Generate Queue Ticket
+        </button>
+      </div>
+      <div class="branch-card">
+        <img src="branch3.jpg" alt="Branch 3">
+        <button onclick="window.location.href='queue-ticket-generation-branch3.html'">
+          Generate Queue Ticket
+        </button>
+      </div>
+      <div class="branch-card">
+        <img src="branch4.jpg" alt="Branch 4">
+        <button onclick="window.location.href='queue-ticket-generation-branch4.html'">
+          Generate Queue Ticket
+        </button>
+      </div>
+      <div class="branch-card">
+        <img src="branch5.jpg" alt="Branch 5">
+        <button onclick="window.location.href='queue-ticket-generation-branch5.html'">
+          Generate Queue Ticket
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
