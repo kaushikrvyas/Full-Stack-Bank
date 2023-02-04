@@ -1,5 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <title>ABC Bank Queuing System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F2F2F2;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #005AA7;
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #5F5F5F;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    h3 {
+        font-size: 16px;
+      }
+      button {
+        display: inline;
+        padding: 20px 20px;
+        font-size: 16px;
+        background-color: #005AA7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    table {
+      border-collapse: collapse;
+      width: 50%;
+      margin: 10px auto;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #005AA7;
+      color: white;
+    }
+    font[color="red"] {
+      color: red;
+      font-size: 24px;
+    }
+  </style>
   <head>
     <style>
       .branch-card {
@@ -21,36 +73,34 @@
     </style>
   </head>
   <body>
-    <h1>Welcome to Our Bank</h1>
-    <h2>Choose Your Branch</h2>
+    <h1>Welcome to ABC Bank</h1>
+    <h2>Choose Your Preferred Branch</h2>
     <div style="display: flex; justify-content: space-between;">
       <div class="branch-card">
-        <img src="branch1.jpg" alt="Branch 1">
+        <img src="hg.jpg" alt="Branch 1">
+        <h3>Hougang</h3>
         <button onclick="window.location.href='queue-ticket-generation-branch1.html'">
           Generate Queue Ticket
         </button>
       </div>
       <div class="branch-card">
-        <img src="branch2.jpg" alt="Branch 2">
+        <img src="je.png" alt="Branch 2">
+        <h3>Jurong East</h3>
         <button onclick="window.location.href='queue-ticket-generation-branch2.html'">
           Generate Queue Ticket
         </button>
       </div>
       <div class="branch-card">
-        <img src="branch3.jpg" alt="Branch 3">
+        <img src="jp.jpg" alt="Branch 3">
+        <h3>Jurong Point</h3>
         <button onclick="window.location.href='queue-ticket-generation-branch3.html'">
           Generate Queue Ticket
         </button>
       </div>
       <div class="branch-card">
-        <img src="branch4.jpg" alt="Branch 4">
+        <img src="kl.jpg" alt="Branch 4">
+        <h3>Kuala Lumpur</h3>
         <button onclick="window.location.href='queue-ticket-generation-branch4.html'">
-          Generate Queue Ticket
-        </button>
-      </div>
-      <div class="branch-card">
-        <img src="branch5.jpg" alt="Branch 5">
-        <button onclick="window.location.href='queue-ticket-generation-branch5.html'">
           Generate Queue Ticket
         </button>
       </div>
