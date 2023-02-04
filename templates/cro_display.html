@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <title>ABC Bank CRO Display</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F2F2F2;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #005AA7;
+      font-size: 36px;
+      margin-bottom: 50px;
+    }
+    h2 {
+      color: #5F5F5F;
+      font-size: 18px;
+      margin-bottom: 50px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 50%;
+      margin: 10px auto;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #005AA7;
+      color: white;
+    }
+    font[color="red"] {
+      color: red;
+      font-size: 24px;
+    }
+  </style>
+<head>
+  <meta http-equiv="refresh" content="2;url={{url}}">
+  <title>CRO Monitor Screen</title>
+</head>
+<body>
+    <h1 align="center"> Queue Status</h1>
+    <br>
+  <table>
+    <tr>
+        <th colspan="2"> Private Banking </th>
+    </tr>
+    <tr>
+      <th> Now Serving </th>
+      <th> Counter </th>
+    </tr>
+    {% for k,v in current_serving_personal.items() %}
+    <tr>
+      <td>{{v}}</td>
+      <td>{{k[-1:]}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <th colspan="2"> Waiting Queue </th>
+    </tr>
+    <tr>
+      <td>Private Normal</td>
+      <td>{% for x1 in personal_normal_waiting %}{{x1}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+    </tr>
+    <tr>
+      <td>Private Priority</td>
+      <td>{% for x2 in personal_priority_waiting %}{{x2}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+    </tr>
+    
+    <tr>
+      <th colspan="2"> Missed Queue Numbers </th>
+  </tr>
+    <tr>
+      <td colspan="2">{% for x in personal_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+    </tr>
+      </table>
+<br><br>
+
+  <table>
+    <tr>
+        <th colspan="2"> Corporate Banking </th>
+    </tr>
+    <tr>
+      <th> Now Serving </th>
+      <th> Counter </th>
+    </tr>
+    {% for k,v in current_serving_business.items() %}
+    <tr>
+      <td>{{v}}</td>
+      <td>{{k[-1:]}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th colspan="2"> Waiting Queue </th>
+    </tr>
+    <tr>
+      <td>Business</td>
+      <td>{% for x3 in business_normal_waiting %}{{x3}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+    </tr>
+    <tr>
+      <th colspan="2"> Missed Queue Numbers </th>
+  </tr>
+  <tr>
+      <td colspan="2">{% for x in business_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+  </tr>
+  </table>
+<br><br>
+</body>
+</html>
