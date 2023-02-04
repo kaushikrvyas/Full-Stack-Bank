@@ -146,6 +146,23 @@ def assign_queue_no_to_queue(branch, type_of_business, priority):
     elif type_of_business =='b':
         business_normal_waiting.append(current_assigned_queue_no)
     return current_assigned_queue_no
+  
+  # CRO add missed numbers function -Serena
+ def add_missed_num_to_queue(branch,type_of_business,priority,missednum):
+    
+    global dict_all
+    personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
+    personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
+    business_normal_waiting = dict_all[branch]['business_normal_waiting']
+    
+    if type_of_business =='p' and priority == 'y':
+        personal_priority_waiting.insert(2,missednum)
+    elif type_of_business =='p' and priority == 'n':
+        personal_normal_waiting.insert(2,missednum)
+    elif type_of_business =='b':
+        business_normal_waiting.insert(2,missednum)
+    return missednum 
+  
 
 @app.route('/counter/<branch>/<type_of_business>/<counter>', methods=['GET', 'POST'])
 def show1(branch, type_of_business, counter):
@@ -244,7 +261,7 @@ def get_q_inperson(branch):
     return render_template('inperson_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 
-@app.route('/cro/<branch>', methods=['GET','POST'])   #CRO Display, shows the queue status: serving, waiting, missed 
+@app.route('/cro/<branch>', methods=['GET','POST'])   #CRO Display, shows the queue status: serving, waiting, missed -Serena
 def cro_show(branch):
     global dict_all
     current_serving_personal = dict_all[branch]['current_serving_personal']
@@ -265,7 +282,8 @@ def cro_show(branch):
                         business_skipped=business_skipped,
                         url=url)
 
-def cro_terminate(branch):
+  
+  def cro_terminate(branch):
     global dict_all
     system_status = dict_all[branch]['system_status'][1]
     url = f"/cro/" + branch
@@ -292,6 +310,27 @@ def cro_reinitiate(branch):
                         personal_skipped=personal_skipped,
                         business_skipped=business_skipped,
                         url=url)
+  
+  
+  
+@app.route('/cro/manipulate/<branch>', methods=['GET','POST']) #CRO Add missed numbers -Serena
+
+def add_miss_num(branch):
+    global dict_all
+    if request.method == 'POST':
+        type_of_business = request.form.get('type_of_business')
+        priority = request.form.get('priority')
+        missednum=request.form.get('missednum')
+        if type_of_business is not None and priority is not None:
+            add_missed_num_to_queue(branch,type_of_business,priority,missednum)
+            type_of_business = business_dict[type_of_business]
+            branch = branch_dict[branch]
+            return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
+            
+    return render_template('cro_add_missed.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+  
+  
+
   
   
 if __name__ == '__main__':
