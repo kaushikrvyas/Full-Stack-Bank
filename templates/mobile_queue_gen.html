@@ -3,30 +3,126 @@
     <head>
         <meta charset="UTF-8">
         <title>ABC Bank Queuing System</title>
-        <link href="styles.css" rel="stylesheet">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #F2F2F2;
+                padding: 50px;
+            }
+            
+            h1 {
+                color: #005AA7;
+                font-size: 36px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            
+            h2 {
+                color: #5F5F5F;
+                font-size: 20px;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            
+            h3 {
+                font-size: 20px;
+                margin-bottom: 30px;
+            }
+            
+            button {
+                display: block;
+                padding: 20px 40px;
+                font-size: 16px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 30px;
+                text-align: center;
+            }
+            
+            table {
+                border-collapse: collapse;
+                width: 50%;
+                margin: 10px auto;
+            }
+            
+            th, td {
+                border: 1px solid black;
+                padding: 10px;
+                text-align: center;
+                font-size: 16px;
+            }
+            
+            th {
+                background-color: #005AA7;
+                color: white;
+                font-size: 16px;
+            }
+            
+            font[color="red"] {
+                color: red;
+                font-size: 24px;
+            }
+            
+            ul, ol {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                font-size: 16px;
+            }
+            
+            li {
+                padding: 10px;
+                margin-bottom: 10px;
+                background-color: #EAEAEA;
+                border-radius: 5px;
+                text-align: left;
+                font-size: 18px;
+            }
+            
+            ol {
+                counter-reset: item;
+            }
+            
+            ol > li {
+                counter-increment: item;
+                position: relative;
+                padding-left: 30px;
+            }
+            
+            ol > li:before {
+                content: counters(item, ".") ". ";
+                position: absolute;
+                left: 0;
+                font-weight: bold;
+            }
+          </style>
     </head>
     <body>
+        <link rel="stylesheet" href="styles.css">
         <h1>Generate your Queue Number</h1>
         <h2>Welcome to ABC Bank. Please follow the steps below to enter to obtain your queue number:</h2>
         <ol>
-        <li>Enter visit information:
+        <li ><b>Enter visit information:</b>
             <ul>
-                <li>Type of Banking:<br>
+                <li >Type of Banking:<br>
                         {% for k,v in business_dict.items() %}
                     <form action="" method="post">
                         <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
                         <label for="{{k}}">{{v}}</label><br>
                         {% endfor %}
                 </li>
-                <li>Please choose your preferred branch:<br>
-                    <select id="branch" name="branch">
+                <li >Please choose your preferred branch:
+                    <select  id="branch" name="branch">
                         {% for k,v in branch_dict.items() %}
                         <form action="" method="post">
-                            <option value={{k}}>{{v}}</option>
+                            <option  value={{k}}>{{v}}</option>
                             {% endfor %}
                     </select>
                 </li>
-                <li>Priority Banking?<br>
+                <li >Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
                     <form action="" method="post">
                         <input type="radio" name="priority" name="priority" value="{{k}}">
@@ -35,8 +131,8 @@
                 </li>
             </ul>
         </li>
-        <li>Click the "Get Queue Number" button below to receive your queue number.</li>
+        <li ><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
         </ol>
-            <button id="getQbutton" name="getQbutton">Get Queue Number</button>
+            <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Get Queue Number</button>
     </body>
 </html>
