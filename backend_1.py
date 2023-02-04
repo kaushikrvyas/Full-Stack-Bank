@@ -10,7 +10,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {'personal 2':"2", 'personal 3':"3"},
                    'current_serving_business': {'business 1': "4", 'business 3': "5"},
-                   'system_status': ['normal','terminated']
+                   'system_status': ""
                     },
             'je': {'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -21,7 +21,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'system_status': ['normal','terminated']
+                   'system_status': ""
                     },
             'kl':{'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -32,7 +32,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                   'current_assigned_queue_no': 0,
                   'current_serving_personal': {},
                    'current_serving_business': {},
-                   'system_status': ['normal','terminated']
+                   'system_status': ""
                     },
             'hg':{'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -43,7 +43,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                   'current_assigned_queue_no': 0,
                   'current_serving_personal': {},
                    'current_serving_business': {},
-                   'system_status': ['normal','terminated']
+                   'system_status': ""
                     }
             }
 
@@ -55,6 +55,8 @@ business_dict = {'p': 'Private Banking',
                   'b': 'Corporate Banking'}
 priority_dict = {'y': 'Yes',
                   'n': 'No'}
+system_status_dict = {'a': 'Avaliable',
+                       't': 'Terminated'}
 
 def get_next_personal_customer(branch):
     """
@@ -200,11 +202,13 @@ def _show(branch):
     current_serving_business = dict_all[branch]['current_serving_business']
     personal_skipped = dict_all[branch]['personal_skipped']
     business_skipped = dict_all[branch]['business_skipped']
+    system_status = dict_all[branch]['system_status']
     url = f"/main_display/" + branch
     return render_template('main_tv_display.html', current_serving_personal=current_serving_personal,
                            current_serving_business=current_serving_business,
                            personal_skipped = personal_skipped,
                            business_skipped = business_skipped,
+                           system_status=system_status,
                            url=url)
 
 
@@ -247,6 +251,17 @@ def get_q_inperson(branch):
 @app.route('/cro/<branch>', methods=['GET','POST'])   #CRO Display, shows the queue status: serving, waiting, missed 
 def cro_show(branch):
     global dict_all
+
+    if request.form.get("button1"):
+        button = request.form.get("button1")
+    elif request.form.get("button2"):
+        button = request.form.get("button2")
+
+    if request.method == 'POST' and button == "terminateService":
+        dict_all[branch]['system_status'] = system_status_dict['t']
+    if request.method == 'POST' and button == "reinitiateService":
+        dict_all[branch]['system_status'] = system_status_dict['a']
+    
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
     personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
@@ -254,6 +269,7 @@ def cro_show(branch):
     business_normal_waiting = dict_all[branch]['business_normal_waiting']
     personal_skipped = dict_all[branch]['personal_skipped']
     business_skipped = dict_all[branch]['business_skipped']
+    system_status = dict_all[branch]['system_status']
     url = f"/cro/" + branch
     
     return render_template('cro_display.html', current_serving_personal= current_serving_personal,
@@ -263,36 +279,8 @@ def cro_show(branch):
                         business_normal_waiting=business_normal_waiting,
                         personal_skipped=personal_skipped,
                         business_skipped=business_skipped,
+                        system_status=system_status,
                         url=url)
-
-def cro_terminate(branch):
-    global dict_all
-    system_status = dict_all[branch]['system_status'][1]
-    url = f"/cro/" + branch
-
-    return render_template('cro_display.html', current_serving_personal= current_serving_personal,
-                        current_serving_business=current_serving_business,
-                        personal_priority_waiting=personal_priority_waiting,
-                        personal_normal_waiting=personal_normal_waiting,
-                        business_normal_waiting=business_normal_waiting,
-                        personal_skipped=personal_skipped,
-                        business_skipped=business_skipped,
-                        url=url)
-
-def cro_reinitiate(branch):
-    global dict_all
-    system_status = dict_all[branch]['system_status'][0]
-    url = f"/cro/" + branch
-
-    return render_template('cro_display.html', current_serving_personal= current_serving_personal,
-                        current_serving_business=current_serving_business,
-                        personal_priority_waiting=personal_priority_waiting,
-                        personal_normal_waiting=personal_normal_waiting,
-                        business_normal_waiting=business_normal_waiting,
-                        personal_skipped=personal_skipped,
-                        business_skipped=business_skipped,
-                        url=url)
-  
   
 if __name__ == '__main__':
     app.run(debug = True,port=8000)
