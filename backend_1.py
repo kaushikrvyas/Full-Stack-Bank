@@ -272,6 +272,7 @@ def get_q_inperson(branch):
 def cro_show(branch):
     global dict_all
 
+    # For buttons of terminate and reinitiate
     if request.form.get("button1"):
         button = request.form.get("button1")
     elif request.form.get("button2"):
