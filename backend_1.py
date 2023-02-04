@@ -9,7 +9,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {'personal 2':"2", 'personal 3':"3"},
-                   'current_serving_business': {'business 1': "4", 'business 3': "5"}
+                   'current_serving_business': {'business 1': "4", 'business 3': "5"},
+                   'system_status': ['normal','terminated']
                     },
             'je': {'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -19,7 +20,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
-                   'current_serving_business': {}
+                   'current_serving_business': {},
+                   'system_status': ['normal','terminated']
                     },
             'kl':{'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -29,7 +31,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_queue_no': 0,
                   'current_assigned_queue_no': 0,
                   'current_serving_personal': {},
-                   'current_serving_business': {}
+                   'current_serving_business': {},
+                   'system_status': ['normal','terminated']
                     },
             'hg':{'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -39,7 +42,8 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_queue_no': 0,
                   'current_assigned_queue_no': 0,
                   'current_serving_personal': {},
-                   'current_serving_business': {}
+                   'current_serving_business': {},
+                   'system_status': ['normal','terminated']
                     }
             }
 
@@ -253,13 +257,41 @@ def cro_show(branch):
     url = f"/cro/" + branch
     
     return render_template('cro_display.html', current_serving_personal= current_serving_personal,
-                           current_serving_business=current_serving_business,
-                           personal_priority_waiting=personal_priority_waiting,
-                           personal_normal_waiting=personal_normal_waiting,
-                           business_normal_waiting=business_normal_waiting,
-                           personal_skipped=personal_skipped,
-                           business_skipped=business_skipped,
-                           url=url)
+                        current_serving_business=current_serving_business,
+                        personal_priority_waiting=personal_priority_waiting,
+                        personal_normal_waiting=personal_normal_waiting,
+                        business_normal_waiting=business_normal_waiting,
+                        personal_skipped=personal_skipped,
+                        business_skipped=business_skipped,
+                        url=url)
+
+def cro_terminate(branch):
+    global dict_all
+    system_status = dict_all[branch]['system_status'][1]
+    url = f"/cro/" + branch
+
+    return render_template('cro_display.html', current_serving_personal= current_serving_personal,
+                        current_serving_business=current_serving_business,
+                        personal_priority_waiting=personal_priority_waiting,
+                        personal_normal_waiting=personal_normal_waiting,
+                        business_normal_waiting=business_normal_waiting,
+                        personal_skipped=personal_skipped,
+                        business_skipped=business_skipped,
+                        url=url)
+
+def cro_reinitiate(branch):
+    global dict_all
+    system_status = dict_all[branch]['system_status'][0]
+    url = f"/cro/" + branch
+
+    return render_template('cro_display.html', current_serving_personal= current_serving_personal,
+                        current_serving_business=current_serving_business,
+                        personal_priority_waiting=personal_priority_waiting,
+                        personal_normal_waiting=personal_normal_waiting,
+                        business_normal_waiting=business_normal_waiting,
+                        personal_skipped=personal_skipped,
+                        business_skipped=business_skipped,
+                        url=url)
   
   
 if __name__ == '__main__':
