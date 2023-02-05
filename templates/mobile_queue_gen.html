@@ -41,20 +41,7 @@
                 border-radius: 5px;
                 cursor: pointer;
                 margin-top: 30px;
-                margin-bottom: 30px;
                 text-align: center;
-            }
-
-            .button2 {
-                display: inline;
-                padding: 0px 0px;
-                font-size: 16px;
-                background-color: #005AA7;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                text-align: inline;
             }
             
             table {
@@ -69,9 +56,7 @@
                 text-align: center;
                 font-size: 16px;
             }
-            form{
-                display:inline
-            }
+            
             th {
                 background-color: #005AA7;
                 color: white;
@@ -151,33 +136,42 @@
         <h1>Generate your Queue Number</h1>
         <h2>Welcome to ABC Bank. Please follow the steps below to enter to obtain your queue number:</h2>
         <ol>
-        <li> <b>Please check branch queue status before booking a slot in the queue here: <div class = "button2"><form action="" method="post" name="checkStat"> <button id="checkStat" name="checkStat" style="display:inline; margin: 0 auto; size: 0px;" value="checkStat">Check Status</button></form></div>
-        </b></li>
-
         <li ><b>Enter visit information:</b>
             <ul>
-                <li>Type of Banking:<br>
-                        {% for k,v in business_dict.items() %}
+                <li>Please choose your preferred branch:
+                    <select id="branch" name="branch">
+                        {% for k,v in avaliable_branch_dict.items() %}
+                        <form action="" method="post">
+                            <option value={{k}} onclick="refresh_avalibility('{{k}}')">{{v}}</option>
+                            {% endfor %}
+                    </select>
+                </li>
+                <li id="TypeOfBanking">Type of Banking:<br>
+                    {% for k,v in business_dict.items() %}
                     <form action="" method="post">
-                        <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
+                        <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}"
+                            onclick="hidePriority('{{k}}')">
                         <label for="{{k}}">{{v}}</label>
                         {% endfor %}
                 </li>
-                <li>Please choose your preferred branch:
-                    <select id="branch" name="branch">
-                        {% for k,v in branch_dict.items() %}
-                        <form action="" method="post">
-                            <option value={{k}}>{{v}}</option>
-                        {% endfor %}
-                    </select>
-                </li>
+                <script>
+                    function refresh_avalibility(businessType) {
+                        if (businessType === "b") {
+                            document.getElementById("priority_container").style.display = "none";
+                        }
+                        else {
+                            document.getElementById("priority_container").style.display = "block";
+                        }
+                    }
+                </script>
                 <script>
                     function hidePriority(businessType) {
-                      if (businessType === "b") {
-                        document.getElementById("priority_container").style.display = "none";
-                      } else {
-                        document.getElementById("priority_container").style.display = "block";
-                      }
+                        if (businessType === "b") {
+                            document.getElementById("priority_container").style.display = "none";
+                        }
+                        else {
+                            document.getElementById("priority_container").style.display = "block";
+                        }
                     }
                 </script>
                 <li id="priority_container" style="display:block;">Priority Banking?<br>
@@ -185,12 +179,13 @@
                     <form action="" method="post">
                         <input class="half-gap" type="radio" name="priority" value="{{k}}">
                         <label for="{{k}}">{{v}}</label>
-                    {% endfor %}
+                        {% endfor %}
                 </li>
             </ul>
         </li>
-        <li ><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
-        </ol>
-            <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Get Queue Number</button>
-    </body>
+        <li><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
+    </ol>
+    <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Get Queue Number</button>
+</body>
+
 </html>
