@@ -1,197 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-  <meta charset="UTF-8">
-  <title>ABC Bank CRO Display</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #F2F2F2;
-        padding: 50px;
-    }
-    .half-gap {
-        margin-top: 1em;
-      }
-    h1 {
-        color: #005AA7;
-        font-size: 36px;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-    
-    h2 {
-        color: #5F5F5F;
-        font-size: 20px;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-    
-    h3 {
-        font-size: 20px;
-        margin-bottom: 30px;
-    }
-    
-    button {
-        text-align: inline;
-        padding: 10px 10px;
-        font-size: 16px;
-        background-color: #005AA7;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    table {
-        border-collapse: collapse;
-        width: 80%;
-        margin: 10px auto;
-        padding = 10px;
-    }
-    .table2 {
-      border-collapse: collapse;
-      width: 80%;
-      margin: 10px auto;
-      padding = 20px;
-  }
-    
-    th, td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: center;
-        font-size: 16px;
-    }
-    
-    th {
-        background-color: #005AA7;
-        color: white;
-        font-size: 16px;
-    }
-    
-    font[color="red"] {
-        color: red;
-        font-size: 24px;
-    }
-    
-    ul, ol {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        font-size: 16px;
-    }
-    
-    li {
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color: #EAEAEA;
-        border-radius: 5px;
-        text-align: left;
-        font-size: 18px;
-    }
-    
-    ol {
-        counter-reset: item;
-    }
-    
-    ol > li {
-        counter-increment: item;
-        position: relative;
-        padding-left: 30px;
-    }
-    
-    ol > li:before {
-        content: counters(item, ".") ". ";
-        position: absolute;
-        left: 0;
-        font-weight: bold;
-    }
-    select {
-        width: 20%;
-        padding: 16px 16px;
-        border: none;
-        border-radius: 5px;
-        background-color: #005AA7;
-        color: white;
-        font-size: 18px;
+@app.route('/getq/mobile', methods=['GET','POST'])
+def get_q_mobile():
+    global dict_all
 
-    .button-container {
-        display: inline-block;
-        vertical-align: inherit;
-      }
-  </style>
-<head>
-  <meta content="2;url={{url}}">
-  <title>CRO Monitor Screen</title>
-</head>
-<body>
-    <h1 align="center"> Queue Status</h1>
-    <br>
-  <div class="table2">
-  <table>
-    <tr>
-      <th> Now Serving </th>
-      <th> Counter </th>
-    </tr>
-    {% for k,v in current_serving_personal.items() %}
-    <tr>
-      <td>{{v}}</td>
-      <td>{{k[-1:]}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
-    <table>
-      <tr>
-          <th colspan="2"> Waiting Queue </th>
-      </tr>
-      <tr>
-        <td>Private (Normal)</td>
-        <td>{% for x1 in personal_normal_waiting %}{{x1}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-        <td>
-          <div align="center">
-            <div style="display: flex; justify-content: center;">
-              <button style="margin-right: 10px;">Terminate</button>
-              <button>Re-initiate</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Private (Priority)</td>
-        <td>{% for x2 in personal_priority_waiting %}{{x2}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-        <td>
-        <div align="center">
-          <div style="display: flex; justify-content: center;">
-            <button style="margin-right: 10px;">Terminate</button>
-            <button>Re-initiate</button>
-          </div>
-        </div>
-      </td>
-      </tr>
-      <tr>
-        <td>Business</td>
-        <td>{% for x3 in business_normal_waiting %}{{x3}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-        <td>
-          <div align="center">
-            <div style="display: flex; justify-content: center;">
-              <button style="margin-right: 10px;">Terminate</button>
-              <button>Re-initiate</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-  <div class="table2">
-  <table>
-    <tr>
-      <th colspan="2"> Missed Queue Numbers </th>
-    </tr>
-    <tr>
-      <td colspan="2">{% for x in personal_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-    </tr>
-  </table>
-</div>
-<br><br>
-<h1 align = "center">System Status: {{system_status}}</h1>
-</body>
-</html>
+    if request.method == 'POST':
+        type_of_business = request.form.get('type_of_business')
+        priority = request.form.get('priority')
+        branch = request.form.get('branch')
+        checkstat = request.form.get("checkStat")
+
+        if checkstat == "checkStat":
+            return render_template('branch_status.html')
+    
+        if type_of_business is not None and priority is not None and branch is not None:
+            current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
+            type_of_business = business_dict[type_of_business]
+            branch = branch_dict[branch]
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
+        else:  #if user doesn't select all value, prompt user to input all required information
+            return render_template('queue_gen_fail.html')
+    return render_template('mobile_queue_gen.html', avaliable_branch_dict=avaliable_branch_dict, business_dict=business_dict, priority_dict=priority_dict)
