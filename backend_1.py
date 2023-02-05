@@ -202,7 +202,7 @@ def add_missed_num_to_queue(branch,type_of_business,priority,missednum):
 def show1(branch, type_of_business, counter):
     global dict_all
     branch_name = branch_dict[branch]
-    type_of_business = business_dict[type_of_business]
+    type_of_business_whole = business_dict[type_of_business]
     name = f"{branch_name} {type_of_business} {counter}"
     display_name = f"{type_of_business} {counter}"
 
@@ -219,22 +219,22 @@ def show1(branch, type_of_business, counter):
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
 
-    if request.method == 'POST' and button == "next" and type_of_business == 'Private Banking':
+    if request.method == 'POST' and button == "next" and type_of_business_whole == 'Private Banking':
         current_queue_no = get_next_personal_customer(branch)
         current_serving_personal[display_name] = current_queue_no
         return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
 
-    elif request.method == 'POST' and button == "next" and type_of_business == 'Corporate Banking':
+    elif request.method == 'POST' and button == "next" and type_of_business_whole == 'Corporate Banking':
         current_queue_no = get_next_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
         return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
 
-    elif request.method == "POST" and button == "skip" and type_of_business == 'Private Banking':
+    elif request.method == "POST" and button == "skip" and type_of_business_whole == 'Private Banking':
         current_queue_no = skip_personal_customer(branch)
         current_serving_personal[display_name]= current_queue_no
         return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
 
-    elif request.method == "POST" and button == "skip" and type_of_business == 'Corporate Banking':
+    elif request.method == "POST" and button == "skip" and type_of_business_whole == 'Corporate Banking':
         current_queue_no = skip_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
         return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
@@ -244,7 +244,7 @@ def show1(branch, type_of_business, counter):
         return render_template('stop_serving.html', branch_name=branch_name, counter=counter, type_of_business=type_of_business)
     
     elif request.method == 'POST' and button == 'add_missed':
-        return render_template('add_missed.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+        return redirect(url_for('add_miss_num', branch=branch, type_of_business=type_of_business, counter=counter))
     
     return render_template('counter_main.html', branch_name=branch_name, q=None, counter=counter, type_of_business=type_of_business)
 
@@ -461,20 +461,23 @@ def cro_show(branch):
                         business_normal_status = business_normal_status,
                         url=url)
 
-@app.route('/cro/<branch>/manipulate', methods=['GET','POST']) #CRO Add missed numbers -Serena
-def add_miss_num(branch):
+@app.route('/counter/<branch>/<type_of_business>/<counter>/manipulate', methods=['GET','POST']) #Counter Add missed numbers -Serena
+def add_miss_num(branch, type_of_business, counter):
     global dict_all
+
+    avaliable_business_dict = dict_all[branch]['avaliable_business_dict']
+    avaliable_priority_dict = dict_all[branch]['avaliable_priority_dict']
+
     if request.method == 'POST':
-        type_of_business = request.form.get('type_of_business')
         priority = request.form.get('priority')
-        missednum=request.form.get('missednum')
+        missednum = request.form.get('missednum')
         if type_of_business is not None and priority is not None:
             add_missed_num_to_queue(branch,type_of_business,priority,missednum)
             type_of_business = business_dict[type_of_business]
             branch = branch_dict[branch]
             return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
             
-    return render_template('add_missed.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+    return render_template('add_missed.html', avaliable_branch_dict=avaliable_branch_dict, avaliable_business_dict=avaliable_business_dict, avaliable_priority_dict=avaliable_priority_dict)
 
 @app.route('/', methods=['GET','POST']) # Main Page for demonstration
 def main():

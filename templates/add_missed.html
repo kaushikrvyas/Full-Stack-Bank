@@ -138,11 +138,27 @@
         <li>Enter visit information:
             <ul>
                 <li>Type of Banking:<br>
-                    {% for k,v in business_dict.items() %}
-                <form action="" method="post">
-                    <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
-                    <label for="{{k}}">{{v}}</label>
+                    {% for k,v in avaliable_business_dict.items() %}
+                    <form action="" method="post">
+                        <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
+                        <label for="{{k}}">{{v}}</label>
                     {% endfor %}
+            </li>
+            <script>
+                function hidePriority(businessType) {
+                  if (businessType === "b") {
+                    document.getElementById("priority_container").style.display = "none";
+                  } else {
+                    document.getElementById("priority_container").style.display = "block";
+                  }
+                }
+            </script>
+            <li id="priority_container" style="display:block;">Priority Banking?<br>
+                {% for k,v in avaliable_priority_dict.items() %}
+                 <form action="" method="post">
+                    <input type="radio" name="priority" name="priority" value="{{k}}">
+                    <label for="{{k}}">{{v}}</label>
+                {% endfor %}
             </li>
                 <li>Please enter the missed number:<br>
                     <input type="number" class="half-gap" name="missednum" name="missednum" value="{{y}}" size="5" style="height: 30px; font-size: 20px;">
