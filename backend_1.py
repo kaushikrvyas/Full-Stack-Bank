@@ -10,10 +10,10 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "",
-                   'personal_priority_status': "",
-                   'business_normal_status': "",
-                   'system_status': "",
+                   'personal_normal_status': "Avaliable",
+                   'personal_priority_status': "Avaliable",
+                   'business_normal_status': "Avaliable",
+                   'system_status': "Avaliable",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -282,19 +282,13 @@ def get_q_mobile():
         button = request.form.get("button2")
 
     if request.method == 'POST' and button == "showCurrentAvaliability":
-        return render_template('branch_status.html')
+        return render_template('checkStatus')
 
     elif request.method == 'POST' and button == "getQbutton":
         type_of_business = request.form.get('type_of_business')
         priority = request.form.get('priority')
         branch = request.form.get('branch')
-        checkstat = request.form.get("checkStat")
     
-        if type_of_business is not None and priority is not None and branch is not None:
-            current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
-            type_of_business = business_dict[type_of_business]
-            branch = branch_dict[branch]
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
         if branch is not None:
             if type_of_business == 'p' and priority == 'n' and dict_all[branch]['personal_normal_status'] == 'Avaliable':
                 current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
@@ -319,6 +313,11 @@ def get_q_mobile():
     
     return render_template('mobile_queue_gen.html', avaliable_branch_dict=avaliable_branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
+@app.route('/getq/mobile/checkAvaliability', methods=['GET','POST'])
+def checkStatus():
+    global dict_all
+
+    return render_template('branch_status.html', dict_all=dict_all)
 
 @app.route('/getq/inperson/<branch>', methods=['GET','POST'])
 def get_q_inperson(branch):
