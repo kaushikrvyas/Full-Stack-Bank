@@ -31,7 +31,8 @@
     }
     
     button {
-        display: block;
+        display: inline;
+        text-align: center;
         padding: 20px 40px;
         font-size: 18px;
         background-color: #005AA7;
@@ -40,7 +41,6 @@
         border-radius: 5px;
         cursor: pointer;
         margin-top: 30px;
-        text-align: center;
     }
     
     table {
@@ -129,6 +129,7 @@
       input[type="radio"]:checked + label {
         color: #005AA7;
       }
+      
   </style>
 <head>
   <meta content="2;url={{url}}">
@@ -202,7 +203,7 @@
   </table>
 <br><br>
 <h1 align = "center">System Status: {{system_status}}</h1>
-<div style="text-align:center">
+<div align = "center">
   <form action="" method="post" name="next">
     <button id="button1" name="button1" value="terminateService">Terminate Service</button>
     <button id="button2" name="button2" value="reinitiateService">Reinitiate Service</button>

@@ -357,7 +357,7 @@ def main():
         return render_template('miss_added.html')
     return render_template('main_page.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
-@app.route('/cro/branches', methods=['GET','POST']) #CRO Add missed numbers -Serena
+@app.route('/cro/branches/<branch>', methods=['GET','POST']) #CRO Add missed numbers -Serena
 def choose_branches(branch):
     global dict_all
     # For buttons
