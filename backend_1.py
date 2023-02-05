@@ -228,8 +228,8 @@ def _show(branch):
                            system_status=system_status,
                            url=url, branch_name=branch_name)
 
-@app.route('/getq/mobile/<user>', methods=['GET','POST'])
-def get_q_mobile(user):
+@app.route('/getq/mobile', methods=['GET','POST'])
+def get_q_mobile():
     global dict_all
 
     if request.method == 'POST':
@@ -241,9 +241,9 @@ def get_q_mobile(user):
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch = branch_dict[branch]
-            return render_template('queue_generated.html',user=user, q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
         else:  #if user doesn't select all value, prompt user to input all required information
-            return render_template('queue_gen_fail.html',user=user)
+            return render_template('queue_gen_fail.html')
     return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 
@@ -266,7 +266,6 @@ def get_q_inperson(branch):
             return render_template('queue_gen_fail.html')
     branch = branch_dict[branch]
     return render_template('inperson_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict, branch=branch)
-
 
 @app.route('/cro/<branch>', methods=['GET','POST'])   #CRO Display, shows the queue status: serving, waiting, missed -Serena
 def cro_show(branch):
@@ -314,7 +313,6 @@ def cro_show(branch):
                         system_status=system_status,
                         url=url)
 
-
 @app.route('/cro/<branch>/manipulate', methods=['GET','POST']) #CRO Add missed numbers -Serena
 def add_miss_num(branch):
     global dict_all
@@ -355,29 +353,6 @@ def main():
     if request.method == 'POST' and button == "PublicDisplayPage":
         return render_template('miss_added.html')
     if request.method == 'POST' and button == "CounterPage":
-        return render_template('miss_added.html')
-    return render_template('main_page.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
-
-@app.route('/cro/branches/<branch>', methods=['GET','POST']) #CRO Add missed numbers -Serena
-def choose_branches(branch):
-    global dict_all
-    # For buttons
-    if request.form.get("button1"):
-        button = request.form.get("button1")
-    elif request.form.get("button2"):
-        button = request.form.get("button2")
-    elif request.form.get("button3"):
-        button = request.form.get("button3")
-    elif request.form.get("button4"):
-        button = request.form.get("button4")
-
-    if request.method == 'POST' and button == "CROPage":
-        return render_template('/cro/branches')
-    if request.method == 'POST' and button == "QPage4Mobile":
-        return redirect(url_for('/getq/mobile'))
-    if request.method == 'POST' and button == "QPage4Inperson":
-        return redirect(url_for('/getq/inperson/branches'))
-    if request.method == 'POST' and button == "PublicDisplayPage":
         return render_template('miss_added.html')
     return render_template('main_page.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
