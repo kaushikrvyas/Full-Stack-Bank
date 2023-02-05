@@ -241,7 +241,11 @@ def get_q_mobile():
         type_of_business = request.form.get('type_of_business')
         priority = request.form.get('priority')
         branch = request.form.get('branch')
+        checkstat = request.form.get("checkStat")
 
+        if checkstat == "checkStat":
+            return render_template('branch_status.html')
+    
         if type_of_business is not None and priority is not None and branch is not None:
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
@@ -262,6 +266,7 @@ def get_q_inperson(branch):
     if request.method == 'POST':
         type_of_business = request.form.get('type_of_business')
         priority = request.form.get('priority')
+        
         if type_of_business is not None and priority is not None:
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
