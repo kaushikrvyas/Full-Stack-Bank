@@ -276,22 +276,28 @@ def _show(branch):
 def get_q_mobile():
     global dict_all
 
-    if request.method == 'POST':
+    if request.form.get("button1"):
+        button = request.form.get("button1")
+    elif request.form.get("button2"):
+        button = request.form.get("button2")
+
+    if request.method == 'POST' and button == "showCurrentAvaliability":
+        return render_template('branch_status.html')
+
+    elif request.method == 'POST' and button == "getQbutton":
         type_of_business = request.form.get('type_of_business')
         priority = request.form.get('priority')
         branch = request.form.get('branch')
         checkstat = request.form.get("checkStat")
-
-        if checkstat == "checkStat":
-            return render_template('branch_status.html')
     
         if type_of_business is not None and priority is not None and branch is not None:
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
-            branch_name = branch_dict[branch]
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch, branch_name=branch_name)
+            branch = branch_dict[branch]
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
+    
     return render_template('mobile_queue_gen.html', avaliable_branch_dict=avaliable_branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 
@@ -356,7 +362,6 @@ def cro_show(branch):
         button = request.form.get("button6")
     elif request.form.get("button7"):
         button = request.form.get("button7")
-        print('refreshed')
     elif request.form.get("button8"):
         button = request.form.get("button8")
 
