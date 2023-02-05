@@ -11,7 +11,7 @@
             }
             .half-gap {
                 margin-top: 1em;
-              }
+            }
             h1 {
                 color: #005AA7;
                 font-size: 36px;
@@ -41,25 +41,12 @@
                 border-radius: 5px;
                 cursor: pointer;
                 margin-top: 30px;
-                margin-bottom: 30px;
                 text-align: center;
-            }
-
-            .button2 {
-                display: inline;
-                padding: 0px 0px;
-                font-size: 16px;
-                background-color: #005AA7;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                text-align: inline;
             }
             
             table {
                 border-collapse: collapse;
-                width: 50%;
+                width: 70%;
                 margin: 10px auto;
             }
             
@@ -69,9 +56,7 @@
                 text-align: center;
                 font-size: 16px;
             }
-            form{
-                display:inline
-            }
+            
             th {
                 background-color: #005AA7;
                 color: white;
@@ -123,32 +108,44 @@
                 background-color: #005AA7;
                 color: white;
                 font-size: 18px;
-              }
-              input[type="radio"] {
+            }
+            input[type="radio"] {
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
                 border: 2px solid #000;
                 display: inline-block;
                 position: relative;
-              }
+            }
 
-              input[type="radio"] + label {
+            input[type="radio"] + label {
                 display: inline-block;
                 margin-right: 5px;
                 padding: 5px 10px;
                 background-color: #ccc;
                 border-radius: 100px;
                 cursor: pointer;
-              }
-              
-              input[type="radio"]:checked + label {
+            }
+            
+            input[type="radio"]:checked + label {
                 color: #005AA7;
-              }
+            }
+            form input[type="button"] {
+                display: block;
+                padding: 20px 40px;
+                font-size: 18px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 30px auto 0;
+                text-align: center;
+                }
           </style>
     </head>
 <body>
-    
+    <h1> Real-Time Queue Status for ABC Bank's Branches</h1>
     <table>
         <tr>
           <th>Queue</th>
@@ -179,5 +176,8 @@
           <td></td>
         </tr>
       </table>
+      <form>
+        <input type="button" style="display:block; margin: 0 auto;" value="Go Back" onclick="history.back()">
+    </form>
 </body>
 </html>
