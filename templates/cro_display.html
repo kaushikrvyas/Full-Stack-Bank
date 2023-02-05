@@ -138,45 +138,46 @@
     {% endfor %}
   </table>
 </div>
+<form action="" method="post">
     <table style="width:80%">
       <tr>
           <th colspan="2"> Waiting Queue </th>
       </tr>
       <tr>
         <td style="width:20%"><b>Private (Normal)</b><br>
-        Status: {{system_status}}</td>
+          Adding Q Status: {{personal_normal_status}}</td>
         <td style="width:35%">{% for x1 in personal_normal_waiting %}{{x1}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
         <td style=" width: 10%; border: 0px solid black">
           <div align="center">
             <div style="display: flex; justify-content: center;">
-              <button style="margin-right: 10px;">Terminate</button>
-              <button>Re-initiate</button>
+              <button id="button_terminatepn" name="button1" value="terminatepn" style="margin-right: 10px;">Terminate</button>
+              <button id="button_reinitiatepn" name="button2" value="reinitiatepn">Re-initiate</button>
             </div>
           </div>
         </td>
       </tr>
       <tr>
         <td style="width:20%"><b>Private (Priority)</b><br>
-          Status: {{system_status}}</td>
+          Adding Q Status: {{personal_priority_status}}</td>
         <td>{% for x2 in personal_priority_waiting %}{{x2}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
         <td style="border: 0px solid black;">
         <div align="center">
           <div style="display: flex; justify-content: center;">
-            <button style="margin-right: 10px;">Terminate</button>
-            <button>Re-initiate</button>
+            <button id="button_terminatepp" name="button3" value="terminatepp" style="margin-right: 10px;">Terminate</button>
+            <button id="button_reinitiatepp" name="button4" value="reinitiatepp">Re-initiate</button>
           </div>
         </div>
       </td>
       </tr>
       <tr>
         <td><b>Business</b><br>
-        Status: {{system_status}}</td>
+          Adding Q Status: {{business_normal_status}}</td>
         <td>{% for x3 in business_normal_waiting %}{{x3}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
         <td style="border: 0px solid black;">
           <div align="center">
             <div style="display: flex; justify-content: center;">
-              <button style="margin-right: 10px;">Terminate</button>
-              <button>Re-initiate</button>
+              <button id="button_terminatebn" name="button5" value="terminatebn" style="margin-right: 10px;">Terminate</button>
+              <button id="button_reinitiatebn" name="button6" value="reinitiatebn">Re-initiate</button>
             </div>
           </div>
         </td>
@@ -191,6 +192,14 @@
       <td colspan="2">{% for x in personal_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
     </tr>
   </table>
+</form>
+</div>
+<div align="center">
+  <form action="" method="post">
+  <div style="display: flex; justify-content: center;">
+    <button id="button_terminate_all" name="button7" value="terminateAll" style="margin-right: 10px;">Terminate All</button>
+    <button id="button_reinitiate_all" name="button8" value="reinitiateAll">Re-initiate All</button>
+  </div>
 </div>
 <br><br>
 <h1 align = "center">System Status: {{system_status}}</h1>

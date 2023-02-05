@@ -1,15 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
-dict_all = {'jp': {'personal_normal_waiting': [],
-                   'personal_priority_waiting':[],
-                   'business_normal_waiting': [],
-                   'personal_skipped': [],
-                   'business_skipped': [],
+dict_all = {'jp': {'personal_normal_waiting': [2,4],
+                   'personal_priority_waiting':[1,3],
+                   'business_normal_waiting': [5,6,7,8],
+                   'personal_skipped': [13,15],
+                   'business_skipped': [24,56],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
+                   'personal_normal_status': "",
+                   'personal_priority_status': "",
+                   'business_normal_status': "",
                    'system_status': ""
                     },
             'je': {'personal_normal_waiting': [],
@@ -21,6 +24,9 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
+                   'personal_normal_status': "",
+                   'personal_priority_status': "",
+                   'business_normal_status': "",
                    'system_status': ""
                     },
             'kl':{'personal_normal_waiting': [],
@@ -29,9 +35,12 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'personal_skipped': [],
                    'business_skipped': [],
                    'current_queue_no': 0,
-                  'current_assigned_queue_no': 0,
-                  'current_serving_personal': {},
+                   'current_assigned_queue_no': 0,
+                   'current_serving_personal': {},
                    'current_serving_business': {},
+                   'personal_normal_status': "",
+                   'personal_priority_status': "",
+                   'business_normal_status': "",
                    'system_status': ""
                     },
             'hg':{'personal_normal_waiting': [],
@@ -40,9 +49,12 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'personal_skipped': [],
                    'business_skipped': [],
                    'current_queue_no': 0,
-                  'current_assigned_queue_no': 0,
-                  'current_serving_personal': {},
+                   'current_assigned_queue_no': 0,
+                   'current_serving_personal': {},
                    'current_serving_business': {},
+                   'personal_normal_status': "",
+                   'personal_priority_status': "",
+                   'business_normal_status': "",
                    'system_status': ""
                     }
             }
@@ -56,6 +68,7 @@ business_dict = {'p': 'Private Banking',
 priority_dict = {'y': 'Yes',
                   'n': 'No'}
 system_status_dict = {'a': 'Avaliable',
+                       'l': 'Limited Functionality',
                        't': 'Terminated'}
 
 def get_next_personal_customer(branch):
@@ -225,12 +238,18 @@ def _show(branch):
     business_skipped = dict_all[branch]['business_skipped']
     system_status = dict_all[branch]['system_status']
     branch_name = branch_dict[branch]
+    personal_normal_status = branch_dict[branch]['personal_normal_status']
+    personal_priority_status = branch_dict[branch]['personal_priority_status']
+    business_normal_status = branch_dict[branch]['business_normal_status']
     url = f"/main_display/" + branch
     return render_template('main_tv_display.html', current_serving_personal=current_serving_personal,
                            current_serving_business=current_serving_business,
                            personal_skipped = personal_skipped,
                            business_skipped = business_skipped,
                            system_status=system_status,
+                           personal_normal_status=personal_normal_status,
+                           personal_priority_status = personal_priority_status,
+                           business_normal_status = business_normal_status,
                            url=url, branch_name=branch_name)
 
 @app.route('/getq/mobile', methods=['GET','POST'])
@@ -276,15 +295,54 @@ def get_q_inperson(branch):
 def cro_show(branch):
     global dict_all
 
-    # For buttons of terminate and reinitiate
+    # For all buttons
     if request.form.get("button1"):
         button = request.form.get("button1")
     elif request.form.get("button2"):
         button = request.form.get("button2")
+    elif request.form.get("button3"):
+        button = request.form.get("button3")
+    elif request.form.get("button4"):
+        button = request.form.get("button4")
+    elif request.form.get("button5"):
+        button = request.form.get("button5")
+    elif request.form.get("button6"):
+        button = request.form.get("button6")
+    elif request.form.get("button7"):
+        button = request.form.get("button7")
+        print('refreshed')
+    elif request.form.get("button8"):
+        button = request.form.get("button8")
 
-    if request.method == 'POST' and button == "terminateService":
+    # buttons for changing either queue status
+    if request.method == 'POST' and button == "terminatepn":
+        dict_all[branch]['personal_normal_status'] = system_status_dict['t']
+    if request.method == 'POST' and button == "reinitiatepn":
+        dict_all[branch]['personal_normal_waiting'] = []
+        dict_all[branch]['personal_normal_status'] = system_status_dict['a']
+
+    if request.method == 'POST' and button == "terminatepp":
+        dict_all[branch]['personal_priority_status'] = system_status_dict['t']
+    if request.method == 'POST' and button == "reinitiatepp":
+        dict_all[branch]['personal_priority_waiting'] = []
+        dict_all[branch]['personal_priority_status'] = system_status_dict['a']
+
+    if request.method == 'POST' and button == "terminatebn":
+        dict_all[branch]['business_normal_status'] = system_status_dict['t']
+    if request.method == 'POST' and button == "reinitiatebn":
+        dict_all[branch]['business_normal_waiting'] = []
+        dict_all[branch]['business_normal_status'] = system_status_dict['a']
+    
+        # buttons for changing system status
+    # coordinate queue status when changing system status
+    if request.method == 'POST' and button == "terminateAll":
         dict_all[branch]['system_status'] = system_status_dict['t']
-    if request.method == 'POST' and button == "reinitiateService":
+        dict_all[branch]['personal_normal_status'] = system_status_dict['t']
+        dict_all[branch]['personal_priority_status'] = system_status_dict['t']
+        dict_all[branch]['business_normal_status'] = system_status_dict['t']
+        
+        dict_all[branch][' personal_priority_status'] = system_status_dict['t']
+    if request.method == 'POST' and button == "reinitiateAll":
         dict_all[branch] = {'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
                    'business_normal_waiting': [],
@@ -293,11 +351,21 @@ def cro_show(branch):
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
-                   'current_serving_business': {},
-                   'system_status': "avaliable"
+                   'current_serving_business': {}
                     }
         dict_all[branch]['system_status'] = system_status_dict['a']
-    
+        dict_all[branch]['personal_normal_status'] = system_status_dict['a']
+        dict_all[branch]['personal_priority_status'] = system_status_dict['a']
+        dict_all[branch]['business_normal_status'] = system_status_dict['a']
+
+    # coordinate system status when changing either queue status
+    if dict_all[branch]['personal_normal_status'] == system_status_dict['a'] and dict_all[branch]['personal_priority_status'] == system_status_dict['a'] and dict_all[branch]['business_normal_status'] == system_status_dict['a']:
+        dict_all[branch]['system_status'] = system_status_dict['a']
+    elif dict_all[branch]['personal_normal_status'] == system_status_dict['t'] and dict_all[branch]['personal_priority_status'] == system_status_dict['t'] and dict_all[branch]['business_normal_status'] == system_status_dict['t']:
+        dict_all[branch]['system_status'] = system_status_dict['t']
+    else:
+        dict_all[branch]['system_status'] = system_status_dict['l']
+
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
     personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
@@ -305,6 +373,9 @@ def cro_show(branch):
     business_normal_waiting = dict_all[branch]['business_normal_waiting']
     personal_skipped = dict_all[branch]['personal_skipped']
     business_skipped = dict_all[branch]['business_skipped']
+    personal_normal_status = dict_all[branch]['personal_normal_status']
+    personal_priority_status = dict_all[branch]['personal_priority_status']
+    business_normal_status = dict_all[branch]['business_normal_status']
     system_status = dict_all[branch]['system_status']
     url = f"/cro/" + branch
     
@@ -316,6 +387,9 @@ def cro_show(branch):
                         personal_skipped=personal_skipped,
                         business_skipped=business_skipped,
                         system_status=system_status,
+                        personal_normal_status=personal_normal_status,
+                        personal_priority_status = personal_priority_status,
+                        business_normal_status = business_normal_status,
                         url=url)
 
 @app.route('/cro/<branch>/manipulate', methods=['GET','POST']) #CRO Add missed numbers -Serena
@@ -356,14 +430,14 @@ def main():
     if request.method == 'POST' and button == "QPage4Inperson":
         return redirect(url_for('/getq/inperson/branches'))
     if request.method == 'POST' and button == "PublicDisplayPage":
-        return render_template('miss_added.html')
+        return render_template('/main_display/branches')
     if request.method == 'POST' and button == "CounterPage":
-        return render_template('miss_added.html')
+        return render_template('/counter/branches')
     return render_template('main_page.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 @app.route('/test', methods=['GET','POST'])
 def tester():
-    return render_template('testing_page.html')
+    return render_template('main_page.html')
 
 if __name__ == '__main__':
     app.run(debug = True,port=8000)
