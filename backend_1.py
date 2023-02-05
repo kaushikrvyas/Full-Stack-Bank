@@ -179,6 +179,8 @@ def show1(branch, type_of_business, counter):
         button = request.form.get("button2")
     elif request.form.get("button3"):
         button = request.form.get("button3")
+    elif request.form.get("button4"):
+        button = request.form.get("button4")
 
     current_queue_no = dict_all[branch]['current_queue_no']
     current_serving_personal = dict_all[branch]['current_serving_personal']
@@ -207,7 +209,10 @@ def show1(branch, type_of_business, counter):
     elif request.method == 'POST' and button == 'stop':
         current_serving_business[display_name] = 'Stop Serving'
         return render_template('stop_serving.html', branch_name=branch_name, counter=counter, type_of_business=type_of_business)
-
+    
+    elif request.method == 'POST' and button == 'add_missed':
+        return render_template('add_missed.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+    
     return render_template('counter_main.html', branch_name=branch_name, q=None, counter=counter, type_of_business=type_of_business)
 
 
@@ -326,7 +331,7 @@ def add_miss_num(branch):
             branch = branch_dict[branch]
             return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
             
-    return render_template('cro_add_missed.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+    return render_template('add_missed.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 @app.route('/', methods=['GET','POST']) # Main Page for demonstration
 def main():

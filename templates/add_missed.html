@@ -32,7 +32,7 @@
             }
             
             button {
-                display: block;
+                display: inline;
                 padding: 20px 40px;
                 font-size: 18px;
                 background-color: #005AA7;
@@ -117,7 +117,7 @@
                 display: inline-block;
                 position: relative;
               }
-
+      
               input[type="radio"] + label {
                 display: inline-block;
                 margin-right: 5px;
@@ -138,26 +138,19 @@
         <li>Enter visit information:
             <ul>
                 <li>Type of Banking:<br>
-                        {% for k,v in business_dict.items() %}
-                    <form action="" method="post">
-                        <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
-                        <label for="{{k}}">{{v}}</label><br>
-                        {% endfor %}
-                </li>
-                <li>Priority Banking?<br>
-                    {% for k,v in priority_dict.items() %}
-                    <form action="" method="post">
-                        <input type="radio" name="priority" name="priority" value="{{k}}">
-                        <label for="{{k}}">{{v}}</label><br>
+                    {% for k,v in business_dict.items() %}
+                <form action="" method="post">
+                    <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}">
+                    <label for="{{k}}">{{v}}</label>
                     {% endfor %}
-                </li>
+            </li>
                 <li>Please enter the missed number:<br>
-                    <input type="number" name="missednum" name="missednum" value="{{y}}" >
+                    <input type="number" class="half-gap" name="missednum" name="missednum" value="{{y}}" size="5" style="height: 30px; font-size: 20px;">
                 </li>
             </ul>
         </li>
         <li>Click the "Add" button below to add the number into waiting list.</li>
         </ol>
-            <button id="getQbutton" name="getQbutton">Add</button>
+        <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Add</button>
     </body>
 </html>

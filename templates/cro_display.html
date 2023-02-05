@@ -125,7 +125,7 @@
     <h1 align="center"> Queue Status</h1>
     <br>
   <div class="table2">
-  <table>
+  <table style="width:80%">
     <tr>
       <th> Now Serving </th>
       <th> Counter </th>
@@ -138,14 +138,15 @@
     {% endfor %}
   </table>
 </div>
-    <table>
+    <table style="width:80%">
       <tr>
-          <th colspan="3"> Waiting Queue </th>
+          <th colspan="2"> Waiting Queue </th>
       </tr>
       <tr>
-        <td>Private (Normal)</td>
-        <td>{% for x1 in personal_normal_waiting %}{{x1}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-        <td>
+        <td style="width:20%"><b>Private (Normal)</b><br>
+        Status: {{system_status}}</td>
+        <td style="width:35%">{% for x1 in personal_normal_waiting %}{{x1}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        <td style=" width: 10%; border: 0px solid black">
           <div align="center">
             <div style="display: flex; justify-content: center;">
               <button style="margin-right: 10px;">Terminate</button>
@@ -155,9 +156,10 @@
         </td>
       </tr>
       <tr>
-        <td>Private (Priority)</td>
+        <td style="width:20%"><b>Private (Priority)</b><br>
+          Status: {{system_status}}</td>
         <td>{% for x2 in personal_priority_waiting %}{{x2}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-        <td>
+        <td style="border: 0px solid black;">
         <div align="center">
           <div style="display: flex; justify-content: center;">
             <button style="margin-right: 10px;">Terminate</button>
@@ -167,9 +169,10 @@
       </td>
       </tr>
       <tr>
-        <td>Business</td>
+        <td><b>Business</b><br>
+        Status: {{system_status}}</td>
         <td>{% for x3 in business_normal_waiting %}{{x3}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-        <td>
+        <td style="border: 0px solid black;">
           <div align="center">
             <div style="display: flex; justify-content: center;">
               <button style="margin-right: 10px;">Terminate</button>
@@ -180,7 +183,7 @@
       </tr>
     </table>
   <div class="table2">
-  <table>
+  <table style="width:80%">
     <tr>
       <th colspan="2"> Missed Queue Numbers </th>
     </tr>
