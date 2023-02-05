@@ -132,47 +132,49 @@
               }
           </style>
     </head>
-    <body>
-        <h1>Generate your Queue Number</h1>
-        <h2>Welcome to ABC Bank. Please follow the steps below to enter to obtain your queue number:</h2>
-        <ol>
-        <li ><b>Enter visit information:</b>
-            <ul>
-                <li>Type of Banking:<br>
-                        {% for k,v in business_dict.items() %}
-                    <form action="" method="post">
-                        <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
-                        <label for="{{k}}">{{v}}</label>
-                        {% endfor %}
-                </li>
-                <li>Please choose your preferred branch:
-                    <select id="branch" name="branch">
-                        {% for k,v in branch_dict.items() %}
-                        <form action="" method="post">
-                            <option value={{k}}>{{v}}</option>
-                        {% endfor %}
-                    </select>
-                </li>
-                <li id="priority_container" style="display:block;">Priority Banking?<br>
-                    {% for k,v in priority_dict.items() %}
-                    <form action="" method="post">
-                        <input class="half-gap" type="radio" name="priority" name="priority" value="{{k}}">
-                        <label for="{{k}}">{{v}}</label>
-                    {% endfor %}
-                </li>
-            </ul>
-        </li>
-        <script>
-            function hidePriority(businessType) {
-              if (businessType === "b") {
-                document.getElementById("priority_container").style.display = "none";
-              } else {
-                document.getElementById("priority_container").style.display = "block";
-              }
-            }
-        </script>
-        <li ><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
-        </ol>
-            <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Get Queue Number</button>
-    </body>
+<body>
+    <h1>Generate your Queue Number</h1>
+    <h2>Welcome to ABC Bank. Please follow the steps below to enter to obtain your queue number:</h2>
+    <ol>
+      <li><b>Enter visit information:</b>
+        <ul>
+          <li>
+            Type of Banking:<br>
+            {% for k,v in business_dict.items() %}
+            <form action="" method="post">
+              <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
+              <label for="{{k}}">{{v}}</label>
+              {% endfor %}
+          </li>
+          <li id="priority_container" style="display:block;">Please choose your preferred branch:
+            <select id="branch" name="branch">
+              {% for k,v in branch_dict.items() %}
+              <form action="" method="post">
+                <option value={{k}}>{{v}}</option>
+                {% endfor %}
+            </select>
+          </li>
+          <li id="priority_container" style="display:block;">Priority Banking?<br>
+            {% for k,v in priority_dict.items() %}
+            <form action="" method="post">
+              <input class="half-gap" type="radio" name="priority" name="priority" value="{{k}}">
+              <label for="{{k}}">{{v}}</label>
+              {% endfor %}
+            </form>
+          </li>
+        </ul>
+      </li>
+      <li><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
+    </ol>
+    <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Get Queue Number</button>
+    <script>
+      function hidePriority(businessType) {
+        if (businessType === "corporate") {
+          document.getElementById("priority_container").style.display = "none";
+        } else {
+          document.getElementById("priority_container").style.display = "block";
+        }
+      }
+    </script>
+  </body>
 </html>
