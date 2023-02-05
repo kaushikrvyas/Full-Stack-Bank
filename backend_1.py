@@ -335,7 +335,7 @@ def get_q_inperson(branch):
             branch_name = branch_dict[branch]
             waiting_numbers = dict_all[branch]['personal_normal_waiting']
             estimated_time = str(len(waiting_numbers*5))+'minutes'
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         elif type_of_business == 'p' and priority == 'y':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
@@ -343,7 +343,7 @@ def get_q_inperson(branch):
             branch_name = branch_dict[branch]
             waiting_numbers = dict_all[branch]['personal_priority_waiting']
             estimated_time = str(len(waiting_numbers*5))+'minutes'
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         elif type_of_business == 'b':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
@@ -351,14 +351,14 @@ def get_q_inperson(branch):
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['business_normal_waiting'])
             estimated_time = str(waiting_numbers*5)+'minutes'
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
     branch_name = branch_dict[branch]
     avaliable_business_dict = dict_all[branch]['avaliable_business_dict']
     avaliable_priority_dict = dict_all[branch]['avaliable_priority_dict']
-    return render_template('inperson_queue_gen.html', branch_dict=branch_dict, avaliable_business_dict=avaliable_business_dict, avaliable_priority_dict=avaliable_priority_dict, branch_name=branch_name)
+    return render_template('inperson_queue_gen.html', branch_dict=branch_dict, avaliable_business_dict=avaliable_business_dict, avaliable_priority_dict=avaliable_priority_dict, branch_name=branch_name, branch=branch)
 
 @app.route('/cro/<branch>', methods=['GET','POST'])   #CRO Display, shows the queue status: serving, waiting, missed -Serena
 def cro_show(branch):
