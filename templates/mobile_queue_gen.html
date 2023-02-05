@@ -153,6 +153,15 @@
                         {% endfor %}
                     </select>
                 </li>
+                <script>
+                    function hidePriority(businessType) {
+                      if (businessType === "b") {
+                        document.getElementById("priority_container").style.display = "none";
+                      } else {
+                        document.getElementById("priority_container").style.display = "block";
+                      }
+                    }
+                </script>
                 <li id="priority_container" style="display:block;">Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
                     <form action="" method="post">
@@ -162,15 +171,6 @@
                 </li>
             </ul>
         </li>
-        <script>
-            function hidePriority(businessType) {
-              if (businessType === "b") {
-                document.getElementById("priority_container").style.display = "none";
-              } else {
-                document.getElementById("priority_container").style.display = "block";
-              }
-            }
-        </script>
         <li ><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
         </ol>
             <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Get Queue Number</button>
