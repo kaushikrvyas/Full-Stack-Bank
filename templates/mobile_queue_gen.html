@@ -136,13 +136,18 @@
         <h1>Generate your Queue Number</h1>
         <h2>Welcome to ABC Bank. Please follow the steps below to enter to obtain your queue number:</h2>
         <ol>
+        <li ><b>Please click the "check Service Avaliability" button to make sure your desired branch&business is avaliable</b>
+            <form action="" method="post">
+            <br></br>
+            <button id="checkAvalibilitybutton" name="button1" value="showCurrentAvaliability" style="display:block; margin: 0 auto;">check Service Avaliability</button>
+        </form>
         <li ><b>Enter visit information:</b>
             <ul>
                 <li>Please choose your preferred branch:
-                    <select id="branch" name="branch">
+                    <form action="" method="post">
+                    <select id="branch" name="branch" value="branch">
                         {% for k,v in avaliable_branch_dict.items() %}
-                        <form action="" method="post">
-                            <option value={{k}} onclick="refresh_avalibility('{{k}}')">{{v}}</option>
+                            <option value={{k}}>{{v}}</option>
                             {% endfor %}
                     </select>
                 </li>
@@ -154,16 +159,6 @@
                         <label for="{{k}}">{{v}}</label>
                         {% endfor %}
                 </li>
-                <script>
-                    function refresh_avalibility(businessType) {
-                        if (businessType === "b") {
-                            document.getElementById("priority_container").style.display = "none";
-                        }
-                        else {
-                            document.getElementById("priority_container").style.display = "block";
-                        }
-                    }
-                </script>
                 <script>
                     function hidePriority(businessType) {
                         if (businessType === "b") {

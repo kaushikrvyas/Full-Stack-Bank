@@ -14,14 +14,14 @@
     h1 {
         color: #005AA7;
         font-size: 36px;
-        margin-bottom: 30px;
+        margin-bottom: -80px;
         text-align: center;
     }
     
     h2 {
-        color: #5F5F5F;
-        font-size: 20px;
-        margin-bottom: 30px;
+        color: #ff0000;
+        font-size: 100px;
+        margin-bottom: 0px;
         text-align: center;
     }
     
@@ -137,7 +137,7 @@
 </head>
 <body>
   <h3 align = "right">{{branch_name}} Branch</h3>
-  <h3 align = "right">Queue Status: {{system_status}}</h3>  
+  <h3 align = "right">Branch Status: {{system_status}}</h3> 
   <h1 align="center"> It is now calling for the queue number:</h1>
   <h2 align = "center"> <span id="q_number" name="q_number">{{q_number}}</span></h2>
     <br>
@@ -186,5 +186,8 @@
   </tr>
   </table>
 <br><br>
+<h3 align = "center">New Queue Number for personal normal banking: {{personal_normal_status}}</h3>
+  <h3 align = "center">New Queue Number for personal priority banking: {{personal_priority_status}}</h3>
+  <h3 align = "center">New Queue Number for business banking: {{business_normal_status}}</h3> 
 </body>
 </html>

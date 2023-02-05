@@ -8,12 +8,12 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'business_skipped': [24,56],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
-                   'current_serving_personal': {},
-                   'current_serving_business': {},
-                   'personal_normal_status': "Avaliable",
+                   'current_serving_personal': {'1':'11','2':'99'},
+                   'current_serving_business': {'3':15,'4':'10'},
+                   'personal_normal_status': "Terminated",
                    'personal_priority_status': "Avaliable",
                    'business_normal_status': "Avaliable",
-                   'system_status': "Avaliable",
+                   'system_status': "Limited Functionality",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -28,10 +28,10 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "",
-                   'personal_priority_status': "",
-                   'business_normal_status': "",
-                   'system_status': "",
+                   'personal_normal_status': "Not Reinitiated",
+                   'personal_priority_status': "Not Reinitiated",
+                   'business_normal_status': "Not Reinitiated",
+                   'system_status': "Not Reinitiated",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -46,10 +46,10 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "",
-                   'personal_priority_status': "",
-                   'business_normal_status': "",
-                   'system_status': "",
+                   'personal_normal_status': "Not Reinitiated",
+                   'personal_priority_status': "Not Reinitiated",
+                   'business_normal_status': "Not Reinitiated",
+                   'system_status': "Not Reinitiated",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -64,10 +64,10 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "",
-                   'personal_priority_status': "",
-                   'business_normal_status': "",
-                   'system_status': "",
+                   'personal_normal_status': "Not Reinitiated",
+                   'personal_priority_status': "Not Reinitiated",
+                   'business_normal_status': "Not Reinitiated",
+                   'system_status': "Not Reinitiated",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -258,9 +258,10 @@ def _show(branch):
     business_skipped = dict_all[branch]['business_skipped']
     system_status = dict_all[branch]['system_status']
     branch_name = branch_dict[branch]
-    personal_normal_status = branch_dict[branch]['personal_normal_status']
-    personal_priority_status = branch_dict[branch]['personal_priority_status']
-    business_normal_status = branch_dict[branch]['business_normal_status']
+    personal_normal_status = dict_all[branch]['personal_normal_status']
+    personal_priority_status = dict_all[branch]['personal_priority_status']
+    business_normal_status = dict_all[branch]['business_normal_status']
+    q_number = dict_all[branch]['current_queue_no']
     url = f"/main_display/" + branch
     return render_template('main_tv_display.html', current_serving_personal=current_serving_personal,
                            current_serving_business=current_serving_business,
@@ -270,7 +271,39 @@ def _show(branch):
                            personal_normal_status=personal_normal_status,
                            personal_priority_status = personal_priority_status,
                            business_normal_status = business_normal_status,
-                           url=url, branch_name=branch_name)
+                           url=url, branch_name=branch_name,q_number=q_number)
+
+@app.route('/getq/mobile/checkAvaliability', methods=['GET','POST'])
+def checkStatus():
+    global dict_all
+    jp_personal_normal_status = dict_all['jp']['personal_normal_status']
+    jp_personal_priority_status = dict_all['jp']['personal_priority_status']
+    jp_business_normal_status = dict_all['jp']['business_normal_status']
+
+    je_personal_normal_status = dict_all['je']['personal_normal_status']
+    je_personal_priority_status = dict_all['je']['personal_priority_status']
+    je_business_normal_status = dict_all['je']['business_normal_status']
+
+    hg_personal_normal_status = dict_all['hg']['personal_normal_status']
+    hg_personal_priority_status = dict_all['hg']['personal_priority_status']
+    hg_business_normal_status = dict_all['hg']['business_normal_status']
+
+    kl_personal_normal_status = dict_all['kl']['personal_normal_status']
+    kl_personal_priority_status = dict_all['kl']['personal_priority_status']
+    kl_business_normal_status = dict_all['kl']['business_normal_status']
+
+    return render_template('branch_status.html', jp_personal_normal_status=jp_personal_normal_status,
+                                                 jp_personal_priority_status=jp_personal_priority_status,
+                                                 jp_business_normal_status=jp_business_normal_status,
+                                                 je_personal_normal_status=je_personal_normal_status,
+                                                 je_personal_priority_status=je_personal_priority_status,
+                                                 je_business_normal_status=je_business_normal_status,
+                                                 hg_personal_normal_status=hg_personal_normal_status,
+                                                 hg_personal_priority_status=hg_personal_priority_status,
+                                                 hg_business_normal_status=hg_business_normal_status,
+                                                 kl_personal_normal_status=kl_personal_normal_status,
+                                                 kl_personal_priority_status=kl_personal_priority_status,
+                                                 kl_business_normal_status=kl_business_normal_status)
 
 @app.route('/getq/mobile', methods=['GET','POST'])
 def get_q_mobile():
@@ -282,42 +315,41 @@ def get_q_mobile():
         button = request.form.get("button2")
 
     if request.method == 'POST' and button == "showCurrentAvaliability":
-        return render_template('checkStatus')
+        return redirect(url_for('checkStatus'))
 
     elif request.method == 'POST' and button == "getQbutton":
         type_of_business = request.form.get('type_of_business')
         priority = request.form.get('priority')
         branch = request.form.get('branch')
-    
-        if branch is not None:
-            if type_of_business == 'p' and priority == 'n' and dict_all[branch]['personal_normal_status'] == 'Avaliable':
-                current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
-                type_of_business = business_dict[type_of_business]
-                branch = branch_dict[branch]
-                return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
 
-            elif type_of_business == 'p' and priority == 'y' and dict_all[branch]['personal_priority_status'] == 'Avaliable':
-                current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
-                type_of_business = business_dict[type_of_business]
-                branch = branch_dict[branch]
-                return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
+        if type_of_business == 'p' and priority == 'n' and dict_all[branch]['personal_normal_status'] == 'Avaliable':
+            current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
+            type_of_business = business_dict[type_of_business]
+            branch_name = branch_dict[branch]
+            waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])
+            estimated_time = str(waiting_numbers*5)+'minutes'
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+
+        elif type_of_business == 'p' and priority == 'y' and dict_all[branch]['personal_priority_status'] == 'Avaliable':
+            current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
+            type_of_business = business_dict[type_of_business]
+            branch_name = branch_dict[branch]
+            waiting_numbers = len(dict_all[branch]['personal_priority_waiting'])
+            estimated_time = str(waiting_numbers*5)+'minutes'
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
             
-            elif type_of_business == 'b' and dict_all[branch]['business_normal_status'] == 'Avaliable':
-                current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
-                type_of_business = business_dict[type_of_business]
-                branch = branch_dict[branch]
-                return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch=branch)
+        elif type_of_business == 'b' and dict_all[branch]['business_normal_status'] == 'Avaliable':
+            current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
+            type_of_business = business_dict[type_of_business]
+            branch_name = branch_dict[branch]
+            waiting_numbers = len(dict_all[branch]['business_normal_waiting'])
+            estimated_time = str(waiting_numbers*5)+'minutes'
+            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
     
     return render_template('mobile_queue_gen.html', avaliable_branch_dict=avaliable_branch_dict, business_dict=business_dict, priority_dict=priority_dict)
-
-@app.route('/getq/mobile/checkAvaliability', methods=['GET','POST'])
-def checkStatus():
-    global dict_all
-
-    return render_template('branch_status.html', dict_all=dict_all)
 
 @app.route('/getq/inperson/<branch>', methods=['GET','POST'])
 def get_q_inperson(branch):
@@ -333,16 +365,16 @@ def get_q_inperson(branch):
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
-            waiting_numbers = dict_all[branch]['personal_normal_waiting']
-            estimated_time = str(len(waiting_numbers*5))+'minutes'
+            waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])
+            estimated_time = str(waiting_numbers*5)+'minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         elif type_of_business == 'p' and priority == 'y':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
-            waiting_numbers = dict_all[branch]['personal_priority_waiting']
-            estimated_time = str(len(waiting_numbers*5))+'minutes'
+            waiting_numbers = len(dict_all[branch]['personal_priority_waiting'])
+            estimated_time = str(waiting_numbers*5)+'minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         elif type_of_business == 'b':
