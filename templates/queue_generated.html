@@ -148,12 +148,12 @@
     </head>
     <body>
             <h4 align = "right">Type: <span class="op" id="type_of_business" name="type_of_business">{{type_of_business}}</span></h4>
-            <h4 align = "right">Branch: <span class="op2" id="branch" name="branch">{{branch}}</span></h4>
+            <h4 align = "right">Branch: <span class="op2" id="branch" name="branch">{{branch_name}}</span></h4>
             <h1 align = "center">Queue Report</h1>
             <h3 align = "center">Your Queue Number:</h3>
             <h2 align = "center"> <span id="q_number" name="q_number">{{q_number}}</span></h2>
-            <h3 align = "center">People ahead: [NEED TO ADD]</h3>
-            <h3 align = "center">Estimated waiting time: [NEED TO ADD]</h3>
+            <h3 align = "center">People ahead: {{waiting_numbers}}</h3>
+            <h3 align = "center">Estimated waiting time: {{estimated_time}}</h3>
             <form>
                 <input type="button" style="display:block; margin: 0 auto;" value="Generate New Queue Number" onclick="history.back()">
             </form>

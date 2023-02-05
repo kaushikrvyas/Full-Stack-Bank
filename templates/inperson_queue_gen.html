@@ -134,13 +134,13 @@
     </head>
     <body>
         <h1>Generate your Queue Number</h1>
-        <h2>Welcome to ABC Bank's <span class="op2" id="branch" name="branch">{{branch}}</span> branch.</h2>
+        <h2>Welcome to ABC Bank's <span class="op2" id="branch_name" name="branch_name">{{branch_name}}</span> branch.</h2>
         <h2>Please follow the steps below to enter to obtain your queue number:</h2>
         <ol>
         <li><b>Enter visit information:</b>
             <ul>
                 <li>Type of Banking:<br>
-                        {% for k,v in business_dict.items() %}
+                        {% for k,v in avaliable_business_dict.items() %}
                         <form action="" method="post">
                             <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
                             <label for="{{k}}">{{v}}</label>
@@ -156,7 +156,7 @@
                     }
                 </script>
                 <li id="priority_container" style="display:block;">Priority Banking?<br>
-                    {% for k,v in priority_dict.items() %}
+                    {% for k,v in avaliable_priority_dict.items() %}
                      <form action="" method="post">
                         <input type="radio" name="priority" name="priority" value="{{k}}">
                         <label for="{{k}}">{{v}}</label>
