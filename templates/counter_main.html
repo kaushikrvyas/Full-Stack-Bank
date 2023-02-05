@@ -32,7 +32,7 @@
       }
       
       button {
-          display: block;
+          display: inline;
           padding: 20px 40px;
           font-size: 18px;
           background-color: #005AA7;
@@ -146,12 +146,14 @@
       {% endif %}
     </h2>
     </font>
-    <div style="text-align:center">
+    <div align ="center">
+      <div style="display: flex; justify-content: center;">
         <form action="" method="post" name="next">
-            <button id="button1" name="button1" value="next">Next</button>
-            <button id="button2" name="button2" value="skip">Skip</button>
+            <button id="button1" name="button1" value="next" style="margin-right: 10px;">Next</button>
+            <button id="button2" name="button2" value="skip" style="margin-right: 10px;">Skip</button>
             <button id="button3" name="button3" value="stop">Stop</button>
         </form>
+      </div>
     </div>
     <script>
 

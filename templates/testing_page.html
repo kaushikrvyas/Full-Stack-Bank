@@ -31,23 +31,29 @@
     }
     
     button {
-        display: inline;
-        text-align: center;
-        padding: 20px 40px;
-        font-size: 18px;
+        text-align: inline;
+        padding: 10px 10px;
+        font-size: 16px;
         background-color: #005AA7;
         color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        margin-top: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
-    
     table {
         border-collapse: collapse;
-        width: 50%;
+        width: 80%;
         margin: 10px auto;
+        padding = 10px;
     }
+    .table2 {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 10px auto;
+      padding = 20px;
+  }
     
     th, td {
         border: 1px solid black;
@@ -107,29 +113,11 @@
         background-color: #005AA7;
         color: white;
         font-size: 18px;
-      }
-      input[type="radio"] {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 2px solid #000;
-        display: inline-block;
-        position: relative;
-      }
 
-      input[type="radio"] + label {
+    .button-container {
         display: inline-block;
-        margin-right: 5px;
-        padding: 5px 10px;
-        background-color: #ccc;
-        border-radius: 100px;
-        cursor: pointer;
+        vertical-align: inherit;
       }
-      
-      input[type="radio"]:checked + label {
-        color: #005AA7;
-      }
-      
   </style>
 <head>
   <meta content="2;url={{url}}">
@@ -138,10 +126,8 @@
 <body>
     <h1 align="center"> Queue Status</h1>
     <br>
-  <table style="display: inline-block; float: left;">
-    <tr>
-        <th colspan="2"> Private Banking </th>
-    </tr>
+  <div class="table2">
+  <table>
     <tr>
       <th> Now Serving </th>
       <th> Counter </th>
@@ -152,61 +138,60 @@
       <td>{{k[-1:]}}</td>
     </tr>
     {% endfor %}
-    <tr>
-        <th colspan="2"> Waiting Queue </th>
-    </tr>
-    <tr>
-      <td>Private Normal</td>
-      <td>{% for x1 in personal_normal_waiting %}{{x1}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-    </tr>
-    <tr>
-      <td>Private Priority</td>
-      <td>{% for x2 in personal_priority_waiting %}{{x2}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-    </tr>
-    
+  </table>
+</div>
+    <table>
+      <tr>
+          <th colspan="2"> Waiting Queue </th>
+      </tr>
+      <tr>
+        <td>Private (Normal)</td>
+        <td>{% for x1 in personal_normal_waiting %}{{x1}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        <td>
+          <div align="center">
+            <div style="display: flex; justify-content: center;">
+              <button style="margin-right: 10px;">Terminate</button>
+              <button>Re-initiate</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Private (Priority)</td>
+        <td>{% for x2 in personal_priority_waiting %}{{x2}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        <td>
+        <div align="center">
+          <div style="display: flex; justify-content: center;">
+            <button style="margin-right: 10px;">Terminate</button>
+            <button>Re-initiate</button>
+          </div>
+        </div>
+      </td>
+      </tr>
+      <tr>
+        <td>Business</td>
+        <td>{% for x3 in business_normal_waiting %}{{x3}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        <td>
+          <div align="center">
+            <div style="display: flex; justify-content: center;">
+              <button style="margin-right: 10px;">Terminate</button>
+              <button>Re-initiate</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  <div class="table2">
+  <table>
     <tr>
       <th colspan="2"> Missed Queue Numbers </th>
-  </tr>
+    </tr>
     <tr>
       <td colspan="2">{% for x in personal_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
     </tr>
-      </table>
-<br><br>
-  <table style="display: inline-block; float: right;">
-    <tr>
-        <th colspan="2"> Corporate Banking </th>
-    </tr>
-    <tr>
-      <th> Now Serving </th>
-      <th> Counter </th>
-    </tr>
-    {% for k,v in current_serving_business.items() %}
-    <tr>
-      <td>{{v}}</td>
-      <td>{{k[-1:]}}</td>
-    </tr>
-    {% endfor %}
-    <tr>
-      <th colspan="2"> Waiting Queue </th>
-    </tr>
-    <tr>
-      <td>Business</td>
-      <td>{% for x3 in business_normal_waiting %}{{x3}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-    </tr>
-    <tr>
-      <th colspan="2"> Missed Queue Numbers </th>
-  </tr>
-  <tr>
-      <td colspan="2">{% for x in business_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
-  </tr>
   </table>
+</div>
 <br><br>
 <h1 align = "center">System Status: {{system_status}}</h1>
-<div align = "center">
-  <form action="" method="post" name="next">
-    <button id="button1" name="button1" value="terminateService">Terminate Service</button>
-    <button id="button2" name="button2" value="reinitiateService">Reinitiate Service</button>
-  </form>
-</div>
 </body>
 </html>
