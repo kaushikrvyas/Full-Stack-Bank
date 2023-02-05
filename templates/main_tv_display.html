@@ -26,6 +26,7 @@
     }
     
     h3 {
+        color: #005AA7;
         font-size: 20px;
         margin-bottom: 30px;
     }
@@ -135,8 +136,10 @@
   <title>Queue Number On Monitor Screen</title>
 </head>
 <body>
-  <h1 align = "center">Add in Queue Status: {{system_status}}</h1>  
+  <h3 align = "right">{{branch_name}} Branch</h3>
+  <h3 align = "right">Queue Status: {{system_status}}</h3>  
   <h1 align="center"> It is now calling for the queue number:</h1>
+  <h2 align = "center"> <span id="q_number" name="q_number">{{q_number}}</span></h2>
     <br>
   <table>
     <tr>

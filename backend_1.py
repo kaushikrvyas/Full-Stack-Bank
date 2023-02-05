@@ -219,13 +219,14 @@ def _show(branch):
     personal_skipped = dict_all[branch]['personal_skipped']
     business_skipped = dict_all[branch]['business_skipped']
     system_status = dict_all[branch]['system_status']
+    branch_name = branch_dict[branch]
     url = f"/main_display/" + branch
     return render_template('main_tv_display.html', current_serving_personal=current_serving_personal,
                            current_serving_business=current_serving_business,
                            personal_skipped = personal_skipped,
                            business_skipped = business_skipped,
                            system_status=system_status,
-                           url=url)
+                           url=url, branch_name=branch_name)
 
 @app.route('/getq/mobile/<user>', methods=['GET','POST'])
 def get_q_mobile(user):
