@@ -130,11 +130,24 @@
               input[type="radio"]:checked + label {
                 color: #E61030;
               }
+              input[type="button"] {
+                display: block;
+                padding: 20px 40px;
+                font-size: 18px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 30px auto 0;
+                text-align: center;
+                }
           </style>
     </head>
     <body>
             <h1 align = "center">Cannot add this number to the system</h1>
-            <h3 align = "center">Please double check the inputs </h3>
+            <h3 align = "center">Invalid/incomplete inputs given</h3>
+            <h3 align = "center">Please double check the inputs</h3>
             <form>
                 <input type="button" style="display:block; margin: 0 auto;" value="Go Back" onclick="history.back()">
             </form>

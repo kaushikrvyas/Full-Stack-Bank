@@ -11,9 +11,9 @@
             }
             .half-gap {
                 margin-top: 1em;
-              }
+            }
             h1 {
-                color: #0065B3;
+                color: #005AA7;
                 font-size: 36px;
                 margin-bottom: 30px;
                 text-align: center;
@@ -32,10 +32,10 @@
             }
             
             button {
-                display: inline;
+                display: block;
                 padding: 20px 40px;
                 font-size: 18px;
-                background-color: #0065B3;
+                background-color: #005AA7;
                 color: white;
                 border: none;
                 border-radius: 5px;
@@ -46,7 +46,7 @@
             
             table {
                 border-collapse: collapse;
-                width: 50%;
+                width: 70%;
                 margin: 10px auto;
             }
             
@@ -58,7 +58,7 @@
             }
             
             th {
-                background-color: #0065B3;
+                background-color: #005AA7;
                 color: white;
                 font-size: 16px;
             }
@@ -105,11 +105,11 @@
                 padding: 16px 16px;
                 border: none;
                 border-radius: 5px;
-                background-color: #0065B3;
+                background-color: #005AA7;
                 color: white;
                 font-size: 18px;
-              }
-              input[type="radio"] {
+            }
+            input[type="radio"] {
                 width: 20px;
                 height: 20px;
                 border-radius: 50%;
@@ -130,6 +130,18 @@
               input[type="radio"]:checked + label {
                 color: #E61030;
               }
+            input[type="button"] {
+                display: block;
+                padding: 20px 40px;
+                font-size: 18px;
+                background-color: #005AA7;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 30px auto 0;
+                text-align: center;
+                }
           </style>
     </head>
     <body>
@@ -168,5 +180,9 @@
         <li><b>Click the "Add" button below to add the number into waiting list.</b></li>
         </ol>
         <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Add</button>
+        <br>
+        <form>
+            <input type="button" style="display:block; margin: 0 auto;" value="Go Back" onclick="history.back()">
+        </form>
     </body>
 </html>

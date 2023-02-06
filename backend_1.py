@@ -11,10 +11,10 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "available",
-                   'personal_priority_status': "available",
-                   'business_normal_status': "available",
-                   'system_status': "available",
+                   'personal_normal_status': "Available",
+                   'personal_priority_status': "Available",
+                   'business_normal_status': "Available",
+                   'system_status': "Available",
                    'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'available_priority_dict': {'y': 'Yes',
@@ -29,10 +29,10 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "available",
-                   'personal_priority_status': "available",
-                   'business_normal_status': "available",
-                   'system_status': "available",
+                   'personal_normal_status': "Available",
+                   'personal_priority_status': "Available",
+                   'business_normal_status': "Available",
+                   'system_status': "Available",
                    'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'available_priority_dict': {'y': 'Yes',
@@ -65,10 +65,10 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "available",
-                   'personal_priority_status': "available",
-                   'business_normal_status': "available",
-                   'system_status': "available",
+                   'personal_normal_status': "Available",
+                   'personal_priority_status': "Available",
+                   'business_normal_status': "Available",
+                   'system_status': "Available",
                    'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'available_priority_dict': {'y': 'Yes',
@@ -88,7 +88,7 @@ business_dict = {'p': 'Private Banking',
                   'b': 'Corporate Banking'}
 priority_dict = {'y': 'Yes',
                   'n': 'No'}
-system_status_dict = {'a': 'available',
+system_status_dict = {'a': 'Available',
                        'l': 'Limited Functionality',
                        't': 'Terminated'}
 
@@ -411,7 +411,7 @@ def get_q_mobile():
         priority = request.form.get('priority')
         branch = request.form.get('branch')
 
-        if type_of_business == 'p' and priority == 'n' and dict_all[branch]['personal_normal_status'] == 'available':
+        if type_of_business == 'p' and priority == 'n' and dict_all[branch]['personal_normal_status'] == 'Available':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
@@ -419,7 +419,7 @@ def get_q_mobile():
             estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
-        elif type_of_business == 'p' and priority == 'y' and dict_all[branch]['personal_priority_status'] == 'available':
+        elif type_of_business == 'p' and priority == 'y' and dict_all[branch]['personal_priority_status'] == 'Available':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
@@ -427,7 +427,7 @@ def get_q_mobile():
             estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
             
-        elif type_of_business == 'b' and dict_all[branch]['business_normal_status'] == 'available':
+        elif type_of_business == 'b' and dict_all[branch]['business_normal_status'] == 'Available':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
@@ -554,10 +554,10 @@ def cro_show(branch):
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "available",
-                   'personal_priority_status': "available",
-                   'business_normal_status': "available",
-                   'system_status': "available",
+                   'personal_normal_status': "Available",
+                   'personal_priority_status': "Available",
+                   'business_normal_status': "Available",
+                   'system_status': "Available",
                    'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'available_priority_dict': {'y': 'Yes',
@@ -628,8 +628,8 @@ def add_miss_num(branch, type_of_business, counter):
         type_of_business = request.form.get('type_of_business')
         #print("t:",type_of_business)
         priority = request.form.get('priority')
-        missednum = int(request.form.get('missednum'))
         if type_of_business is not None and priority is not None:
+            missednum = int(request.form.get('missednum'))
             outcome = add_missed_num_to_queue(branch,type_of_business,priority,missednum)
             if outcome == True:
                 type_of_business = business_dict[type_of_business]
@@ -637,7 +637,9 @@ def add_miss_num(branch, type_of_business, counter):
                 return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
             else:
                 return render_template('add_missed_fail.html')
-            
+        else:
+            return render_template('add_missed_fail.html')
+        
     return render_template('add_missed.html', available_branch_dict=available_branch_dict, available_business_dict=available_business_dict, available_priority_dict=available_priority_dict)
 
 
