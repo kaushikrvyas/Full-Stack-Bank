@@ -182,7 +182,7 @@ def assign_queue_no_to_queue(branch, type_of_business, priority):
         business_normal_waiting.append(current_assigned_queue_no)
     return current_assigned_queue_no
   
-# CRO add missed numbers function -Serena
+# counter add missed numbers function -Serena
 def add_missed_num_to_queue(branch,type_of_business,priority,missednum):
     global dict_all
     personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
@@ -196,10 +196,62 @@ def add_missed_num_to_queue(branch,type_of_business,priority,missednum):
     elif type_of_business =='b':
         business_normal_waiting.insert(2,missednum)
     return missednum 
-  
+
+@app.route('/<target>/selectbranch', methods=['GET', 'POST'])
+def select_branch(target):
+    global dict_all
+
+    # For buttons
+    if request.form.get("button1"):
+        button = request.form.get("button1")
+    elif request.form.get("button2"):
+        button = request.form.get("button2")
+    elif request.form.get("button3"):
+        button = request.form.get("button3")
+    elif request.form.get("button4"):
+        button = request.form.get("button4")
+    elif request.form.get("button5"):
+        button = request.form.get("button5")
+
+    if request.method == 'POST' and button in list(branch_dict.keys()) and target=="CROPage":
+        return redirect(url_for('cro_show', branch=button))
+    if request.method == 'POST' and button in list(branch_dict.keys()) and target=="QPage4Inperson":
+        return redirect(url_for('get_q_inperson', branch=button))
+    if request.method == 'POST' and button in list(branch_dict.keys()) and target=="PublicDisplayPage":
+        return redirect(url_for('tv_show', branch=button))
+    if request.method == 'POST' and button in list(branch_dict.keys()) and target=="CounterPage":
+        return redirect(url_for('select_counter', branch=button))
+    elif request.method == 'POST' and button == "Back2Main":
+        return redirect(url_for('main'))
+    return render_template('branch_selection_page.html')
+
+@app.route('/counter/<branch>/selectcounter', methods=['GET', 'POST'])
+def select_counter(branch):
+    global dict_all
+
+    # For buttons
+    if request.form.get("button1"):
+        button = request.form.get("button1")
+    elif request.form.get("button2"):
+        button = request.form.get("button2")
+    elif request.form.get("button3"):
+        button = request.form.get("button3")
+    elif request.form.get("button4"):
+        button = request.form.get("button4")
+    elif request.form.get("button5"):
+        button = request.form.get("button5")
+    
+    # from button's value we determine the type_of_business
+    # button's value should be 'b', 'p'
+    if request.method == 'POST' and button in []:
+        counterid = request.form.get('counterid')
+        return redirect(url_for('counter_show', branch=branch, type_of_business=button, counter=counterid))
+    elif request.method == 'POST' and button == "Back2Main":
+        return redirect(url_for('main'))
+    return render_template('counter_selection_page.html')
 
 @app.route('/counter/<branch>/<type_of_business>/<counter>', methods=['GET', 'POST'])
-def show1(branch, type_of_business, counter):
+def counter_show(branch, type_of_business, counter):
     global dict_all
     branch_name = branch_dict[branch]
     type_of_business_whole = business_dict[type_of_business]
@@ -250,7 +302,7 @@ def show1(branch, type_of_business, counter):
 
 
 @app.route('/main_display/<branch>', methods=['GET','POST'])
-def _show(branch):
+def tv_show(branch):
     global dict_all
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
@@ -538,6 +590,7 @@ def add_miss_num(branch, type_of_business, counter):
             
     return render_template('add_missed.html', avaliable_branch_dict=avaliable_branch_dict, avaliable_business_dict=avaliable_business_dict, avaliable_priority_dict=avaliable_priority_dict)
 
+
 @app.route('/', methods=['GET','POST']) # Main Page for demonstration
 def main():
     global dict_all
@@ -554,16 +607,10 @@ def main():
     elif request.form.get("button5"):
         button = request.form.get("button5")
 
-    if request.method == 'POST' and button == "CROPage":
-        return render_template('/cro/branches')
+    if request.method == 'POST' and button in ["CROPage","QPage4Inperson","PublicDisplayPage","CounterPage"]:
+        return redirect(url_for('select_branch',target=button))
     if request.method == 'POST' and button == "QPage4Mobile":
-        return redirect(url_for('/getq/mobile'))
-    if request.method == 'POST' and button == "QPage4Inperson":
-        return redirect(url_for('/getq/inperson/branches'))
-    if request.method == 'POST' and button == "PublicDisplayPage":
-        return render_template('/main_display/branches')
-    if request.method == 'POST' and button == "CounterPage":
-        return render_template('/counter/branches')
+        return redirect(url_for('get_q_mobile'))
     return render_template('main_page.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 @app.route('/test', methods=['GET','POST'])
