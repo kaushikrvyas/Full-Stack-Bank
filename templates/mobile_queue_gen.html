@@ -140,7 +140,7 @@
         <h1>Generate your Queue Number</h1>
         <h2>Welcome to ABC Bank. Please follow the steps below to enter to obtain your queue number:</h2>
         <ol>
-        <li ><b>Please click the "Check Service Avaliability" button to check whether your desired branch and business type is avaliable:</b>
+        <li ><b>Please click the "Check Service Avaliability" button to check whether your desired branch and business type is available:</b>
             <form action="" method="post">
             <br>
             <button id="checkAvalibilitybutton" name="button1" value="showCurrentAvaliability" style="display:block; margin: 0 auto;">Check Service Avaliability</button>
@@ -150,7 +150,7 @@
                 <li>Please choose your preferred branch:
                     <form action="" method="post">
                     <select id="branch" name="branch" value="{{k}}">
-                        {% for k,v in avaliable_branch_dict.items() %}
+                        {% for k,v in available_branch_dict.items() %}
                             <option value={{k}}>{{v}}</option>
                             {% endfor %}
                     </select>

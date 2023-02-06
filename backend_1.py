@@ -11,13 +11,13 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "Avaliable",
-                   'personal_priority_status': "Avaliable",
-                   'business_normal_status': "Avaliable",
-                   'system_status': "Avaliable",
-                   'avaliable_business_dict': {'p': 'Private Banking',
+                   'personal_normal_status': "available",
+                   'personal_priority_status': "available",
+                   'business_normal_status': "available",
+                   'system_status': "available",
+                   'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
-                   'avaliable_priority_dict': {'y': 'Yes',
+                   'available_priority_dict': {'y': 'Yes',
                   'n': 'No'}
                     },
             'je': {'personal_normal_waiting': [],
@@ -29,13 +29,13 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "Avaliable",
-                   'personal_priority_status': "Avaliable",
-                   'business_normal_status': "Avaliable",
-                   'system_status': "Avaliable",
-                   'avaliable_business_dict': {'p': 'Private Banking',
+                   'personal_normal_status': "available",
+                   'personal_priority_status': "available",
+                   'business_normal_status': "available",
+                   'system_status': "available",
+                   'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
-                   'avaliable_priority_dict': {'y': 'Yes',
+                   'available_priority_dict': {'y': 'Yes',
                   'n': 'No'}
                     },
             'amk':{'personal_normal_waiting': [3,7,8,9],
@@ -51,9 +51,9 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'personal_priority_status': "Available",
                    'business_normal_status': "Available",
                    'system_status': "Available",
-                   'avaliable_business_dict': {'p': 'Private Banking',
+                   'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
-                   'avaliable_priority_dict': {'y': 'Yes',
+                   'available_priority_dict': {'y': 'Yes',
                   'n': 'No'}
                     },
             'hg':{'personal_normal_waiting': [],
@@ -65,13 +65,13 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "Avaliable",
-                   'personal_priority_status': "Avaliable",
-                   'business_normal_status': "Avaliable",
-                   'system_status': "Avaliable",
-                   'avaliable_business_dict': {'p': 'Private Banking',
+                   'personal_normal_status': "available",
+                   'personal_priority_status': "available",
+                   'business_normal_status': "available",
+                   'system_status': "available",
+                   'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
-                   'avaliable_priority_dict': {'y': 'Yes',
+                   'available_priority_dict': {'y': 'Yes',
                   'n': 'No'}
                     }
             }
@@ -80,7 +80,7 @@ branch_dict = {'jp': 'Jurong Point',
                'je': 'Jurong East',
                'amk': 'Ang Mo Kio',
                'hg': 'Hougang'}
-avaliable_branch_dict = {'jp': 'Jurong Point',
+available_branch_dict = {'jp': 'Jurong Point',
                'je': 'Jurong East',
                'amk': 'Ang Mo Kio',
                'hg': 'Hougang'}
@@ -88,7 +88,7 @@ business_dict = {'p': 'Private Banking',
                   'b': 'Corporate Banking'}
 priority_dict = {'y': 'Yes',
                   'n': 'No'}
-system_status_dict = {'a': 'Avaliable',
+system_status_dict = {'a': 'available',
                        'l': 'Limited Functionality',
                        't': 'Terminated'}
 
@@ -361,40 +361,7 @@ def tv_show(branch):
                            personal_normal_third_q_number=personal_normal_third_q_number,
                            personal_priority_third_q_number=personal_priority_third_q_number,
                            business_normal_third_q_number=business_normal_third_q_number)
-def send_email():
-    if request.method == 'POST':
-        email = request.form['email']
 
-        # Connect to the email server
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-
-        # Login to the email server
-        server.login('kaushikrv7@gmail.com', 'letWSin23G')
-
-        # Send the email
-        subject = "Test Email"
-        body = "This is a test email sent from Flask."
-        msg = f"Subject: {subject}\n\n{body}"
-        server.sendmail(
-            'kaushikrv7@gmail.com',
-            email,
-            msg
-        )
-
-        # Close the connection to the email server
-        server.quit()
-
-        return "Email sent!"
-
-    return '''
-        <form action="/" method="post">
-          <input type="email" name="email" placeholder="Enter your email">
-          <button type="submit">Send Email</button>
-        </form>
-    '''
 @app.route('/getq/mobile/checkAvaliability', methods=['GET','POST'])
 def checkStatus():
     global dict_all
@@ -444,7 +411,7 @@ def get_q_mobile():
         priority = request.form.get('priority')
         branch = request.form.get('branch')
 
-        if type_of_business == 'p' and priority == 'n' and dict_all[branch]['personal_normal_status'] == 'Avaliable':
+        if type_of_business == 'p' and priority == 'n' and dict_all[branch]['personal_normal_status'] == 'available':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
@@ -452,7 +419,7 @@ def get_q_mobile():
             estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
-        elif type_of_business == 'p' and priority == 'y' and dict_all[branch]['personal_priority_status'] == 'Avaliable':
+        elif type_of_business == 'p' and priority == 'y' and dict_all[branch]['personal_priority_status'] == 'available':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
@@ -460,7 +427,7 @@ def get_q_mobile():
             estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
             
-        elif type_of_business == 'b' and dict_all[branch]['business_normal_status'] == 'Avaliable':
+        elif type_of_business == 'b' and dict_all[branch]['business_normal_status'] == 'available':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
@@ -471,7 +438,7 @@ def get_q_mobile():
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
     
-    return render_template('mobile_queue_gen.html', avaliable_branch_dict=avaliable_branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+    return render_template('mobile_queue_gen.html', available_branch_dict=available_branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 @app.route('/getq/inperson/<branch>', methods=['GET','POST'])
 def get_q_inperson(branch):
@@ -510,14 +477,14 @@ def get_q_inperson(branch):
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
     branch_name = branch_dict[branch]
-    avaliable_business_dict = dict_all[branch]['avaliable_business_dict']
-    avaliable_priority_dict = dict_all[branch]['avaliable_priority_dict']
-    return render_template('inperson_queue_gen.html', branch_dict=branch_dict, avaliable_business_dict=avaliable_business_dict, avaliable_priority_dict=avaliable_priority_dict, branch_name=branch_name, branch=branch)
+    available_business_dict = dict_all[branch]['available_business_dict']
+    available_priority_dict = dict_all[branch]['available_priority_dict']
+    return render_template('inperson_queue_gen.html', branch_dict=branch_dict, available_business_dict=available_business_dict, available_priority_dict=available_priority_dict, branch_name=branch_name, branch=branch)
 
 @app.route('/cro/<branch>', methods=['GET','POST'])   #CRO Display, shows the queue status: serving, waiting, missed -Serena
 def cro_show(branch):
     global dict_all
-    global avaliable_branch_dict
+    global available_branch_dict
 
     # For all buttons
     if request.form.get("button1"):
@@ -540,42 +507,42 @@ def cro_show(branch):
     # buttons for changing either queue status
     if request.method == 'POST' and button == "terminatepn":
         dict_all[branch]['personal_normal_status'] = system_status_dict['t']
-        dict_all[branch]['avaliable_priority_dict'].pop('n','This key does not exist') # Change avaliable business list of certain for mobile customer page
+        dict_all[branch]['available_priority_dict'].pop('n','This key does not exist') # Change available business list of certain for mobile customer page
     if request.method == 'POST' and button == "reinitiatepn":
         dict_all[branch]['personal_normal_waiting'] = []
         dict_all[branch]['personal_normal_status'] = system_status_dict['a']
-        dict_all[branch]['avaliable_priority_dict']['n'] = priority_dict['n'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        dict_all[branch]['available_priority_dict']['n'] = priority_dict['n'.format(branch=branch)] # Change available branch list for mobile customer page
 
     if request.method == 'POST' and button == "terminatepp":
         dict_all[branch]['personal_priority_status'] = system_status_dict['t']
-        dict_all[branch]['avaliable_priority_dict'].pop('y','This key does not exist') # Change avaliable business list of certain for mobile customer page
+        dict_all[branch]['available_priority_dict'].pop('y','This key does not exist') # Change available business list of certain for mobile customer page
     if request.method == 'POST' and button == "reinitiatepp":
         dict_all[branch]['personal_priority_waiting'] = []
         dict_all[branch]['personal_priority_status'] = system_status_dict['a']
-        dict_all[branch]['avaliable_priority_dict']['y'] = priority_dict['y'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        dict_all[branch]['available_priority_dict']['y'] = priority_dict['y'.format(branch=branch)] # Change available branch list for mobile customer page
 
     if request.method == 'POST' and button == "terminatebn":
         dict_all[branch]['business_normal_status'] = system_status_dict['t']
-        dict_all[branch]['avaliable_business_dict'].pop('b','This key does not exist') # Change avaliable business list of certain for mobile customer page
+        dict_all[branch]['available_business_dict'].pop('b','This key does not exist') # Change available business list of certain for mobile customer page
     if request.method == 'POST' and button == "reinitiatebn":
         dict_all[branch]['business_normal_waiting'] = []
         dict_all[branch]['business_normal_status'] = system_status_dict['a']
-        dict_all[branch]['avaliable_business_dict']['b'] = business_dict['b'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        dict_all[branch]['available_business_dict']['b'] = business_dict['b'.format(branch=branch)] # Change available branch list for mobile customer page
     
     # buttons for changing branch all queue status
     # coordinate queue status when changing all queue status
     if request.method == 'POST' and button == "terminateAll":
         dict_all[branch]['system_status'] = system_status_dict['t']
-        avaliable_branch_dict.pop('{branch}'.format(branch=branch), 'This key does not exist') # Change avaliable branch list for mobile customer page
+        available_branch_dict.pop('{branch}'.format(branch=branch), 'This key does not exist') # Change available branch list for mobile customer page
 
         dict_all[branch]['personal_normal_status'] = system_status_dict['t']
-        dict_all[branch]['avaliable_priority_dict'].pop('n','This key does not exist') # Change avaliable business list of certain for mobile customer page
+        dict_all[branch]['available_priority_dict'].pop('n','This key does not exist') # Change available business list of certain for mobile customer page
         
         dict_all[branch]['personal_priority_status'] = system_status_dict['t']
-        dict_all[branch]['avaliable_priority_dict'].pop('y','This key does not exist') # Change avaliable business list of certain for mobile customer page
+        dict_all[branch]['available_priority_dict'].pop('y','This key does not exist') # Change available business list of certain for mobile customer page
 
         dict_all[branch]['business_normal_status'] = system_status_dict['t']
-        dict_all[branch]['avaliable_business_dict'].pop('b','This key does not exist') # Change avaliable business list of certain for mobile customer page
+        dict_all[branch]['available_business_dict'].pop('b','This key does not exist') # Change available business list of certain for mobile customer page
 
     if request.method == 'POST' and button == "reinitiateAll":
         dict_all[branch] = {'personal_normal_waiting': [],
@@ -587,42 +554,42 @@ def cro_show(branch):
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "Avaliable",
-                   'personal_priority_status': "Avaliable",
-                   'business_normal_status': "Avaliable",
-                   'system_status': "Avaliable",
-                   'avaliable_business_dict': {'p': 'Private Banking',
+                   'personal_normal_status': "available",
+                   'personal_priority_status': "available",
+                   'business_normal_status': "available",
+                   'system_status': "available",
+                   'available_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
-                   'avaliable_priority_dict': {'y': 'Yes',
+                   'available_priority_dict': {'y': 'Yes',
                   'n': 'No'}
                     }
         dict_all[branch]['system_status'] = system_status_dict['a']
-        avaliable_branch_dict['{branch}'] = branch_dict['{branch}'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        available_branch_dict['{branch}'] = branch_dict['{branch}'.format(branch=branch)] # Change available branch list for mobile customer page
         
         dict_all[branch]['personal_normal_status'] = system_status_dict['a']
-        dict_all[branch]['avaliable_priority_dict']['n'] = priority_dict['n'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        dict_all[branch]['available_priority_dict']['n'] = priority_dict['n'.format(branch=branch)] # Change available branch list for mobile customer page
         
         dict_all[branch]['personal_priority_status'] = system_status_dict['a']
-        dict_all[branch]['avaliable_priority_dict']['y'] = priority_dict['y'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        dict_all[branch]['available_priority_dict']['y'] = priority_dict['y'.format(branch=branch)] # Change available branch list for mobile customer page
         
         dict_all[branch]['business_normal_status'] = system_status_dict['a']
-        dict_all[branch]['avaliable_business_dict']['b'] = business_dict['b'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        dict_all[branch]['available_business_dict']['b'] = business_dict['b'.format(branch=branch)] # Change available branch list for mobile customer page
 
     # coordinate system status when changing either queue status
     if dict_all[branch]['personal_normal_status'] == system_status_dict['a'] and dict_all[branch]['personal_priority_status'] == system_status_dict['a'] and dict_all[branch]['business_normal_status'] == system_status_dict['a']:
         dict_all[branch]['system_status'] = system_status_dict['a']
-        avaliable_branch_dict['{branch}'] = branch_dict['{branch}'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        available_branch_dict['{branch}'] = branch_dict['{branch}'.format(branch=branch)] # Change available branch list for mobile customer page
     elif dict_all[branch]['personal_normal_status'] == system_status_dict['t'] and dict_all[branch]['personal_priority_status'] == system_status_dict['t'] and dict_all[branch]['business_normal_status'] == system_status_dict['t']:
         dict_all[branch]['system_status'] = system_status_dict['t']
-        avaliable_branch_dict.pop('{branch}'.format(branch=branch), 'This key does not exist') # Change avaliable branch list for mobile customer page
+        available_branch_dict.pop('{branch}'.format(branch=branch), 'This key does not exist') # Change available branch list for mobile customer page
     else:
         dict_all[branch]['system_status'] = system_status_dict['l']
-        avaliable_branch_dict['{branch}'] = branch_dict['{branch}'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        available_branch_dict['{branch}'] = branch_dict['{branch}'.format(branch=branch)] # Change available branch list for mobile customer page
 
     if dict_all[branch]['personal_normal_status'] == system_status_dict['t'] and dict_all[branch]['personal_priority_status'] == system_status_dict['t']:
-        dict_all[branch]['avaliable_business_dict'].pop('p','This key does not exist') # Change avaliable business list of certain for mobile customer page
+        dict_all[branch]['available_business_dict'].pop('p','This key does not exist') # Change available business list of certain for mobile customer page
     elif dict_all[branch]['personal_normal_status'] == system_status_dict['a'] or dict_all[branch]['personal_priority_status'] == system_status_dict['a']:
-        dict_all[branch]['avaliable_business_dict']['p'] = business_dict['p'.format(branch=branch)] # Change avaliable branch list for mobile customer page
+        dict_all[branch]['available_business_dict']['p'] = business_dict['p'.format(branch=branch)] # Change available branch list for mobile customer page
 
     current_serving_personal = dict_all[branch]['current_serving_personal']
     current_serving_business = dict_all[branch]['current_serving_business']
@@ -654,8 +621,8 @@ def cro_show(branch):
 def add_miss_num(branch, type_of_business, counter):
     global dict_all
 
-    avaliable_business_dict = dict_all[branch]['avaliable_business_dict']
-    avaliable_priority_dict = dict_all[branch]['avaliable_priority_dict']
+    available_business_dict = dict_all[branch]['available_business_dict']
+    available_priority_dict = dict_all[branch]['available_priority_dict']
 
     if request.method == 'POST':
         type_of_business = request.form.get('type_of_business')
@@ -671,7 +638,7 @@ def add_miss_num(branch, type_of_business, counter):
             else:
                 return render_template('add_missed_fail.html')
             
-    return render_template('add_missed.html', avaliable_branch_dict=avaliable_branch_dict, avaliable_business_dict=avaliable_business_dict, avaliable_priority_dict=avaliable_priority_dict)
+    return render_template('add_missed.html', available_branch_dict=available_branch_dict, available_business_dict=available_business_dict, available_priority_dict=available_priority_dict)
 
 
 @app.route('/', methods=['GET','POST']) # Main Page for demonstration

@@ -138,7 +138,7 @@
         <li><b>Enter visit information:</b>
             <ul>
                 <li>Type of Banking:<br>
-                    {% for k,v in avaliable_business_dict.items() %}
+                    {% for k,v in available_business_dict.items() %}
                     <form action="" method="post">
                         <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
                         <label for="{{k}}">{{v}}</label>
@@ -154,7 +154,7 @@
                 }
             </script>
             <li id="priority_container" style="display:block;">Priority Banking?<br>
-                {% for k,v in avaliable_priority_dict.items() %}
+                {% for k,v in available_priority_dict.items() %}
                  <form action="" method="post">
                     <input class="half-gap" type="radio" name="priority" name="priority" value="{{k}}">
                     <label for="{{k}}">{{v}}</label>
