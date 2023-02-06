@@ -37,7 +37,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'avaliable_priority_dict': {'y': 'Yes',
                   'n': 'No'}
                     },
-            'kl':{'personal_normal_waiting': [],
+            'amk':{'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
                    'business_normal_waiting': [],
                    'personal_skipped': [],
@@ -77,12 +77,12 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
 
 branch_dict = {'jp': 'Jurong Point',
                'je': 'Jurong East',
-               'kl': 'Kuala Lumpur',
-               'hg': 'Hou Gang'}
+               'amk': 'Ang Mo Kio',
+               'hg': 'Hougang'}
 avaliable_branch_dict = {'jp': 'Jurong Point',
                'je': 'Jurong East',
-               'kl': 'Kuala Lumpur',
-               'hg': 'Hou Gang'}
+               'amk': 'Ang Mo Kio',
+               'hg': 'Hougang'}
 business_dict = {'p': 'Private Banking',
                   'b': 'Corporate Banking'}
 priority_dict = {'y': 'Yes',
