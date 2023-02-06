@@ -428,7 +428,7 @@ def get_q_mobile():
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
-            waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])-1
+            waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])+len(dict_all[branch]['personal_priority_waiting'])-1
             estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
@@ -467,7 +467,7 @@ def get_q_inperson(branch):
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
-            waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])-1
+            waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])+len(dict_all[branch]['personal_priority_waiting'])-1
             estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
