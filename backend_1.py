@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
-dict_all = {'jp': {'personal_normal_waiting': [2,4],
-                   'personal_priority_waiting':[1,3],
-                   'business_normal_waiting': [5,6,7,8],
-                   'personal_skipped': [13,15],
-                   'business_skipped': [24,56],
+dict_all = {'jp': {'personal_normal_waiting': [],
+                   'personal_priority_waiting':[],
+                   'business_normal_waiting': [],
+                   'personal_skipped': [],
+                   'business_skipped': [],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
-                   'current_serving_personal': {'1':'11','2':'99'},
-                   'current_serving_business': {'3':15,'4':10},
+                   'current_serving_personal': {},
+                   'current_serving_business': {},
                    'personal_normal_status': "Terminated",
                    'personal_priority_status': "Avaliable",
                    'business_normal_status': "Avaliable",
