@@ -443,7 +443,7 @@ def get_q_mobile():
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
     
-    return render_template('mobile_queue_gen.html', available_branch_dict=available_branch_dict, business_dict=business_dict, priority_dict=priority_dict)
+    return render_template('mobile_queue_gen.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
 @app.route('/getq/inperson/<branch>', methods=['GET','POST'])
 def get_q_inperson(branch):

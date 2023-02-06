@@ -150,7 +150,7 @@
                 <li>Please choose your preferred branch:
                     <form action="" method="post">
                     <select id="branch" name="branch" value="{{k}}">
-                        {% for k,v in available_branch_dict.items() %}
+                        {% for k,v in branch_dict.items() %}
                             <option value={{k}}>{{v}}</option>
                             {% endfor %}
                     </select>
