@@ -385,7 +385,7 @@ def get_q_mobile():
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])
-            estimated_time = str(waiting_numbers*5)+'minutes'
+            estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
         elif type_of_business == 'p' and priority == 'y' and dict_all[branch]['personal_priority_status'] == 'Avaliable':
@@ -393,7 +393,7 @@ def get_q_mobile():
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['personal_priority_waiting'])
-            estimated_time = str(waiting_numbers*5)+'minutes'
+            estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
             
         elif type_of_business == 'b' and dict_all[branch]['business_normal_status'] == 'Avaliable':
@@ -401,7 +401,7 @@ def get_q_mobile():
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['business_normal_waiting'])
-            estimated_time = str(waiting_numbers*5)+'minutes'
+            estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
         else:  #if user doesn't select all value, prompt user to input all required information
@@ -424,7 +424,7 @@ def get_q_inperson(branch):
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])
-            estimated_time = str(waiting_numbers*5)+'minutes'
+            estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         elif type_of_business == 'p' and priority == 'y':
@@ -432,7 +432,7 @@ def get_q_inperson(branch):
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['personal_priority_waiting'])
-            estimated_time = str(waiting_numbers*5)+'minutes'
+            estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         elif type_of_business == 'b':
@@ -440,7 +440,7 @@ def get_q_inperson(branch):
             type_of_business = business_dict[type_of_business]
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['business_normal_waiting'])
-            estimated_time = str(waiting_numbers*5)+'minutes'
+            estimated_time = str(waiting_numbers*5)+' minutes'
             return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
         
         else:  #if user doesn't select all value, prompt user to input all required information
