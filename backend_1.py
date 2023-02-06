@@ -14,7 +14,7 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'personal_normal_status': "Avaliable",
                    'personal_priority_status': "Avaliable",
                    'business_normal_status': "Avaliable",
-                   'system_status': "Limited Functionality",
+                   'system_status': "Avaliable",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -29,10 +29,10 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "Not Reinitiated",
-                   'personal_priority_status': "Not Reinitiated",
-                   'business_normal_status': "Not Reinitiated",
-                   'system_status': "Not Reinitiated",
+                   'personal_normal_status': "Avaliable",
+                   'personal_priority_status': "Avaliable",
+                   'business_normal_status': "Avaliable",
+                   'system_status': "Avaliable",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -49,8 +49,8 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_serving_business': {},
                    'personal_normal_status': "Available",
                    'personal_priority_status': "Available",
-                   'business_normal_status': "Not Reinitiated",
-                   'system_status': "Not Reinitiated",
+                   'business_normal_status': "Available",
+                   'system_status': "Available",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -65,10 +65,10 @@ dict_all = {'jp': {'personal_normal_waiting': [],
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
                    'current_serving_business': {},
-                   'personal_normal_status': "Not Reinitiated",
-                   'personal_priority_status': "Not Reinitiated",
-                   'business_normal_status': "Not Reinitiated",
-                   'system_status': "Not Reinitiated",
+                   'personal_normal_status': "Avaliable",
+                   'personal_priority_status': "Avaliable",
+                   'business_normal_status': "Avaliable",
+                   'system_status': "Avaliable",
                    'avaliable_business_dict': {'p': 'Private Banking',
                   'b': 'Corporate Banking'},
                    'avaliable_priority_dict': {'y': 'Yes',
@@ -263,31 +263,31 @@ def counter_show(branch, type_of_business, counter):
     if request.method == 'POST' and button == "next" and type_of_business_whole == 'Private Banking':
         current_queue_no = get_next_personal_customer(branch)
         current_serving_personal[display_name] = current_queue_no
-        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business_whole)
 
     elif request.method == 'POST' and button == "next" and type_of_business_whole == 'Corporate Banking':
         current_queue_no = get_next_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business_whole)
 
     elif request.method == "POST" and button == "skip" and type_of_business_whole == 'Private Banking':
         current_queue_no = skip_personal_customer(branch)
         current_serving_personal[display_name]= current_queue_no
-        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business_whole)
 
     elif request.method == "POST" and button == "skip" and type_of_business_whole == 'Corporate Banking':
         current_queue_no = skip_business_customer(branch)
         current_serving_business[display_name] = current_queue_no
-        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business)
+        return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business_whole)
 
     elif request.method == 'POST' and button == 'stop':
         current_serving_business[display_name] = 'Stop Serving'
-        return render_template('stop_serving.html', branch_name=branch_name, counter=counter, type_of_business=type_of_business)
+        return render_template('stop_serving.html', branch_name=branch_name, counter=counter, type_of_business=type_of_business_whole)
     
     elif request.method == 'POST' and button == 'add_missed':
-        return redirect(url_for('add_miss_num', branch=branch, type_of_business=type_of_business, counter=counter))
+        return redirect(url_for('add_miss_num', branch=branch, type_of_business=type_of_business_whole, counter=counter))
     
-    return render_template('counter_main.html', branch_name=branch_name, q=None, counter=counter, type_of_business=type_of_business)
+    return render_template('counter_main.html', branch_name=branch_name, q=None, counter=counter, type_of_business=type_of_business_whole)
 
 
 @app.route('/main_display/<branch>', methods=['GET','POST'])
