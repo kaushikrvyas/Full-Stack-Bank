@@ -13,7 +13,7 @@
                 margin-top: 1em;
               }
             h1 {
-                color: #005AA7;
+                color: #0065B3;
                 font-size: 36px;
                 margin-bottom: 30px;
                 text-align: center;
@@ -35,7 +35,7 @@
                 display: inline;
                 padding: 20px 40px;
                 font-size: 18px;
-                background-color: #005AA7;
+                background-color: #0065B3;
                 color: white;
                 border: none;
                 border-radius: 5px;
@@ -58,7 +58,7 @@
             }
             
             th {
-                background-color: #005AA7;
+                background-color: #0065B3;
                 color: white;
                 font-size: 16px;
             }
@@ -105,7 +105,7 @@
                 padding: 16px 16px;
                 border: none;
                 border-radius: 5px;
-                background-color: #005AA7;
+                background-color: #0065B3;
                 color: white;
                 font-size: 18px;
               }
@@ -128,28 +128,44 @@
               }
               
               input[type="radio"]:checked + label {
-                color: #005AA7;
+                color: #E61030;
               }
           </style>
     </head>
     <body>
         <h1>Add Missed Number Into Queue</h1>
         <ol>
-        <li>Enter visit information:
+        <li><b>Enter visit information:</b>
             <ul>
                 <li>Type of Banking:<br>
                     {% for k,v in avaliable_business_dict.items() %}
                     <form action="" method="post">
-                        <input type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
+                        <input class="half-gap" type="radio" id="type_of_business" name="type_of_business" value="{{k}}" onclick="hidePriority('{{k}}')">
                         <label for="{{k}}">{{v}}</label>
                     {% endfor %}
             </li>
+            <script>
+                function hidePriority(businessType) {
+                  if (businessType === "b") {
+                    document.getElementById("priority_container").style.display = "none";
+                  } else {
+                    document.getElementById("priority_container").style.display = "block";
+                  }
+                }
+            </script>
+            <li id="priority_container" style="display:block;">Priority Banking?<br>
+                {% for k,v in avaliable_priority_dict.items() %}
+                 <form action="" method="post">
+                    <input class="half-gap" type="radio" name="priority" name="priority" value="{{k}}">
+                    <label for="{{k}}">{{v}}</label>
+                {% endfor %}
+            </li>
                 <li>Please enter the missed number:<br>
-                    <input type="number" class="half-gap" name="missednum" name="missednum" value="{{y}}" size="5" style="height: 30px; font-size: 20px;">
+                    <input type="number" name="missednum" name="missednum" value="{{y}}" size="5" style="height: 30px; font-size: 20px;">
                 </li>
             </ul>
         </li>
-        <li>Click the "Add" button below to add the number into waiting list.</li>
+        <li><b>Click the "Add" button below to add the number into waiting list.</b></li>
         </ol>
         <button id="getQbutton" name="getQbutton" style="display:block; margin: 0 auto;">Add</button>
     </body>

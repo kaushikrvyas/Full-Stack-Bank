@@ -9,7 +9,7 @@ dict_all = {'jp': {'personal_normal_waiting': [2,4],
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {'1':'11','2':'99'},
-                   'current_serving_business': {'3':15,'4':'10'},
+                   'current_serving_business': {'3':15,'4':10},
                    'personal_normal_status': "Terminated",
                    'personal_priority_status': "Avaliable",
                    'business_normal_status': "Avaliable",
@@ -346,9 +346,9 @@ def checkStatus():
     hg_personal_priority_status = dict_all['hg']['personal_priority_status']
     hg_business_normal_status = dict_all['hg']['business_normal_status']
 
-    kl_personal_normal_status = dict_all['kl']['personal_normal_status']
-    kl_personal_priority_status = dict_all['kl']['personal_priority_status']
-    kl_business_normal_status = dict_all['kl']['business_normal_status']
+    amk_personal_normal_status = dict_all['amk']['personal_normal_status']
+    amk_personal_priority_status = dict_all['amk']['personal_priority_status']
+    amk_business_normal_status = dict_all['amk']['business_normal_status']
 
     return render_template('branch_status.html', jp_personal_normal_status=jp_personal_normal_status,
                                                  jp_personal_priority_status=jp_personal_priority_status,
@@ -359,9 +359,9 @@ def checkStatus():
                                                  hg_personal_normal_status=hg_personal_normal_status,
                                                  hg_personal_priority_status=hg_personal_priority_status,
                                                  hg_business_normal_status=hg_business_normal_status,
-                                                 kl_personal_normal_status=kl_personal_normal_status,
-                                                 kl_personal_priority_status=kl_personal_priority_status,
-                                                 kl_business_normal_status=kl_business_normal_status)
+                                                 amk_personal_normal_status=amk_personal_normal_status,
+                                                 amk_personal_priority_status=amk_personal_priority_status,
+                                                 amk_business_normal_status=amk_business_normal_status)
 
 @app.route('/getq/mobile', methods=['GET','POST'])
 def get_q_mobile():
