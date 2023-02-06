@@ -310,11 +310,16 @@ def counter_show(branch, type_of_business, counter):
         dict_all[branch]['current_queue_no'] = current_queue_no
         return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business_whole)
 
-    elif request.method == 'POST' and button == 'stop':
-        current_serving_business[display_name] = 'Stop Serving'
+    elif request.method == 'POST' and button == 'stop' and type_of_business_whole == 'Private Banking':
+        current_serving_personal[display_name] = 'Stop Serving'
         return render_template('stop_serving.html', branch_name=branch_name, counter=counter, type_of_business=type_of_business_whole)
-    
-    elif request.method == 'POST' and button == 'add_missed':
+
+    elif request.method == 'POST' and button == 'stop' and type_of_business_whole == 'Corporate Banking':
+        current_serving_business[display_name] = 'Stop Serving'
+        return render_template('stop_serving.html', branch_name=branch_name, counter=counter,
+                               type_of_business=type_of_business_whole)
+
+    elif request.method == 'POST' and button == 'add_missed' :
         return redirect(url_for('add_miss_num', branch=branch, type_of_business=type_of_business_whole, counter=counter))
     
     return render_template('counter_main.html', branch_name=branch_name, q=None, counter=counter, type_of_business=type_of_business_whole)
