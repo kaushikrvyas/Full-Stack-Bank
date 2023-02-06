@@ -41,7 +41,7 @@ dict_all = {'jp': {'personal_normal_waiting': [],
             'amk':{'personal_normal_waiting': [3,7,8,9],
                    'personal_priority_waiting':[4],
                    'business_normal_waiting': [5,6,10,11,12],
-                   'personal_skipped': [2],
+                   'personal_skipped': [2,100,101],
                    'business_skipped': [],
                    'current_queue_no': 6,
                    'current_assigned_queue_no': 1,
@@ -106,7 +106,7 @@ def get_next_personal_customer(branch):
     if not personal_priority_waiting:  # if personal_priority_waiting queue is empty, get queue number from personal_normal_waiting list
         if personal_normal_waiting:  # if personal_normal_waiting queue is not empty.
             current_queue_no = personal_normal_waiting[0]  # get the current queue number
-            print("cqn:", current_queue_no)
+            #print("cqn:", current_queue_no)
             personal_normal_waiting.pop(0)  # Remove current_queue_no from personal_normal_waiting list
             return current_queue_no
 
@@ -115,7 +115,7 @@ def get_next_personal_customer(branch):
 
     if personal_priority_waiting:  # if personal_priority_waiting queue is not empty, get queue number from personal_priority_waiting list
         current_queue_no = personal_priority_waiting[0]
-        print("cqn:", current_queue_no)
+        #print("cqn:", current_queue_no)
         personal_priority_waiting.pop(0)  # Remove current_queue_no from personal_priority_waiting list
         return current_queue_no
 
@@ -139,11 +139,11 @@ def skip_personal_customer(branch):
     current_queue_no = dict_all[branch]['current_queue_no']
     personal_skipped = dict_all[branch]['personal_skipped']
     if current_queue_no != 'No customer in the queue':
-        print("cqn before added to skipped:", current_queue_no)
+        #print("cqn before added to skipped:", current_queue_no)
         personal_skipped.append(current_queue_no) # Append the skipped queue number to the personal_skipped list
-        print("added to the list:", personal_skipped)
+        #print("added to the list:", personal_skipped)
         current_queue_no = get_next_personal_customer(branch)
-        print("cqn:", current_queue_no)
+        #print("cqn:", current_queue_no)
         return current_queue_no
     else:
         return 'Cannot skip, no customer in the queue'
@@ -194,14 +194,34 @@ def add_missed_num_to_queue(branch,type_of_business,priority,missednum):
     personal_priority_waiting = dict_all[branch]['personal_priority_waiting']
     personal_normal_waiting = dict_all[branch]['personal_normal_waiting']
     business_normal_waiting = dict_all[branch]['business_normal_waiting']
-    
+    #print(type(missednum))
+    #print(priority)
+    #print(type_of_business)
     if type_of_business =='p' and priority == 'y':
-        personal_priority_waiting.insert(2,missednum)
+        #print(dict_all[branch]['personal_skipped'])
+        if missednum in dict_all[branch]['personal_skipped']:
+            personal_priority_waiting.insert(2,missednum)
+            dict_all[branch]['personal_skipped'].remove(missednum)
+            return True
+        else:
+            return False
+
     elif type_of_business =='p' and priority == 'n':
-        personal_normal_waiting.insert(2,missednum)
+        if missednum in dict_all[branch]['personal_skipped']:
+            personal_normal_waiting.insert(2,missednum)
+            dict_all[branch]['personal_skipped'].remove(missednum)
+            return True
+        else:
+            return False
+
     elif type_of_business =='b':
-        business_normal_waiting.insert(2,missednum)
-    return missednum 
+        if missednum in dict_all[branch]['business_skipped']:
+            business_normal_waiting.insert(2,missednum)
+            dict_all[branch]['business_skipped'].remove(missednum)
+            return True
+        else:
+            return False
+    return False
 
 @app.route('/<target>/selectbranch', methods=['GET', 'POST'])
 def select_branch(target):
@@ -279,7 +299,7 @@ def counter_show(branch, type_of_business, counter):
 
     elif request.method == "POST" and button == "skip" and type_of_business_whole == 'Private Banking':
         current_queue_no = skip_personal_customer(branch)
-        print("cqn1:", current_queue_no)
+        #print("cqn1:", current_queue_no)
         current_serving_personal[display_name]= current_queue_no
         dict_all[branch]['current_queue_no'] = current_queue_no
         return render_template('counter_main.html', branch_name=branch_name, q=current_queue_no, counter=counter, type_of_business=type_of_business_whole)
@@ -638,13 +658,18 @@ def add_miss_num(branch, type_of_business, counter):
     avaliable_priority_dict = dict_all[branch]['avaliable_priority_dict']
 
     if request.method == 'POST':
+        type_of_business = request.form.get('type_of_business')
+        #print("t:",type_of_business)
         priority = request.form.get('priority')
-        missednum = request.form.get('missednum')
+        missednum = int(request.form.get('missednum'))
         if type_of_business is not None and priority is not None:
-            add_missed_num_to_queue(branch,type_of_business,priority,missednum)
-            type_of_business = business_dict[type_of_business]
-            branch = branch_dict[branch]
-            return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
+            outcome = add_missed_num_to_queue(branch,type_of_business,priority,missednum)
+            if outcome == True:
+                type_of_business = business_dict[type_of_business]
+                branch = branch_dict[branch]
+                return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
+            else:
+                return render_template('add_missed_fail.html')
             
     return render_template('add_missed.html', avaliable_branch_dict=avaliable_branch_dict, avaliable_business_dict=avaliable_business_dict, avaliable_priority_dict=avaliable_priority_dict)
 
