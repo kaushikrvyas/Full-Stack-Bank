@@ -139,14 +139,18 @@ def skip_personal_customer(branch):
     current_queue_no = dict_all[branch]['current_queue_no']
     personal_skipped = dict_all[branch]['personal_skipped']
     if current_queue_no != 'No customer in the queue':
-        print("cqn before added to skipped:", current_queue_no)
+        # print("cqn before added to skipped:", current_queue_no)
         personal_skipped.append(current_queue_no) # Append the skipped queue number to the personal_skipped list
-        print("added to the list:", personal_skipped)
+        # print("added to the list:", personal_skipped)
         current_queue_no = get_next_personal_customer(branch)
-        print("cqn:", current_queue_no)
+        dict_all[branch]['current_queue_no'] = current_queue_no
+        # print("cqn:", current_queue_no)
         return current_queue_no
     else:
         return 'Cannot skip, no customer in the queue'
+
+# print(skip_personal_customer('jp'))
+# print(skip_personal_customer('jp'))
 
 
 def skip_business_customer(branch):
