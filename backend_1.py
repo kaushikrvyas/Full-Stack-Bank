@@ -633,7 +633,16 @@ def add_miss_num(branch, type_of_business, counter):
         type_of_business = request.form.get('type_of_business')
         #print("t:",type_of_business)
         priority = request.form.get('priority')
-        if type_of_business is not None and priority is not None:
+        if type_of_business == 'p' and priority is not None:
+            missednum = int(request.form.get('missednum'))
+            outcome = add_missed_num_to_queue(branch,type_of_business,priority,missednum)
+            if outcome == True:
+                type_of_business = business_dict[type_of_business]
+                branch = branch_dict[branch]
+                return render_template('miss_added.html', missednum=missednum, type_of_business=type_of_business, branch=branch)
+            else:
+                return render_template('add_missed_fail.html')
+        elif type_of_business == 'b':
             missednum = int(request.form.get('missednum'))
             outcome = add_missed_num_to_queue(branch,type_of_business,priority,missednum)
             if outcome == True:

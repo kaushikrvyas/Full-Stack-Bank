@@ -130,10 +130,16 @@
       <th> Now Serving </th>
       <th> Counter </th>
     </tr>
-    {% for k,v in current_serving_personal.items() %}
+    {% for k1,v1 in current_serving_personal.items() %}
     <tr>
-      <td>{{v}}</td>
-      <td>{{k[-1:]}}</td>
+      <td>{{v1}}</td>
+      <td>{{k1[-1:]}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      {% for k2,v2 in current_serving_business.items() %}
+      <td>{{v2}}</td>
+      <td>{{k2[-1:]}}</td>
     </tr>
     {% endfor %}
   </table>
