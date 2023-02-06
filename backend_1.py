@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+import smtplib
 app = Flask(__name__)
 
 dict_all = {'jp': {'personal_normal_waiting': [],
@@ -330,7 +331,40 @@ def tv_show(branch):
                            personal_normal_third_q_number=personal_normal_third_q_number,
                            personal_priority_third_q_number=personal_priority_third_q_number,
                            business_normal_third_q_number=business_normal_third_q_number)
+def send_email():
+    if request.method == 'POST':
+        email = request.form['email']
 
+        # Connect to the email server
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+
+        # Login to the email server
+        server.login('kaushikrv7@gmail.com', 'letWSin23G')
+
+        # Send the email
+        subject = "Test Email"
+        body = "This is a test email sent from Flask."
+        msg = f"Subject: {subject}\n\n{body}"
+        server.sendmail(
+            'kaushikrv7@gmail.com',
+            email,
+            msg
+        )
+
+        # Close the connection to the email server
+        server.quit()
+
+        return "Email sent!"
+
+    return '''
+        <form action="/" method="post">
+          <input type="email" name="email" placeholder="Enter your email">
+          <button type="submit">Send Email</button>
+        </form>
+    '''
 @app.route('/getq/mobile/checkAvaliability', methods=['GET','POST'])
 def checkStatus():
     global dict_all
