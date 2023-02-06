@@ -229,7 +229,6 @@ def select_branch(target):
 def select_counter(branch):
     global dict_all
     global business_dict
-    branch=branch
 
     if request.method == 'POST':
         counterid = request.form.get('counterid')
@@ -237,7 +236,7 @@ def select_counter(branch):
         if type_of_business is not None and counterid is not None:
             return redirect(url_for('counter_show', branch=branch, type_of_business=type_of_business, counter=counterid))
             
-    return render_template('counter_selection_page.html',branch=branch)
+    return render_template('counter_selection_page.html',branch=branch, business_dict=business_dict)
 
 @app.route('/counter/<branch>/<type_of_business>/<counter>', methods=['GET', 'POST'])
 def counter_show(branch, type_of_business, counter):
@@ -303,6 +302,21 @@ def tv_show(branch):
     personal_priority_status = dict_all[branch]['personal_priority_status']
     business_normal_status = dict_all[branch]['business_normal_status']
     q_number = dict_all[branch]['current_queue_no']
+    if len(dict_all[branch]['personal_normal_waiting']) >= 3:
+        personal_normal_third_q_number = dict_all[branch]['personal_normal_waiting'][2]
+    else:
+        personal_normal_third_q_number = 'None'
+
+    if len(dict_all[branch]['personal_priority_waiting']) >= 3:
+        personal_priority_third_q_number = dict_all[branch]['personal_priority_waiting'][2]
+    else:
+         personal_priority_third_q_number = 'None'
+
+    if len(dict_all[branch]['business_normal_waiting']) >= 3:
+        business_normal_third_q_number = dict_all[branch]['business_normal_waiting'][2]
+    else:
+        business_normal_third_q_number = 'None'
+
     url = f"/main_display/" + branch
     return render_template('main_tv_display.html', current_serving_personal=current_serving_personal,
                            current_serving_business=current_serving_business,
@@ -312,7 +326,10 @@ def tv_show(branch):
                            personal_normal_status=personal_normal_status,
                            personal_priority_status = personal_priority_status,
                            business_normal_status = business_normal_status,
-                           url=url, branch_name=branch_name,q_number=q_number)
+                           url=url, branch_name=branch_name,q_number=q_number,
+                           personal_normal_third_q_number=personal_normal_third_q_number,
+                           personal_priority_third_q_number=personal_priority_third_q_number,
+                           business_normal_third_q_number=business_normal_third_q_number)
 
 @app.route('/getq/mobile/checkAvaliability', methods=['GET','POST'])
 def checkStatus():
