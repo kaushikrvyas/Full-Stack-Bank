@@ -149,7 +149,7 @@
             <ul>
                 <li>Please choose your preferred branch:
                     <form action="" method="post">
-                    <select id="branch" name="branch" value="branch">
+                    <select id="branch" name="branch" value="{{k}}">
                         {% for k,v in avaliable_branch_dict.items() %}
                             <option value={{k}}>{{v}}</option>
                             {% endfor %}
@@ -176,7 +176,7 @@
                 <li id="priority_container" style="display:block;">Priority Banking?<br>
                     {% for k,v in priority_dict.items() %}
                     <form action="" method="post">
-                        <input class="half-gap" type="radio" name="priority" value="{{k}}">
+                        <input class="half-gap" type="radio" id="priority" name="priority" value="{{k}}">
                         <label for="{{k}}">{{v}}</label>
                         {% endfor %}
                 </li>
