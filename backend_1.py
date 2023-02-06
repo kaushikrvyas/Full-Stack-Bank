@@ -228,27 +228,16 @@ def select_branch(target):
 @app.route('/counter/<branch>/selectcounter', methods=['GET', 'POST'])
 def select_counter(branch):
     global dict_all
+    global business_dict
+    branch=branch
 
-    # For buttons
-    if request.form.get("button1"):
-        button = request.form.get("button1")
-    elif request.form.get("button2"):
-        button = request.form.get("button2")
-    elif request.form.get("button3"):
-        button = request.form.get("button3")
-    elif request.form.get("button4"):
-        button = request.form.get("button4")
-    elif request.form.get("button5"):
-        button = request.form.get("button5")
-    
-    # from button's value we determine the type_of_business
-    # button's value should be 'b', 'p'
-    if request.method == 'POST' and button in []:
+    if request.method == 'POST':
         counterid = request.form.get('counterid')
-        return redirect(url_for('counter_show', branch=branch, type_of_business=button, counter=counterid))
-    elif request.method == 'POST' and button == "Back2Main":
-        return redirect(url_for('main'))
-    return render_template('counter_selection_page.html')
+        type_of_business = request.form.get('type_of_business')
+        if type_of_business is not None and counterid is not None:
+            return redirect(url_for('counter_show', branch=branch, type_of_business=type_of_business, counter=counterid))
+            
+    return render_template('counter_selection_page.html',branch=branch)
 
 @app.route('/counter/<branch>/<type_of_business>/<counter>', methods=['GET', 'POST'])
 def counter_show(branch, type_of_business, counter):
@@ -516,7 +505,15 @@ def cro_show(branch):
                    'current_queue_no': 0,
                    'current_assigned_queue_no': 0,
                    'current_serving_personal': {},
-                   'current_serving_business': {}
+                   'current_serving_business': {},
+                   'personal_normal_status': "Avaliable",
+                   'personal_priority_status': "Avaliable",
+                   'business_normal_status': "Avaliable",
+                   'system_status': "Avaliable",
+                   'avaliable_business_dict': {'p': 'Private Banking',
+                  'b': 'Corporate Banking'},
+                   'avaliable_priority_dict': {'y': 'Yes',
+                  'n': 'No'}
                     }
         dict_all[branch]['system_status'] = system_status_dict['a']
         avaliable_branch_dict['{branch}'] = branch_dict['{branch}'.format(branch=branch)] # Change avaliable branch list for mobile customer page
@@ -613,10 +610,5 @@ def main():
         return redirect(url_for('get_q_mobile'))
     return render_template('main_page.html', branch_dict=branch_dict, business_dict=business_dict, priority_dict=priority_dict)
 
-@app.route('/test', methods=['GET','POST'])
-def tester():
-    return render_template('main_page.html')
-
 if __name__ == '__main__':
     app.run(debug = True,port=8000)
-
