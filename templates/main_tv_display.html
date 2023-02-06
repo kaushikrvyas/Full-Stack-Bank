@@ -138,8 +138,12 @@
 <body>
   <h3 align = "right">{{branch_name}} Branch</h3>
   <h1 align="center"> It is now calling for the queue number:</h1>
-  <h2 align = "center"> <span id="q_number" name="q_number">{{q_number}}</span></h2>
-    <br>
+  {% if q_number == "No customer in the queue" %}
+    <h2 align = "center"> <span id="q_number" name="q_number"></span></h2>
+  {% else %}
+    <h2 align = "center"> <span id="q_number" name="q_number">{{q_number}}</span></h2>
+  {% endif %}
+  <br>
   <table>
     <tr>
         <th colspan="2"> Private Banking </th>
