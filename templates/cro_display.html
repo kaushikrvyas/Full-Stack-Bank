@@ -118,7 +118,7 @@
       }
   </style>
 <head>
-  <meta  http-equiv="refresh" content="2;url={{url}}">
+  <meta content="2;url={{url}}">
   <title>CRO Monitor Screen</title>
 </head>
 <body>
@@ -189,7 +189,7 @@
       <th colspan="2"> Missed Queue Numbers </th>
     </tr>
     <tr>
-      <td colspan="2">{% for x in personal_skipped %}{{x}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+      <td colspan="2">{% for x in personal_skipped %}{{x}}{% if not loop.last %}{% endif %}  {% endfor %}{% for y in business_skipped %}{{y}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
     </tr>
   </table>
 </form>
