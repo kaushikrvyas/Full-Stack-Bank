@@ -329,9 +329,9 @@ def checkStatus():
     hg_personal_priority_status = dict_all['hg']['personal_priority_status']
     hg_business_normal_status = dict_all['hg']['business_normal_status']
 
-    kl_personal_normal_status = dict_all['kl']['personal_normal_status']
-    kl_personal_priority_status = dict_all['kl']['personal_priority_status']
-    kl_business_normal_status = dict_all['kl']['business_normal_status']
+    amk_personal_normal_status = dict_all['amk']['personal_normal_status']
+    amk_personal_priority_status = dict_all['amk']['personal_priority_status']
+    amk_business_normal_status = dict_all['amk']['business_normal_status']
 
     return render_template('branch_status.html', jp_personal_normal_status=jp_personal_normal_status,
                                                  jp_personal_priority_status=jp_personal_priority_status,
@@ -342,9 +342,9 @@ def checkStatus():
                                                  hg_personal_normal_status=hg_personal_normal_status,
                                                  hg_personal_priority_status=hg_personal_priority_status,
                                                  hg_business_normal_status=hg_business_normal_status,
-                                                 kl_personal_normal_status=kl_personal_normal_status,
-                                                 kl_personal_priority_status=kl_personal_priority_status,
-                                                 kl_business_normal_status=kl_business_normal_status)
+                                                 amk_personal_normal_status=amk_personal_normal_status,
+                                                 amk_personal_priority_status=amk_personal_priority_status,
+                                                 amk_business_normal_status=amk_business_normal_status)
 
 @app.route('/getq/mobile', methods=['GET','POST'])
 def get_q_mobile():
