@@ -40,6 +40,16 @@
         border-radius: 5px;
         cursor: pointer;
     }
+    input {
+        text-align: inline;
+        padding: 10px 10px;
+        font-size: 16px;
+        background-color: #005AA7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
     table {
         border-collapse: collapse;
         width: 50%;
@@ -209,5 +219,8 @@
 </div>
 <br><br>
 <h1 align = "center">System Status: {{system_status}}</h1>
+<form>
+  <input type="button" style="display:block; margin: 0 auto;" value="Go Back" onclick="history.back()">
+</form>
 </body>
 </html>

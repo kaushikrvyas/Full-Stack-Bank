@@ -30,7 +30,16 @@
                 font-size: 20px;
                 margin-bottom: 30px;
             }
-            
+            input {
+        text-align: inline;
+        padding: 10px 10px;
+        font-size: 16px;
+        background-color: #005AA7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
             button {
                 display: block;
                 padding: 20px 40px;
@@ -167,5 +176,9 @@
         <li><b>Click the "Get Queue Number" button below to receive your queue number.</b></li>
         </ol>
             <button style="display:block; margin: 0 auto;" id="getQbutton" name="getQbutton">Get Queue Number</button>
-    </body>
+            <br></br>
+            <form>
+                <input type="button" style="display:block; margin: 0 auto;" value="Go Back" onclick="history.back()">
+              </form>
+        </body>
 </html>
