@@ -21,7 +21,7 @@ def SendEmail(email_address,q_number, type_of_business,
     currenttime=now.strftime('%Y-%m-%d %H:%M:%S')
     msg = Message(
 				'Hello Please Check Your Queue Number',
-				sender ='tony615huang@gmail.com',
+				sender ='customerservice@ABCBank.sg',
 				recipients = ['{email_address}'.format(email_address=email_address)]
 			)
     msg.body = 'Dear user, \n\nThank you for choosing ABC Bank. \nYour Queue Number is {q_number} for {type_of_business} in {branch_name}. \nThere is {waiting_numbers} person(s) in the queue in front of you. \nThe estimated waiting time is {estimated_time}. \nThank you for choosing us, and we look forward to assisting you soon.\n\nBest wishes,\nABC Bank {branch_name} branch\n\n{currenttime}'.format(q_number=q_number, 
