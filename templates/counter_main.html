@@ -30,7 +30,16 @@
           font-size: 20px;
           margin-bottom: 30px;
       }
-      
+      input {
+        text-align: inline;
+        padding: 10px 10px;
+        font-size: 16px;
+        background-color: #005AA7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
       button {
           display: inline;
           padding: 20px 40px;
@@ -158,5 +167,9 @@
         <button id="button4" name="button4" value="add_missed">Add Missed Number</button>
       </form>
     </div>
+    <br></br>
+    <form>
+        <input type="button" style="display:block; margin: 0 auto;" value="Go Back" onclick="history.back()">
+      </form>
   </body>
 </html>
