@@ -30,8 +30,11 @@ def SendEmail(email_address,q_number, type_of_business,
                                                             waiting_numbers=waiting_numbers,
                                                             estimated_time=estimated_time,
                                                             currenttime=currenttime)
-    mail.send(msg)
-    return redirect(url_for('EmailSent'))
+    try:
+        mail.send(msg)
+        return redirect(url_for('EmailSent'))
+    except:
+        return redirect(url_for('EmailSentUnsuccessful'))
 
 
 
@@ -709,11 +712,17 @@ def queue_generated(q_number, type_of_business,
                     branch_name, branch, 
                     waiting_numbers, estimated_time)
 
-    return render_template('queue_generated.html',q_number=q_number, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+    return render_template('queue_generated.html',q_number=q_number, type_of_business=type_of_business,
+                                                    branch_name=branch_name, branch=branch,
+                                                    waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
 @app.route("/EmailSent", methods=['GET','POST'])
 def EmailSent():
     return render_template('email_send_successful.html')
+
+@app.route("/EmailSentUnsuccessful", methods=['GET','POST'])
+def EmailSentUnsuccessful():
+    return render_template('email_send_unsuccessful.html')
 
 @app.route('/', methods=['GET','POST']) # Main Page for demonstration
 def main():
