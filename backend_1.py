@@ -1,6 +1,39 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_mail import Mail, Message
+from datetime import datetime
 import smtplib
 app = Flask(__name__)
+mail = Mail(app) # instantiate the mail class
+
+# configuration of mail
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'tony615huang@gmail.com'
+app.config['MAIL_PASSWORD'] = 'pqlwvkszarklluwd'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+def SendEmail(email_address,q_number, type_of_business, 
+                    branch_name, branch, 
+                    waiting_numbers, estimated_time):
+    now = datetime.now()
+    currenttime=now.strftime('%Y-%m-%d %H:%M:%S')
+    msg = Message(
+				'Hello Please Check Your Queue Number',
+				sender ='tony615huang@gmail.com',
+				recipients = ['{email_address}'.format(email_address=email_address)]
+			)
+    msg.body = 'Dear user, \n\nThank you for choosing ABC Bank. \nYour Queue Number is {q_number} for {type_of_business} in {branch_name}. \nThere is {waiting_numbers} person(s) in the queue in front of you. \nThe estimated waiting time is {estimated_time}. \nThank you for choosing us, and we look forward to assisting you soon.\n\nBest wishes,\nABC Bank {branch_name} branch\n\n{currenttime}'.format(q_number=q_number, 
+                                                            branch_name=branch_name,
+                                                            type_of_business=type_of_business,
+                                                            waiting_numbers=waiting_numbers,
+                                                            estimated_time=estimated_time,
+                                                            currenttime=currenttime)
+    mail.send(msg)
+    return redirect(url_for('EmailSent'))
+
+
 
 dict_all = {'jp': {'personal_normal_waiting': [],
                    'personal_priority_waiting':[],
@@ -461,7 +494,7 @@ def get_q_inperson(branch):
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['personal_normal_waiting'])+len(dict_all[branch]['personal_priority_waiting'])-1
             estimated_time = str(waiting_numbers*5)+' minutes'
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+            return redirect(url_for('queue_generated', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time))
         
         elif type_of_business == 'p' and priority == 'y':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
@@ -469,7 +502,7 @@ def get_q_inperson(branch):
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['personal_priority_waiting'])-1
             estimated_time = str(waiting_numbers*5)+' minutes'
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+            return redirect(url_for('queue_generated', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time))
         
         elif type_of_business == 'b':
             current_assigned_queue_no = assign_queue_no_to_queue(branch, type_of_business, priority)
@@ -477,7 +510,7 @@ def get_q_inperson(branch):
             branch_name = branch_dict[branch]
             waiting_numbers = len(dict_all[branch]['business_normal_waiting'])-1
             estimated_time = str(waiting_numbers*5)+' minutes'
-            return render_template('queue_generated.html', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+            return redirect(url_for('queue_generated', q_number=current_assigned_queue_no, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time))
         
         else:  #if user doesn't select all value, prompt user to input all required information
             return render_template('queue_gen_fail.html')
@@ -656,6 +689,31 @@ def add_miss_num(branch, type_of_business, counter):
         
     return render_template('add_missed.html', available_branch_dict=available_branch_dict, available_business_dict=available_business_dict, available_priority_dict=available_priority_dict)
 
+# Send the email
+@app.route("/<branch_name>/<branch>/<type_of_business>/<waiting_numbers>/<estimated_time>/<q_number>/queueGenerated", methods=['GET','POST'])
+def queue_generated(q_number, type_of_business, 
+                    branch_name, branch, 
+                    waiting_numbers, estimated_time):
+    global dict_all
+    #print("yes")
+    # For all buttons
+    if request.form.get("button1"):
+        button = request.form.get("button1")
+    
+     # buttons for changing either queue status
+    if request.method == 'POST' and button == "SendEmail":
+        
+        email_address = request.form.get('email_address')
+        
+        return SendEmail(email_address, q_number, type_of_business, 
+                    branch_name, branch, 
+                    waiting_numbers, estimated_time)
+
+    return render_template('queue_generated.html',q_number=q_number, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+
+@app.route("/EmailSent", methods=['GET','POST'])
+def EmailSent():
+    return render_template('email_send_successful.html')
 
 @app.route('/', methods=['GET','POST']) # Main Page for demonstration
 def main():
