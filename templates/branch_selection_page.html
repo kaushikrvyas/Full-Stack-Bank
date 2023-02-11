@@ -1,181 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>ABC Bank Queuing System</title>
-    <style>
-      body {
-          font-family: Arial, sans-serif;
-          background-color: #F2F2F2;
-          padding: 50px;
+  <meta charset="UTF-8">
+  <title>ABC Bank Queuing System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #F2F2F2;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #005AA7;
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #5F5F5F;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    h3 {
+        font-size: 16px;
       }
-      .half-gap {
-          margin-top: 1em;
-        }
-      h1 {
-          color: #005AA7;
-          font-size: 36px;
-          margin-bottom: 30px;
-          text-align: center;
-      }
-      
-      h2 {
-          color: #5F5F5F;
-          font-size: 20px;
-          margin-bottom: 30px;
-          text-align: center;
-      }
-      
-      h3 {
-          font-size: 20px;
-          margin-bottom: 30px;
-      }
-      
       button {
-          display: block;
-          padding: 20px 40px;
-          font-size: 18px;
-          background-color: #005AA7;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          margin-top: 30px;
-          text-align: center;
+        display: inline;
+        padding: 20px 20px;
+        font-size: 16px;
+        background-color: #005AA7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    table {
+      border-collapse: collapse;
+      width: 50%;
+      margin: 10px auto;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #005AA7;
+      color: white;
+    }
+    font[color="red"] {
+      color: red;
+      font-size: 24px;
+    }
+  </style>
+  <head>
+    <style>
+      .branch-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+        margin: 20px;
       }
-      
-      table {
-          border-collapse: collapse;
-          width: 50%;
-          margin: 10px auto;
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
       }
-      
-      th, td {
-          border: 1px solid black;
-          padding: 10px;
-          text-align: center;
-          font-size: 16px;
+      button {
+        padding: 10px 20px;
+        margin-top: 20px;
       }
-      
-      th {
-          background-color: #005AA7;
-          color: white;
-          font-size: 16px;
-      }
-      
-      font[color="red"] {
-          color: red;
-          font-size: 24px;
-      }
-      
-      ul, ol {
-          padding: 0;
-          margin: 0;
-          list-style: none;
-          font-size: 16px;
-      }
-      
-      li {
-          padding: 10px;
-          margin-bottom: 10px;
-          background-color: #EAEAEA;
-          border-radius: 5px;
-          text-align: left;
-          font-size: 18px;
-      }
-      
-      ol {
-          counter-reset: item;
-      }
-      
-      ol > li {
-          counter-increment: item;
-          position: relative;
-          padding-left: 30px;
-      }
-      
-      ol > li:before {
-          content: counters(item, ".") ". ";
-          position: absolute;
-          left: 0;
-          font-weight: bold;
-      }
-      select {
-          width: 20%;
-          padding: 16px 16px;
-          border: none;
-          border-radius: 5px;
-          background-color: #005AA7;
-          color: white;
-          font-size: 18px;
-        }
-        input[type="radio"] {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          border: 2px solid #000;
-          display: inline-block;
-          position: relative;
-        }
-
-        input[type="radio"] + label {
-          display: inline-block;
-          margin-right: 5px;
-          padding: 5px 10px;
-          background-color: #ccc;
-          border-radius: 100px;
-          cursor: pointer;
-        }
-        
-        input[type="radio"]:checked + label {
-          color: #E61030;
-        }
     </style>
   </head>
   <body>
+    <form action="" method="post">
     <h1>Welcome to ABC Bank</h1>
     <h2>Choose your preferred branch</h2>
     <div style="display: flex; justify-content: space-between;">
-      <div class="domain-card">
-        <form action="" method="post">
-        <img src="jp.jpg" alt="Domain 1">
+      <div class="branch-card">
+        <img src="{{ url_for('static', filename='jp.jpg')}}" alt="Domain 1">
         <button id="button1" name="button1" value="jp">
           Jurong Point
         </button>
-      </form>
       </div>
-      <div class="domain-card">
-        <form action="" method="post">
-        <img src="je.png" alt="Domain 2">
+      <div class="branch-card">
+        <img src="{{ url_for('static', filename='je.jpg')}}" alt="Domain 2">
         <button id="button2" name="button2" value="je">
           Jurong East
         </button>
-      </form>
       </div>
-      <div class="domain-card">
-        <form action="" method="post">
-        <img src="amk.jpg" alt="Domain 3">
+      <div class="branch-card">
+        <img src="{{ url_for('static', filename='amk.jpg')}}" alt="Domain 3">
         <button id="button3" name="button3" value="amk">
           Ang Mo Kio
         </button>
-      </form>
       </div>
-      <div class="domain-card">
-        <form action="" method="post">
-        <img src="hg.jpg" alt="Domain 4">
+      <div class="branch-card">
+        <img src="{{ url_for('static', filename='hg.jpg')}}" alt="Domain 4">
         <button id="button4" name="button4" value="hg">
           Hougang
         </button>
-      </form>
       </div>
       <div class="branch-card">
-        <form action="" method="post">
-        <img src="kl.jpg" alt="Domain 5">
+        <img src="{{ url_for('static', filename='jp.jpg')}}" alt="Domain 5">
         <button id="button5" name="button5" value="Back2Main">
           Main Page
         </button>
-      </form>
+
       </div>
     </div>
+  </form>
   </body>
 </html>
