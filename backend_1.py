@@ -24,17 +24,14 @@ def SendEmail(email_address,q_number, type_of_business,
 				sender ='customerservice@ABCBank.sg',
 				recipients = ['{email_address}'.format(email_address=email_address)]
 			)
-    msg.body = 'Dear user, \n\nThank you for choosing ABC Bank. \nYour Queue Number is {q_number} for {type_of_business} in {branch_name} branch. \nThere is {waiting_numbers} person(s) in the queue in front of you. \nThe estimated waiting time is {estimated_time}. \nThank you for choosing us, and we look forward to assisting you soon.\n\nBest wishes,\nABC Bank {branch_name} branch\n\n{currenttime}'.format(q_number=q_number, 
+    msg.body = 'Dear user, \n\nThank you for choosing ABC Bank. \nYour Queue Number is {q_number} for {type_of_business} in {branch_name}. \nThere is {waiting_numbers} person(s) in the queue in front of you. \nThe estimated waiting time is {estimated_time}. \nThank you for choosing us, and we look forward to assisting you soon.\n\nBest wishes,\nABC Bank {branch_name} branch\n\n{currenttime}'.format(q_number=q_number, 
                                                             branch_name=branch_name,
                                                             type_of_business=type_of_business,
                                                             waiting_numbers=waiting_numbers,
                                                             estimated_time=estimated_time,
                                                             currenttime=currenttime)
-    try:
-        mail.send(msg)
-        return redirect(url_for('EmailSent'))
-    except:
-        return redirect(url_for('EmailSentUnsuccessful'))
+    mail.send(msg)
+    return redirect(url_for('EmailSent'))
 
 
 
@@ -316,6 +313,8 @@ def counter_show(branch, type_of_business, counter):
         button = request.form.get("button3")
     elif request.form.get("button4"):
         button = request.form.get("button4")
+    elif request.form.get("button5"):
+        button = request.form.get("button5")
 
     current_queue_no = dict_all[branch]['current_queue_no']
     current_serving_personal = dict_all[branch]['current_serving_personal']
@@ -357,6 +356,9 @@ def counter_show(branch, type_of_business, counter):
 
     elif request.method == 'POST' and button == 'add_missed' :
         return redirect(url_for('add_miss_num', branch=branch, type_of_business=type_of_business_whole, counter=counter))
+    
+    elif request.method == 'POST' and button == 'go_main' :
+        return render_template('branch_selection_page.html', branch=branch, type_of_business=type_of_business_whole, counter=counter)
     
     return render_template('counter_main.html', branch_name=branch_name, q=None, counter=counter, type_of_business=type_of_business_whole)
 
@@ -712,17 +714,11 @@ def queue_generated(q_number, type_of_business,
                     branch_name, branch, 
                     waiting_numbers, estimated_time)
 
-    return render_template('queue_generated.html',q_number=q_number, type_of_business=type_of_business,
-                                                    branch_name=branch_name, branch=branch,
-                                                    waiting_numbers=waiting_numbers, estimated_time=estimated_time)
+    return render_template('queue_generated.html',q_number=q_number, type_of_business=type_of_business, branch_name=branch_name, branch=branch, waiting_numbers=waiting_numbers, estimated_time=estimated_time)
 
 @app.route("/EmailSent", methods=['GET','POST'])
 def EmailSent():
     return render_template('email_send_successful.html')
-
-@app.route("/EmailSentUnsuccessful", methods=['GET','POST'])
-def EmailSentUnsuccessful():
-    return render_template('email_send_unsuccessful.html')
 
 @app.route('/', methods=['GET','POST']) # Main Page for demonstration
 def main():
